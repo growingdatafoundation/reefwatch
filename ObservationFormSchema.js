@@ -9,13 +9,13 @@ var Example = React.createClass({
       label: 'Date:'
     },
     observation: {
-        type: {
+      type: {
         observationTime: {
           type: String,
           label: 'Time',
           isRequired: true
         }
-        }
+      }
     },
     tideLowHeight: {
       type: String,

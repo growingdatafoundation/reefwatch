@@ -4,14 +4,9 @@ var FormGenerator = require('form-generator-react');
 
 var Example = React.createClass({
   schema: {
-    field: {
-      type: Number,
-      label: 'Number Field',
-      validate: function(val) {
-        if (val % 10 !== 0) {
-          return 'Error: input must be divisible by 10';
-        }
-      }
+    timeStarted: {
+      type: Date,
+      label: 'Time Started'
     }
   },
 
