@@ -1,8 +1,7 @@
 var React = require('react');
-var ReactDom = require('react-dom');
 var FormGenerator = require('form-generator-react');
 
-var Example = React.createClass({
+export default React.createClass({
   schema: {
     field: {
       type: Number,
@@ -29,10 +28,4 @@ var Example = React.createClass({
 
     return <span>{formElement}</span>;
   }
-});
-
-$(document).ready(function() {
-  var rootParent = document.getElementById('content');
-  var rootNode = React.createElement(Example, {}, rootParent);
-  ReactDom.render(rootNode, rootParent);
 });

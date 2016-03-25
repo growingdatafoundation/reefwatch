@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import jquery from 'jquery'
+import bootstrap from 'bootstrap'
 
 import { Router, Route, hashHistory } from 'react-router'
 
@@ -10,7 +11,6 @@ import Observation from './js/Observation'
 import TimedSearch from './js/TimedSearch'
 import Quadrat from './js/Quadrat'
 import Admin from './js/Admin'
-
 
 render((
   <Router history={hashHistory}>
