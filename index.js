@@ -11,10 +11,14 @@ import Observation from './js/Observation'
 import TimedSearch from './js/TimedSearch'
 import Quadrat from './js/Quadrat'
 import Admin from './js/Admin'
+import Surveys from './js/Surveys'
+import Home from './js/Home'
 
 render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
+      <Route path="/home" component={Home}/>
+      <Route path="/surveys" component={Surveys}/>
       <Route path="/observation" component={Observation}/>
       <Route path="/timed" component={TimedSearch}/>
       <Route path="/quadrat" component={Quadrat}/>
