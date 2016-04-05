@@ -1,10 +1,10 @@
 var React = require('react');
-var FormGenerator = require('form-generator-react');
+var FormGenerator = require('./form-generator.js');
 
 export default React.createClass({
   schema: {
     observatonDate: {
-      type: String,
+      type: Date,
       label: 'Date:'
     },
     observation: {
