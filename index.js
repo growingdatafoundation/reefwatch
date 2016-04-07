@@ -7,12 +7,12 @@ import { Router, Route, hashHistory } from 'react-router'
 
 import App from './js/App'
 import Login from './js/Login'
-import Observation from './js/Observation'
 import TimedSearch from './js/TimedSearch'
 import Quadrat from './js/Quadrat'
 import Admin from './js/Admin'
 import Surveys from './js/Surveys'
 import Home from './js/Home'
+import Observation from './js/Observation'
 
 render((
   <Router history={hashHistory}>

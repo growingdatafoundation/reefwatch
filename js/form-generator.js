@@ -689,7 +689,28 @@ var FlatField = React.createClass({displayName: "FlatField",
             that.props.children
           )
         );
-        case 'date': return null;
+        case 'date': return (
+          React.createElement("div", {className: 'form-group' + errorClass}, 
+            React.createElement("label", {className: "control-label"}, 
+              that.props.label
+            ), 
+          React.createElement(DateTimeField, {
+            type: that.props.type, 
+            label: that.props.label, 
+            placeholder: that.props.placeholder, 
+            onChange: that.onChange, 
+            value: that.state.value}, 
+            that.props.children
+          ), 
+             _.map(that.state.errorMessages, function(msg) {
+                return (
+                  React.createElement("span", {className: "help-block"}, 
+                    msg
+                  )
+                );
+            })
+          )
+        );
         case 'hidden': return null;
       }
     })(this);
