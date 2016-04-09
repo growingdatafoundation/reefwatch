@@ -2,54 +2,10 @@ import React from 'react'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
 
-var products = [
-  {
-      id: 1,
-      survey: "Hallet Cove",
-      location: "Lower",
-      leader: "Jim Smith",
-      date: "19-10-2010"
-  },
-  {
-      id: 2,
-      survey: "Hallet Cove",
-      location: "Middle",
-      leader: "Jim Smith",
-      date: "19-10-2010"
-  },
-  {
-      id: 3,
-      survey: "Hallet Cove",
-      location: "High",
-      leader: "Jim Smith",
-      date: "19-10-2010"
-  },
-  {
-      id: 4,
-      survey: "Nathan Beach",
-      location: "Lower",
-      leader: "Tom Grimble",
-      date: "22-10-2010"
-  }
-];
 
-
-var completed = [
-  {
-      id: 1,
-      survey: "Hallet Cove",
-      location: "Lower",
-      leader: "Jim Smith",
-      date: "19-10-2010"
-  },
-  {
-      id: 2,
-      survey: "Hallet Cove",
-      location: "Middle",
-      leader: "Jim Smith",
-      date: "19-10-2010"
-  }
-];
+/*
+Get Survey Data
+*/
 
 const selectRowProp = {
   mode: 'radio',
@@ -57,15 +13,13 @@ const selectRowProp = {
 };
 
 
-
 var Table = React.createClass({
  render() {
     return (
     <BootstrapTable ref={this.props.myref} data={this.props.surveys} selectRow={ selectRowProp }  hover={true}>
-        <TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
-        <TableHeaderColumn dataField="survey" dataSort={true}>Survey Name</TableHeaderColumn>
-        <TableHeaderColumn dataField="leader" dataSort={true} dataFormat={priceFormatter}>Leader</TableHeaderColumn>
-        <TableHeaderColumn dataField="date"  dataSort={true} dataFormat={priceFormatter}>Date</TableHeaderColumn>
+        <TableHeaderColumn dataField="_id" isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
+        <TableHeaderColumn dataField="surveyLeader" dataSort={true}>Survey Name</TableHeaderColumn>
+        <TableHeaderColumn dataField="site" dataSort={true} dataFormat={priceFormatter}>Leader</TableHeaderColumn>
     </BootstrapTable>
   )}
 })
@@ -99,19 +53,24 @@ export default React.createClass({
     this.refs.ExampleTable.handleAddRow(fakeRow);
   },
 
+  getInitialState: function() {
+    return {"surveys":[ {"_id":"John", "surveyLeader":"Doe", "site":"site"}]};
+  },  
+
+  componentDidMount: function() {
+    this.serverRequest = $.get("http://128.199.240.53:3001/api/surveys?populate=volunteers&populate=surveyLeader&populate=sites", function (result) {
+        this.setState({
+            surveys: result
+        });
+    }.bind(this));
+  },
+
+  componentWillUnmount: function() {
+    this.serverRequest.abort();
+  },
+
   render() {
-    return (<div><Panel heading={"Active Surveys"} type={"primary"}><Table surveys={products} /></Panel>
-                <Panel heading={"Completed Surveys"} type={"info"}><Table surveys={completed} /></Panel>
-
-
-    <BootstrapTable ref="ExampleTable" data={completed} selectRow={ selectRowProp }  hover={true}>
-        <TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
-        <TableHeaderColumn dataField="survey" dataSort={true}>Survey Name</TableHeaderColumn>
-        <TableHeaderColumn dataField="leader" dataSort={true} dataFormat={priceFormatter}>Leader</TableHeaderColumn>
-        <TableHeaderColumn dataField="date"  dataSort={true} dataFormat={priceFormatter}>Date</TableHeaderColumn>
-    </BootstrapTable>
-
-
+    return (<div><Panel heading={"Active Surveys"} type={"primary"}><Table surveys={this.state.surveys} /></Panel>
                 <button onClick={this.handleBtnClick}>Add</button>
             </div>)
   }
