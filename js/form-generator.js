@@ -1,6 +1,6 @@
 var _ = require('underscore');
 var React = require('react');
-var DateTimeField = require('react-bootstrap-datetimepicker');
+var ReactBootstrap = require('react-bootstrap');
 var FormGenerator = {
   /**
    * This creates a new FormGenerator form based on the schema
