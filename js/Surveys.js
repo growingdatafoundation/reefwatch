@@ -65,7 +65,6 @@ export default React.createClass({
     return (<div>
                 <Panel heading={"Active Surveys"} type={"primary"}><Table surveys={this.state.surveys} /></Panel>
                 <button onClick={this.handleBtnClick}>Add</button>
-                Nathan was here!
             </div>)
   }
 })
