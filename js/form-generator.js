@@ -642,7 +642,7 @@ var FlatField = React.createClass({
         case 'hidden':
             e.target.value;
         case 'date':
-            e.target.date();
+            e.target.value;
         case 'select':
             var newValue = !this.state.value;
         case 'checkbox':
