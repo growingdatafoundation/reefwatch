@@ -5,7 +5,8 @@ export default React.createClass({
   schema: {
     observatonDate: {
       type: Date,
-      label: 'Date:'
+      label: 'Date:',
+      onchange: { alert(this); }     
     },
     observation: {
       type: {
