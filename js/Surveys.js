@@ -2,7 +2,6 @@ import React from 'react'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
 
-
 /*
 Get Survey Data
 */
@@ -13,16 +12,17 @@ const selectRowProp = {
 };
 
 
+
 var Table = React.createClass({
  render() {
     return (
-    <BootstrapTable ref={this.props.myref} data={this.props.surveys} selectRow={ selectRowProp }  hover={true}>
+    <BootstrapTable ref={this.props.myref} data={this.props.surveys} selectRow={ selectRowProp }>
         <TableHeaderColumn dataField="_id" isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
         <TableHeaderColumn dataField="surveyLeader" dataSort={true}>Survey Name</TableHeaderColumn>
         <TableHeaderColumn dataField="site" dataSort={true} dataFormat={priceFormatter}>Leader</TableHeaderColumn>
     </BootstrapTable>
   )}
-})
+});
 
 var Panel = React.createClass({
     render() {
@@ -39,7 +39,7 @@ var fakeRow =   {
       location: "Middle",
       leader: "Jim Smith",
       date: "19-10-2010"
-  };
+};
 
 
 
@@ -70,7 +70,8 @@ export default React.createClass({
   },
 
   render() {
-    return (<div><Panel heading={"Active Surveys"} type={"primary"}><Table surveys={this.state.surveys} /></Panel>
+    return (<div>
+                <Panel heading={"Active Surveys"} type={"primary"}><Table surveys={this.state.surveys} /></Panel>
                 <button onClick={this.handleBtnClick}>Add</button>
             </div>)
   }
