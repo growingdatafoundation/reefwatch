@@ -658,6 +658,7 @@ var FlatField = React.createClass({
       : '';
 
     return (function(that) {
+      <pre>{JSON.stringify(this.state,null,2)}</pre>
       switch (that.props.type) {
         case 'text':
         case 'password': return (
