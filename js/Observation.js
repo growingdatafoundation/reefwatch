@@ -6,7 +6,7 @@ export default React.createClass({
     observatonDate: {
       type: Date,
       label: 'Date:',
-      onchange: { alert(this); }     
+      onchange: function() { alert(this); }     
     },
     observation: {
       type: {
