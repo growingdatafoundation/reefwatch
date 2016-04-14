@@ -636,7 +636,7 @@ var FlatField = React.createClass({
   onChange: function(e) {
     // If checkbox type, toggle value;
     // otherwise, use the event target value
-    switch (that.props.type) {
+    switch (this.props.type) {
         case 'text':
         case 'password':
         case 'hidden':
