@@ -1,7 +1,6 @@
 import React from 'react'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
-
 /*
 Get Survey Data
 */
@@ -41,22 +40,17 @@ var fakeRow =   {
       date: "19-10-2010"
 };
 
-
-
 function priceFormatter(cell, row){
   return cell;
 }
 
 export default React.createClass({
-
   handleBtnClick: function(e) {
     this.refs.ExampleTable.handleAddRow(fakeRow);
   },
-
   getInitialState: function() {
     return {"surveys":[ {"_id":"John", "surveyLeader":"Doe", "site":"site"}]};
   },  
-
   componentDidMount: function() {
     this.serverRequest = $.get("http://128.199.240.53:3001/api/surveys?populate=volunteers&populate=surveyLeader&populate=sites", function (result) {
         this.setState({
@@ -64,15 +58,14 @@ export default React.createClass({
         });
     }.bind(this));
   },
-
   componentWillUnmount: function() {
     this.serverRequest.abort();
   },
-
   render() {
     return (<div>
                 <Panel heading={"Active Surveys"} type={"primary"}><Table surveys={this.state.surveys} /></Panel>
                 <button onClick={this.handleBtnClick}>Add</button>
+                Nathan was here!
             </div>)
   }
 })
