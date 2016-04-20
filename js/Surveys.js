@@ -1,5 +1,8 @@
 import React from 'react'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import Update from 'react-addons-update'
+
+
 
 /*
 Get Survey Data
@@ -11,18 +14,30 @@ const selectRowProp = {
 };
 
 
+/*
 
+*/
 var Table = React.createClass({
+  handleComplete: function (id) {
+    alert(id);  
+  },
+  BuildButtons: function(cell, row, enumObject){
+    return <div><button onClick={this.handleComplete.bind(this, cell)} className="success">Complete</button></div>
+ },
  render() {
     return (
-    <BootstrapTable ref={this.props.myref} data={this.props.surveys} selectRow={ selectRowProp }>
+    <BootstrapTable ref={this.props.myref} data={this.props.surveys} pagination={true}>
         <TableHeaderColumn dataField="_id" isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
         <TableHeaderColumn dataField="surveyLeader" dataSort={true}>Survey Name</TableHeaderColumn>
         <TableHeaderColumn dataField="site" dataSort={true} dataFormat={priceFormatter}>Leader</TableHeaderColumn>
+        <TableHeaderColumn dataField="_id" dataFormat={this.BuildButtons}>Actions</TableHeaderColumn>
     </BootstrapTable>
   )}
 });
 
+/* 
+
+*/
 var Panel = React.createClass({
     render() {
         return (<div className={"panel panel-"+this.props.type}>
@@ -32,39 +47,97 @@ var Panel = React.createClass({
     }
 })
 
-var fakeRow =   {
-      id: 200,
-      survey: "Hallet Cove",
-      location: "Middle",
-      leader: "Jim Smith",
-      date: "19-10-2010"
-};
+
+var CompleteSurvey = React.createClass({
+    getInitialState: function() {
+        return {"surveys":[ {"_id":"John", "surveyLeader":"Doe", "site":"site one"}]};
+    },  
+    componentDidMount: function() {
+        this.serverRequest = $.get("http://128.199.240.53:3001/api/surveys?populate=volunteers&populate=surveyLeader&populate=sites", function (result) {
+        this.setState({
+            surveys: result
+        });
+        }.bind(this));
+    },
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
+    },
+    render() {
+        return ( 
+            <Panel heading={"Completed Field Days"} type={"info"}>
+                <button onClick={this.handleBtnClick}>Add</button>
+                <Table surveys={this.state.surveys} />
+            </Panel>
+        )
+    }
+})
+
+
+
+
+var ActiveSurvey = React.createClass({
+    handleBtnClick: function(e) {
+        /* Use AJAX to post the object to our adduser service
+        $.ajax({
+            type: 'POST',
+            data: {"site": "1" },
+            url: '/api/surveys',
+            dataType: 'JSON'
+        }).done(function( response ) {
+            // Check for successful (blank) response
+            if (response.msg === '') {
+                this.setState({"surveys":[ {"_id":"Nathan", "surveyLeader":"Hill", "site":"site one"}]});
+            }
+            else {
+
+                // If something goes wrong, alert the error message that our service returned
+                alert('Error: ' + response.msg);
+
+            }
+        });
+        */
+        var currentState = this.state;
+        currentState.surveys.push({"_id":"Nathan", "surveyLeader":"Hill", "site":"site one"})
+        this.setState(currentState);
+    },
+    getInitialState: function() {
+        return {"surveys":[ {"_id":"John", "surveyLeader":"Doe", "site":"site one"}]};
+    },  
+    componentDidMount: function() {
+        this.serverRequest = $.get("http://128.199.240.53:3001/api/surveys?populate=volunteers&populate=surveyLeader&populate=sites", function (result) {
+        this.setState({
+            surveys: result
+        });
+        }.bind(this));
+    },
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
+    },
+    render() {
+        return ( 
+            <Panel heading={"Current Field Days"} type={"primary"}>
+                <button onClick={this.handleBtnClick}>Add</button>
+                <Table surveys={this.state.surveys} />
+            </Panel>
+        )
+    }
+})
 
 function priceFormatter(cell, row){
   return cell;
 }
 
+
+/*
+
+*/
 export default React.createClass({
-  handleBtnClick: function(e) {
-    this.refs.ExampleTable.handleAddRow(fakeRow);
-  },
-  getInitialState: function() {
-    return {"surveys":[ {"_id":"John", "surveyLeader":"Doe", "site":"site"}]};
-  },  
-  componentDidMount: function() {
-    this.serverRequest = $.get("http://128.199.240.53:3001/api/surveys?populate=volunteers&populate=surveyLeader&populate=sites", function (result) {
-        this.setState({
-            surveys: result
-        });
-    }.bind(this));
-  },
-  componentWillUnmount: function() {
-    this.serverRequest.abort();
-  },
   render() {
     return (<div>
-                <Panel heading={"Active Surveys"} type={"primary"}><Table surveys={this.state.surveys} /></Panel>
-                <button onClick={this.handleBtnClick}>Add</button>
+                <hr />
+                <ActiveSurvey />
+                <hr />
+                <CompleteSurvey />
             </div>)
   }
 })
