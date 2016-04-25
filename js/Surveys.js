@@ -21,16 +21,22 @@ var Table = React.createClass({
   handleComplete: function (id) {
     alert(id);  
   },
+  handleSelect: function (id) {
+    alert(id);  
+  },
   BuildButtons: function(cell, row, enumObject){
-    return <div><button onClick={this.handleComplete.bind(this, cell)} className="success">Complete</button></div>
+    return <div className="btn-toolbar">
+                <button onClick={this.handleComplete.bind(this, cell)} className="btn btn-success btn-sm">Complete</button>
+                <button onClick={this.handleSelect.bind(this, cell)} className="btn btn-info btn-sm">Select</button>                
+           </div>
  },
  render() {
     return (
-    <BootstrapTable ref={this.props.myref} data={this.props.surveys} pagination={true}>
-        <TableHeaderColumn dataField="_id" isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
-        <TableHeaderColumn dataField="surveyLeader" dataSort={true}>Survey Name</TableHeaderColumn>
-        <TableHeaderColumn dataField="site" dataSort={true} dataFormat={priceFormatter}>Leader</TableHeaderColumn>
-        <TableHeaderColumn dataField="_id" dataFormat={this.BuildButtons}>Actions</TableHeaderColumn>
+    <BootstrapTable ref={this.props.myref} data={this.props.surveys} pagination={true} striped={true}>
+        <TableHeaderColumn width="50" dataField="id" isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
+        <TableHeaderColumn width="100" dataField="date" dataSort={true}>Date</TableHeaderColumn>
+        <TableHeaderColumn dataField="description" dataSort={true} dataFormat={priceFormatter}>Description</TableHeaderColumn>
+        <TableHeaderColumn width="200" dataAlign="center" dataField="id" dataFormat={this.BuildButtons}>Actions</TableHeaderColumn>
     </BootstrapTable>
   )}
 });
@@ -47,13 +53,13 @@ var Panel = React.createClass({
     }
 })
 
-
+/*
 var CompleteSurvey = React.createClass({
-    getInitialState: function() {
-        return {"surveys":[ {"_id":"John", "surveyLeader":"Doe", "site":"site one"}]};
-    },  
+    //getInitialState: function() {
+    //    return {"surveys":[ {"_id":"John", "description":"Doe", "data":"site one"}]};
+    //},  
     componentDidMount: function() {
-        this.serverRequest = $.get("http://128.199.240.53:3001/api/surveys?populate=volunteers&populate=surveyLeader&populate=sites", function (result) {
+        this.serverRequest = $.get("http://0.0.0.0:3001/api/surveys?populate=volunteers&populate=surveyLeader&populate=sites", function (result) {
         this.setState({
             surveys: result
         });
@@ -71,7 +77,7 @@ var CompleteSurvey = React.createClass({
         )
     }
 })
-
+*/
 
 
 
@@ -101,14 +107,24 @@ var ActiveSurvey = React.createClass({
         this.setState(currentState);
     },
     getInitialState: function() {
-        return {"surveys":[ {"_id":"John", "surveyLeader":"Doe", "site":"site one"}]};
+        return {"surveys":[]};
     },  
     componentDidMount: function() {
-        this.serverRequest = $.get("http://128.199.240.53:3001/api/surveys?populate=volunteers&populate=surveyLeader&populate=sites", function (result) {
-        this.setState({
-            surveys: result
+        var that = this;
+        this.serverRequest = $.get("http://0.0.0.0:3001/field_days?num="+Math.random(), function (result) {
+            that.setState({
+                surveys: result.data
+            });
+        })
+        .done(function() {
+            alert( "second success" );
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) { 
+            alert( "Error" + errorThrown );
+        })
+        .always(function() {
+            alert( "finished" );
         });
-        }.bind(this));
     },
     componentWillUnmount: function() {
         this.serverRequest.abort();
@@ -116,7 +132,7 @@ var ActiveSurvey = React.createClass({
     render() {
         return ( 
             <Panel heading={"Current Field Days"} type={"primary"}>
-                <button onClick={this.handleBtnClick}>Add</button>
+                <button className="btn btn-primary" onClick={this.handleBtnClick}>Add</button>
                 <Table surveys={this.state.surveys} />
             </Panel>
         )
@@ -134,10 +150,7 @@ function priceFormatter(cell, row){
 export default React.createClass({
   render() {
     return (<div>
-                <hr />
                 <ActiveSurvey />
-                <hr />
-                <CompleteSurvey />
             </div>)
   }
 })
