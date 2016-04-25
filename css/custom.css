@@ -1,0 +1,15 @@
+/*
+  body {
+    padding-top: 100px;
+  }
+ */
+ 
+ 
+.selectedFieldDay {
+    margin-top:12px;
+    width:200px;
+    height: 35px;
+    float: right;
+    vertical-align: middle;
+}
+  
