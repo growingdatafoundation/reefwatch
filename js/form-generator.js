@@ -94,7 +94,7 @@ var FormGenerator = {
    * @param  {Boolean} validateOnSubmit Wait until submit to validate
    * @return {JSX}      A JSX representation of the field
    */
-  generateFlatField: function(name, field, defaultValue, onChange, validateOnSubmit) {
+  generateFlatField: function(name, field, defaultValue, onChange, validateOnSubmit) { // eslint-disable-line complexity
     var validators =
       field.validators || (field.validate && [field.validate]) || [];
 
@@ -636,17 +636,20 @@ var FlatField = React.createClass({
   onChange: function(e) {
     // If checkbox type, toggle value;
     // otherwise, use the event target value
+    var newValue = null;
     switch (this.props.type) {
-        case 'text':
-        case 'password':
-        case 'hidden':
+        case 'text': // eslint-disable-line no-fallthrough
+        case 'password': // eslint-disable-line no-fallthrough
+        case 'hidden': // eslint-disable-line no-fallthrough
+        case 'date': 
             e.target.value;
-        case 'date':
-            e.target.value;
-        case 'select':
-            var newValue = !this.state.value;
-        case 'checkbox':
-            var newValue = !this.state.value;
+            break;
+        case 'select': 
+            newValue = !this.state.value;
+            break;
+        case 'checkbox': 
+            newValue = !this.state.value;
+            break;
     }
 
     this.setValue(newValue);

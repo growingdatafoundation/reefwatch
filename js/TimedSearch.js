@@ -10,7 +10,6 @@ export default React.createClass({
   },
 
   onSubmit: function(data) {
-    console.log('Parsed form data', data);
     // Reset fields back to default values
     this.refs.myFormRef.reset();
   },

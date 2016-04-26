@@ -8,8 +8,9 @@
     "express": "^4.13.4",
     "form-generator-react": "^1.1.4",
     "jquery": "^2.2.1",
-    "react": "^0.14.7",
+    "react": "0.14.8",
     "react-bootstrap": "^0.28.5",
+    "react-bootstrap-datetimepicker": "0.0.22",
     "react-bootstrap-table": "^2.1.1",
     "react-dom": "^0.14.7",
     "react-router": "^2.0.1",
@@ -17,17 +18,24 @@
   },
   "scripts": {
     "start": "webpack-dev-server --host 0.0.0.0 --port 3000 --inline --content-base .",
-    "clean": "rm -R node_modules/"
+    "clean": "rm -R ./node_modules/",
+    "eslint": "eslint **/*.js",
+    "webpack": "./node_modules/webpack/bin/webpack.js"
   },
   "devDependencies": {
     "babel-core": "^6.5.1",
+    "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.2",
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-react": "^6.5.0",
+    "eslint": "^2.8.0",
+    "eslint-plugin-promise": "^1.1.0",
+    "eslint-plugin-react": "^5.0.1",
     "expose-loader": "^0.7.1",
     "gulp": "^3.9.1",
     "http-server": "^0.8.5",
-    "react-bootstrap": "^0.28.3",
+    "install": "^0.6.1",
+    "npm": "^3.8.7",
     "underscore": "^1.8.3",
     "webpack": "^1.12.13",
     "webpack-dev-server": "^1.14.1"

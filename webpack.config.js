@@ -13,7 +13,7 @@ module.exports = {
             { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,  exclude: /node_modules/, loader: "url?limit=10000&mimetype=application/octet-stream" },
             { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,  exclude: /node_modules/, loader: "url?limit=10000&mimetype=image/svg+xml" },
             { test: /jquery\.js$/, loader: 'expose?jQuery' },
-            { test: /jquery\.js$/, loader: 'expose?$', },
+            { test: /jquery\.js$/, loader: 'expose?$' },
             { test: /jquery\..*\.js/, loader: "imports?$=jquery,jQuery=jquery,this=>window" }
         ]
     }
