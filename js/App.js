@@ -5,7 +5,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-      <div className="selectedFieldDay">selected:{this.props.selectedFieldDay}</div>
+      <div className="selectedFieldDay"></div>
         <ul className="nav nav-pills">
             <li className="active"><Link to="/home">Home</Link></li>
             <li><Link to="/surveys">Surveys <span className="badge">42</span></Link></li>

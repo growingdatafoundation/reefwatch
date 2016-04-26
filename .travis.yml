@@ -1,0 +1,12 @@
+sudo: false
+language: node_js
+node_js:
+  - node
+  - "5"
+  - "0.12"
+script: npm run start
+env:
+before_install:
+  - '[ "${TRAVIS_NODE_VERSION}" != "0.10" ] || npm install -g npm@^2'
+before_script:
+after_success:
