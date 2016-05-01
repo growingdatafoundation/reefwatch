@@ -21,21 +21,24 @@ var Table = React.createClass({
   handleComplete: function (id) {
     alert(id);  
   },
-  handleSelect: function (id) {
-    alert(id);  
+  handleSelect: function (row) {
+    $.publish("selectFieldDay", {"location":row.description, "date":row.date});
   },
   BuildButtons: function(cell, row, enumObject){
     return <div className="btn-toolbar">
-                <button onClick={this.handleComplete.bind(this, cell)} className="btn btn-success btn-sm">Complete</button>
-                <button onClick={this.handleSelect.bind(this, cell)} className="btn btn-info btn-sm">Select</button>                
+                <button onClick={this.handleComplete.bind(this, row)} className="btn btn-success btn-sm">Complete</button>
+                <button onClick={this.handleSelect.bind(this, row)} className="btn btn-info btn-sm">Select</button>                
            </div>
+ },
+ onRowSelect: function (row, isSelected) {
+   alert("Row Selected");  
  },
  render() {
     return (
     <BootstrapTable ref={this.props.myref} data={this.props.surveys} pagination={true} striped={true}>
         <TableHeaderColumn width="50" dataField="id" isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
         <TableHeaderColumn width="100" dataField="date" dataSort={true}>Date</TableHeaderColumn>
-        <TableHeaderColumn dataField="description" dataSort={true} dataFormat={priceFormatter}>Description</TableHeaderColumn>
+        <TableHeaderColumn dataField="description" dataSort={true}>Description</TableHeaderColumn>
         <TableHeaderColumn width="200" dataAlign="center" dataField="id" dataFormat={this.BuildButtons}>Actions</TableHeaderColumn>
     </BootstrapTable>
   )}
@@ -52,33 +55,6 @@ var Panel = React.createClass({
                 </div>)
     }
 })
-
-/*
-var CompleteSurvey = React.createClass({
-    //getInitialState: function() {
-    //    return {"surveys":[ {"_id":"John", "description":"Doe", "data":"site one"}]};
-    //},  
-    componentDidMount: function() {
-        this.serverRequest = $.get("http://0.0.0.0:3001/api/surveys?populate=volunteers&populate=surveyLeader&populate=sites", function (result) {
-        this.setState({
-            surveys: result
-        });
-        }.bind(this));
-    },
-    componentWillUnmount: function() {
-        this.serverRequest.abort();
-    },
-    render() {
-        return ( 
-            <Panel heading={"Completed Field Days"} type={"info"}>
-                <button onClick={this.handleBtnClick}>Add</button>
-                <Table surveys={this.state.surveys} />
-            </Panel>
-        )
-    }
-})
-*/
-
 
 
 var ActiveSurvey = React.createClass({
@@ -117,13 +93,13 @@ var ActiveSurvey = React.createClass({
             });
         })
         .done(function() {
-            alert( "second success" );
+            //alert( "second success" );
         })
         .fail(function(jqXHR, textStatus, errorThrown) { 
-            alert( "Error" + errorThrown );
+            //alert( "Error" + errorThrown );
         })
         .always(function() {
-            alert( "finished" );
+            //alert( "finished" );
         });
     },
     componentWillUnmount: function() {
