@@ -93,13 +93,10 @@ var ActiveSurvey = React.createClass({
             });
         })
         .done(function() {
-            //alert( "second success" );
         })
         .fail(function(jqXHR, textStatus, errorThrown) { 
-            //alert( "Error" + errorThrown );
         })
         .always(function() {
-            //alert( "finished" );
         });
     },
     componentWillUnmount: function() {

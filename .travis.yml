@@ -2,9 +2,8 @@ sudo: false
 language: node_js
 node_js:
   - node
-  - "5"
-  - "0.12"
 install: 
   - npm install
+  - npm test
 script: 
   - npm run eslint

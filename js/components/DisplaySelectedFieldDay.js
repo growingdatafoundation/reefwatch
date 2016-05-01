@@ -1,5 +1,4 @@
 import React from 'react'
-import $ from 'jquery'
 
 var DisplaySelectedFieldDay = React.createClass({
   getInitialState: function () {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 jest
     .unmock('../js/components/DisplaySelectedFieldDay')
     .unmock('jquery');
