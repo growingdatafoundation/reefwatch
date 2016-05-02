@@ -1,7 +1,7 @@
 import React from 'react'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
-
+import config from "../config"
 
 /*
 Get Survey Data
@@ -86,7 +86,7 @@ var ActiveSurvey = React.createClass({
     },  
     componentDidMount: function() {
         var that = this;
-        this.serverRequest = $.get("http://0.0.0.0:3001/field_days?num="+Math.random(), function (result) {
+        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/field_days?num="+Math.random(), function (result) {
             that.setState({
                 surveys: result.data
             });
