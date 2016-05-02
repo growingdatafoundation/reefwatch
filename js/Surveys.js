@@ -59,28 +59,6 @@ var Panel = React.createClass({
 
 var ActiveSurvey = React.createClass({
     handleBtnClick: function(e) {
-        /* Use AJAX to post the object to our adduser service
-        $.ajax({
-            type: 'POST',
-            data: {"site": "1" },
-            url: '/api/surveys',
-            dataType: 'JSON'
-        }).done(function( response ) {
-            // Check for successful (blank) response
-            if (response.msg === '') {
-                this.setState({"surveys":[ {"_id":"Nathan", "surveyLeader":"Hill", "site":"site one"}]});
-            }
-            else {
-
-                // If something goes wrong, alert the error message that our service returned
-                alert('Error: ' + response.msg);
-
-            }
-        });
-        */
-        //var currentState = this.state;
-        //currentState.surveys.push({"_id":"Nathan", "surveyLeader":"Hill", "site":"site one"})
-        //this.setState(currentState);
         this.refs["fieldDay"].open();
     },
     getInitialState: function() {
