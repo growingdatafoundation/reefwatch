@@ -2,6 +2,7 @@ import React from 'react'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
 import config from "../config"
+import FieldDay from "./ModalFieldDay"
 
 /*
 Get Survey Data
@@ -77,16 +78,17 @@ var ActiveSurvey = React.createClass({
             }
         });
         */
-        var currentState = this.state;
-        currentState.surveys.push({"_id":"Nathan", "surveyLeader":"Hill", "site":"site one"})
-        this.setState(currentState);
+        //var currentState = this.state;
+        //currentState.surveys.push({"_id":"Nathan", "surveyLeader":"Hill", "site":"site one"})
+        //this.setState(currentState);
+        this.refs["fieldDay"].open();
     },
     getInitialState: function() {
         return {"surveys":[]};
     },  
     componentDidMount: function() {
         var that = this;
-        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/field_days?num="+Math.random(), function (result) {
+        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/api/v1/field_days?num="+Math.random(), function (result) {
             that.setState({
                 surveys: result.data
             });
@@ -106,6 +108,7 @@ var ActiveSurvey = React.createClass({
             <Panel heading={"Current Field Days"} type={"primary"}>
                 <button className="btn btn-primary" onClick={this.handleBtnClick}>Add</button>
                 <Table surveys={this.state.surveys} />
+                <FieldDay ref="fieldDay" />
             </Panel>
         )
     }
