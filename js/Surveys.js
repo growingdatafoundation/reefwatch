@@ -59,7 +59,7 @@ var Panel = React.createClass({
 
 var ActiveSurvey = React.createClass({
     handleBtnClick: function(e) {
-        this.refs["fieldDay"].open();
+        this.refs.fieldDay.open();
     },
     getInitialState: function() {
         return {"surveys":[]};
