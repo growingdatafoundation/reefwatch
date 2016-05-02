@@ -40,7 +40,12 @@
     "http-server": "^0.8.5",
     "install": "^0.6.1",
     "jest-cli": "^12.0.2",
+<<<<<<< HEAD
     "npm": "^3.8.8",
+=======
+    "npm": "^3.8.7",
+    "react-addons-test-utils": "^0.14.8",
+>>>>>>> 41bf855780c8700b629efeaeefc189ca7079ec92
     "underscore": "^1.8.3",
     "webpack": "^1.12.13",
     "webpack-dev-server": "^1.14.1"
