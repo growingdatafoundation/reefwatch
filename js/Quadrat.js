@@ -1,5 +1,5 @@
 var React = require('react');
-var FormGenerator = require('./form-generator.js');
+var FormGenerator = require('form-generator-react');
 
 export default React.createClass({
   schema: {

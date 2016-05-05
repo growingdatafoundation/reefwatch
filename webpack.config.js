@@ -1,3 +1,4 @@
+var path = require('path');
 module.exports = {
     entry: "./index.js",
     output: {
@@ -6,7 +7,7 @@ module.exports = {
     },
     module: {
         loaders: [
-            { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?presets[]=es2015&presets[]=react' },
+            { test: /\.js$/, exclude: /node_modules/,  loader: 'babel-loader?presets[]=es2015&presets[]=react' }, //include: [ path.resolve("./node_modules/form-generator-react/dist") ],
             { test: /\.css$/, loader: 'style-loader!css-loader', exclude: /node_modules/ },
             { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,  exclude: /node_modules/,loader: "file" },
             { test: /\.(woff|woff2)$/,  exclude: /node_modules/, loader:"url?prefix=font/&limit=5000" },
