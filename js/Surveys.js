@@ -30,9 +30,6 @@ var Table = React.createClass({
                 <button onClick={this.handleSelect.bind(this, row)} className="btn btn-info btn-sm">Select</button>                
            </div>
  },
- onRowSelect: function (row, isSelected) {
-   alert("Row Selected");  
- },
  render() {
     return (
     <BootstrapTable ref={this.props.myref} data={this.props.surveys} pagination={true} striped={true}>

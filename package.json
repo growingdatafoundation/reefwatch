@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "bootstrap": "^3.3.6",
-    "form-generator-react": "^1.1.4",
+    "form-generator-react": "https://github.com/nathanjameshill/react-form-generator.git",
     "jquery": "^2.2.1",
     "react": "^0.14.8",
     "react-addons-test-utils": "^15.0.2",
@@ -19,6 +19,7 @@
   "scripts": {
     "start": "webpack-dev-server --host 0.0.0.0 --port 3000 --inline --content-base .",
     "clean": "rm -R ./node_modules/",
+    "clean-fg": "rm -R ./node_modules/form-generator-react/ && npm install",
     "eslint": "eslint **/*.js",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "test": "./node_modules/jest-cli/bin/jest.js",
