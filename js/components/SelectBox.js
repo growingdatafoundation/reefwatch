@@ -3,9 +3,6 @@ import $ from 'jquery'
 import { FormControl } from 'react-bootstrap'
 
 var SelectBox = React.createClass({
-    test: function () {
-        
-    },
     render() {
         var fields = ["value", "display"];
         if (this.props.fields!=null) {
