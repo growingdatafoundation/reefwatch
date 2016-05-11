@@ -14,9 +14,9 @@ var SelectBox = React.createClass({
             }
         }
         return (
-                <FormControl componentClass="select" placeholder="select"
+                <FormControl id={this.props.id} name={this.props.name} componentClass="select" placeholder="select"
                     placeholder="Survey Location"
-                    onChange={this.handleChange}>
+                    onChange={this.props.onChange}>
                     {
                         this.props.data.map(function(item) {
                             return <option value={item[fields[0]]}>{item[fields[1]]}</option>;

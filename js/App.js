@@ -11,7 +11,7 @@ export default React.createClass({
     },  
     componentDidMount: function() {
         var that = this;
-        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/api/v1/field_days?num="+Math.random(), function (result) {
+        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days?num="+Math.random(), function (result) {
             that.setState({
                 fieldDayCount: result.data.length
             });
