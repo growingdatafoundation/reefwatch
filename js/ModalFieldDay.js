@@ -32,14 +32,14 @@ var fieldDay =  React.createClass({
     submit: function (e) {
         e.preventDefault();
         var state = this.state;
-        var form_data = new FormData();
+        var formData = new FormData();
         for ( var key in state.fieldDay ) {
-            form_data.append(key, state.fieldDay[key]);
+            formData.append(key, state.fieldDay[key]);
         }
         var that = this;
         $.ajax({
             url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days?num="+Math.random(),
-            data        : form_data,
+            data        : formData,
             processData : false,
             contentType : false,
             type: 'POST'
@@ -51,14 +51,14 @@ var fieldDay =  React.createClass({
         });
     },
     handleChange: function(e) {
-        var fieldDay = this.state.fieldDay;
-        fieldDay[e.target.name] = e.target.value;
-        this.setState(fieldDay);
+        var fieldDayCopy = this.state.fieldDay;
+        fieldDayCopy[e.target.name] = e.target.value;
+        this.setState(fieldDayCopy);
     },
     handleDate: function(date) {
-        var fieldDay = this.state.fieldDay;
-        fieldDay.date = date;
-        this.setState(fieldDay);
+        var fieldDayCopy = this.state.fieldDay;
+        fieldDayCopy.date = date;
+        this.setState(fieldDayCopy);
     },
     render() {
         return (
