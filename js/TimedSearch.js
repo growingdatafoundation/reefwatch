@@ -4,6 +4,6 @@ export default React.createClass({
   submit: function(data) {
   },
   render () {
-    return (<span>{formElement}</span>);
+    return (<span></span>);
   }
 });
