@@ -1,108 +1,139 @@
-var React = require('react');
-var FormGenerator = require('form-generator-react');
+import React from 'react';
+import validator from 'bootstrap-validator';
+import { Modal, Button, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Checkbox } from 'react-bootstrap';
+import DateTimeField from 'react-bootstrap-datetimepicker';
+import moment from "moment";
+import Typeahead from 'react-bootstrap-typeahead';
+import CloudCover from './components/CloudCover';
 
-export default React.createClass({
-  schema: {
-    observatonDate: {
-      type: String,
-      label: 'Date:',
-      onChange: function() { alert("Hello"); }     
-    },
-    observation: {
-      type: {
-        observationTime: {
-          type: String,
-          label: 'Time',
-          isRequired: true
-        }
-      }
-    },
-    tideLowHeight: {
-      type: String,
-      label: 'Height of low tide (m)',
-      isRequired: true
-    },
-    tideLowTime: {
-      type: String,
-      label: 'Time of low tide (m)',
-      isRequired: true
-    },
-    tideHighHeight: {
-      type: String,
-      label: 'Height of high tide (m)',
-      isRequired: true
-    },
-    tideHighTime: {
-      type: String,
-      label: 'Time of high tide (m)',
-      isRequired: true
-    },
-    location: {
-      type: String,
-      label: 'Location',
-      enum: ['Aldinga North','Aldinga South','Lady Bay North','Lady Bay South','Hallet Cove', 'Victor Harbor', 'Beachport','Robe','Port Macdonnell'],
-      isRequired: true
-    },
-    siteCode: {
-      type: String,
-      label: 'Site code',
-      isRequired: true
-    },
-    volunteerNames: {
-      type: String,
-      label: 'Volunteer names',
-      isRequired: true
-    },
-    weatherComment: {
-      type: String,
-      label: 'Weather Comment',
-      isRequired: true
-    },
-    beaufortWindScale: {
-      type: Number,
-      label: 'Beaufort Wind Scale (1-5)',
-      isRequired: true
-    },
-    windDirection: {
-      type: String,
-      enum: ['N','S','W','E','NW','NE','SW','SW'],
-      label: 'Wind Direction',
-      isRequired: true
-    },
-    seaState: {
-      type: String,
-      label: 'Sea State',
-      enum: ['Calm','Smooth','Slight','Moderate','Rough'],
-      isRequired: true
-    },
-    rainfall: {
-      type: String,
-      label: 'Rainfall',
-      enum: ['Nil','Light','Moderate','Heavy'],
-      isRequired: true
-    },
-    cloudCover: {
-      type: Number,
-      label: 'Cloud cover (eighths, 0-8)',
-      isRequired: true
-    },
-    recentWeather: {
-      type: String,
-      label: 'Any recent tidal, weather, or other unusual events (e.g. heavy rain shortly before survey, storm, heatwave, wind held tide higher than expected):',
-      isRequired: true
-    }
+var observation = React.createClass({
+  getInitialState: function() {
+      var initialState = {};
+      /*
+      this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"locations?num="+Math.random(), $( "#testform" ).serialize(), function (result) {
+          initialState.locations = []; 
+          result.data.map(function (item) {
+              initialState.locations.push({value: item.id, display: item.description});
+              return initialState;
+          });
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) { 
+      })
+      initialState.fieldDay = {};
+      */
+      
+      
+      initialState.volunteers = [];
+      initialState.volunteers.push({id: 1, volunteer: "Jarkko Oikarinen"});
+      initialState.volunteers.push({id: 2, volunteer: "David Wise"});
+      initialState.volunteers.push({id: 3, volunteer: "Alan Turing"});
+      initialState.volunteers.push({id: 4, volunteer: "Bob Kahn"});
+      initialState.volunteers.push({id: 5, volunteer: "Vint Cerf"});
+      initialState.volunteers.push({id: 6, volunteer: "Ralph Baer"});
+      initialState.volunteers.push({id: 7, volunteer: "Ray Tomlinson"});
+      initialState.volunteers.push({id: 8, volunteer: "Dennis Ritchie"});
+      
+      initialState.windDirections = [];
+      initialState.windDirections.push({id: 1, windDireciton: "North"});
+      initialState.windDirections.push({id: 2, windDireciton: "South"});
+      initialState.windDirections.push({id: 3, windDireciton: "West"});
+      initialState.windDirections.push({id: 4, windDireciton: "East"});
+      initialState.windDirections.push({id: 5, windDireciton: "North West"});
+      initialState.windDirections.push({id: 6, windDireciton: "North East"});
+      initialState.windDirections.push({id: 7, windDireciton: "South West"});
+      initialState.windDirections.push({id: 8, windDireciton: "South East"});
+      
+      return initialState;
   },
-  onSubmit: function(data) {
+  handleTime: function (timeValue) {
+    alert(timeValue);  
+  },
+  submit: function(data) {
     // Reset fields back to default values
     this.refs.myFormRef.reset();
   },
-
-  render: function() {
-    var schema = this.schema;
-    var ref = 'myFormRef';
-    var onSubmit = this.onSubmit;
-    var formElement = FormGenerator.create(schema, ref, onSubmit);
-
-    return <span>{formElement}</span>;
+  render() {
+    return (
+      <form id="formObservation" data-toggle="validator" onSubmit={this.submit} role="form">
+        <FormGroup controlId="time">
+          <ControlLabel controlId="time">Observation Time</ControlLabel>
+          <DateTimeField
+              mode="time"
+              id="time"
+              inputProps={{required:"required", name:"time"}}
+              onChange={this.handleTime}
+          />
+          <FormControl.Feedback />
+          <HelpBlock></HelpBlock>
+        </FormGroup>
+        <FormGroup controlId="otherLocation">
+            <ControlLabel controlId="otherLocation">Other Location</ControlLabel>
+            <FormControl
+                required
+                type="text"
+                value={this.state.otherLocation}
+                placeholder=""
+                onChange={this.handleChange}
+                id="otherLocation"
+                name="otherLocation"
+            />
+            <FormControl.Feedback />
+            <HelpBlock></HelpBlock>
+        </FormGroup>
+        <FormGroup controlId="volunteers">
+            <ControlLabel controlId="volunteers">Volunteers</ControlLabel>
+            <Typeahead
+              required
+              labelKey="volunteer"
+              onChange={this.handleChange}
+              options={this.state.volunteers}
+              id="volunteers"
+              allowNew={true}
+              multiple={true}
+            />
+            <FormControl.Feedback />
+            <HelpBlock></HelpBlock>
+        </FormGroup>
+        <FormGroup controlId="weatherComment">
+            <ControlLabel controlId="weatherComment">Weather Comment </ControlLabel>
+            <FormControl
+                required
+                type="text"
+                value={this.state.weatherComment}
+                placeholder="weatherComment"
+                onChange={this.handleChange}
+                id="weatherComment"
+                name="weatherComment"
+            />
+            <FormControl.Feedback />
+            <HelpBlock></HelpBlock>
+        </FormGroup>
+        <FormGroup controlId="windDirection">
+            <ControlLabel controlId="windDirection">Wind Direction</ControlLabel>
+            <Typeahead
+              required
+              labelKey="windDireciton"
+              onChange={this.handleChange}
+              options={this.state.windDirections}
+              id="windDirection"
+              allowNew={false}
+              multiple={false}
+            />
+            <FormControl.Feedback />
+            <HelpBlock></HelpBlock>
+        </FormGroup>
+        <FormGroup controlId="cloudCover">
+            <ControlLabel controlId="cloudCover">Cloud Cover</ControlLabel>
+            <CloudCover
+              id="cloudCover"
+              required
+            />
+            <FormControl.Feedback />
+            <HelpBlock></HelpBlock>
+        </FormGroup>
+      </form>
+    );
   }
 })
+
+export default observation;

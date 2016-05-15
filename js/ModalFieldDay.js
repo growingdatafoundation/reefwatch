@@ -5,7 +5,7 @@ import moment from "moment";
 import SelectBox from './components/SelectBox'
 import config from '../config'
 import validator from 'bootstrap-validator';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
+
 
 var fieldDay =  React.createClass({
     getInitialState: function() {
