@@ -3,6 +3,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
 import config from "../config"
 import FieldDay from "./ModalFieldDay"
+import WorkingSurveyList from "./components/WorkingSurveyList"
 
 /*
 Get Survey Data
@@ -101,6 +102,7 @@ export default React.createClass({
   render() {
     return (<div>
                 <ActiveSurvey />
+                <WorkingSurveyList />
             </div>)
   }
 })

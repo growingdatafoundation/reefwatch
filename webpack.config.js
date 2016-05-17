@@ -19,5 +19,5 @@ module.exports = {
             { test: /jquery\..*\.js/, loader: "imports?$=jquery,jQuery=jquery,this=>window" },
             { test: /\.png$/, loader: "url-loader?mimetype=image/png" }
         ]
-    }
+    },
 }

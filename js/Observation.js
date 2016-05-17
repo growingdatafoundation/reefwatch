@@ -5,8 +5,9 @@ import DateTimeField from 'react-bootstrap-datetimepicker';
 import moment from "moment";
 import Typeahead from 'react-bootstrap-typeahead';
 import CloudCover from './components/CloudCover';
+import SelectBox from './components/SelectBox';
 
-var observation = React.createClass({
+var Observation = React.createClass({
   getInitialState: function() {
       var initialState = {};
       /*
@@ -32,21 +33,46 @@ var observation = React.createClass({
       initialState.volunteers.push({id: 6, volunteer: "Ralph Baer"});
       initialState.volunteers.push({id: 7, volunteer: "Ray Tomlinson"});
       initialState.volunteers.push({id: 8, volunteer: "Dennis Ritchie"});
+ 
+      initialState.windForce = [];
+      initialState.windForce.push({value: 1, display: "Light air"});
+      initialState.windForce.push({value: 2, display: "Gentle breeze"});
+      initialState.windForce.push({value: 3, display: "Moderate breeze"});
+      initialState.windForce.push({value: 4, display: "Fresh breeze"});
+      initialState.windForce.push({value: 5, display: "Strong Breeze"});
+      
+      initialState.seaState = [];
+      initialState.seaState.push({value: 1, display: "Calm"});
+      initialState.seaState.push({value: 2, display: "Smooth"});
+      initialState.seaState.push({value: 3, display: "Slight"});
+      initialState.seaState.push({value: 4, display: "Moderate"});
+      initialState.seaState.push({value: 5, display: "Rough"});
+      
+      initialState.rainfall = [];
+      initialState.rainfall.push({value: 1, display: "Nil"});
+      initialState.rainfall.push({value: 2, display: "Light"});
+      initialState.rainfall.push({value: 3, display: "Moderate"});
+      initialState.rainfall.push({value: 4, display: "Heavy"});
       
       initialState.windDirections = [];
-      initialState.windDirections.push({id: 1, windDireciton: "North"});
-      initialState.windDirections.push({id: 2, windDireciton: "South"});
-      initialState.windDirections.push({id: 3, windDireciton: "West"});
-      initialState.windDirections.push({id: 4, windDireciton: "East"});
-      initialState.windDirections.push({id: 5, windDireciton: "North West"});
-      initialState.windDirections.push({id: 6, windDireciton: "North East"});
-      initialState.windDirections.push({id: 7, windDireciton: "South West"});
-      initialState.windDirections.push({id: 8, windDireciton: "South East"});
+      initialState.windDirections.push({value: 1, display: "North"});
+      initialState.windDirections.push({value: 2, display: "South"});
+      initialState.windDirections.push({value: 3, display: "West"});
+      initialState.windDirections.push({value: 4, display: "East"});
+      initialState.windDirections.push({value: 5, display: "North West"});
+      initialState.windDirections.push({value: 6, display: "North East"});
+      initialState.windDirections.push({value: 7, display: "South West"});
+      initialState.windDirections.push({value: 8, display: "South East"});
+      
+      initialState.cloudCover = 0;
       
       return initialState;
   },
   handleTime: function (timeValue) {
     alert(timeValue);  
+  },
+  handleChange: function (e) {
+      
   },
   submit: function(data) {
     // Reset fields back to default values
@@ -108,17 +134,27 @@ var observation = React.createClass({
             <FormControl.Feedback />
             <HelpBlock></HelpBlock>
         </FormGroup>
+        <FormGroup controlId="seaState">
+            <ControlLabel controlId="seaState">Sea State</ControlLabel>
+                <SelectBox id="seaState" onChange={this.handleChange} name="seaState" data={this.state.seaState} />
+            <FormControl.Feedback />
+            <HelpBlock></HelpBlock>
+        </FormGroup>
+        <FormGroup controlId="windForce">
+            <ControlLabel controlId="windForce">Wind Force</ControlLabel>
+                <SelectBox id="windForce" onChange={this.handleChange} name="windForce" data={this.state.windForce} />
+            <FormControl.Feedback />
+            <HelpBlock></HelpBlock>
+        </FormGroup>
         <FormGroup controlId="windDirection">
             <ControlLabel controlId="windDirection">Wind Direction</ControlLabel>
-            <Typeahead
-              required
-              labelKey="windDireciton"
-              onChange={this.handleChange}
-              options={this.state.windDirections}
-              id="windDirection"
-              allowNew={false}
-              multiple={false}
-            />
+                <SelectBox id="windDirection" onChange={this.handleChange} name="windDirection" data={this.state.windDirections} />
+            <FormControl.Feedback />
+            <HelpBlock></HelpBlock>
+        </FormGroup>
+        <FormGroup controlId="rainfall">
+            <ControlLabel controlId="rainfall">Rainfall</ControlLabel>
+                <SelectBox id="rainfall" onChange={this.handleChange} name="rainfall" data={this.state.rainfall} />
             <FormControl.Feedback />
             <HelpBlock></HelpBlock>
         </FormGroup>
@@ -126,8 +162,17 @@ var observation = React.createClass({
             <ControlLabel controlId="cloudCover">Cloud Cover</ControlLabel>
             <CloudCover
               id="cloudCover"
+              cloudCoverValue={this.state.cloudCover}
               required
             />
+            <FormControl.Feedback />
+            <HelpBlock></HelpBlock>
+        </FormGroup>
+        <FormGroup controlId="">
+            <ControlLabel controlId="exceptionalWeatherConditions">Recent Exceptional Weather Conditions</ControlLabel>
+                <FormControl componentClass="textarea" placeholder="textarea" value={this.state.exceptionalWeatherConditions}
+                placeholder="Any recent tidal, weather, or other unusual events (e.g. hevy rain shortly before survey, storm, heatwave, wind held tide higher than expected)"
+                onChange={this.handleChange} name="exceptionalWeatherConditions" />
             <FormControl.Feedback />
             <HelpBlock></HelpBlock>
         </FormGroup>
@@ -136,4 +181,4 @@ var observation = React.createClass({
   }
 })
 
-export default observation;
+export default Observation;
