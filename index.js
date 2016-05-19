@@ -12,6 +12,7 @@ import Admin from './js/Admin'
 import Surveys from './js/Surveys'
 import Home from './js/Home'
 import Observation from './js/Observation'
+import PhotoUpload from './js/PhotoUpload'
 
 render((
   <Router history={hashHistory}>
@@ -24,6 +25,7 @@ render((
       <Route path="/quadrat" component={Quadrat}/>
       <Route path="/admin" component={Admin}/>
       <Route path="/login" component={Login}/>
+      <Route path="/photoupload" component={PhotoUpload}/>
     </Route>
   </Router>
 ), document.getElementById('app'))

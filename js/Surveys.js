@@ -4,6 +4,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import config from "../config"
 import FieldDay from "./ModalFieldDay"
 import WorkingSurveyList from "./components/WorkingSurveyList"
+import SurveyMenu from './components/SurveyMenu'
 
 /*
 Get Survey Data
@@ -24,6 +25,7 @@ var Table = React.createClass({
   },
   handleSelect: function (row) {
     $.publish("selectFieldDay", {"location":row.description, "date":row.date});
+    this.props.onSelect(row);
   },
   BuildButtons: function(cell, row, enumObject){
     return <div className="btn-toolbar">
@@ -81,9 +83,9 @@ var ActiveSurvey = React.createClass({
     },
     render() {
         return ( 
-            <Panel heading={"Current Field Days"} type={"primary"}>
+            <Panel heading={"Current Survey Days"} type={"primary"}>
                 <button className="btn btn-primary" onClick={this.handleBtnClick}>Add</button>
-                <Table surveys={this.state.surveys} />
+                <Table surveys={this.state.surveys} onSelect={this.props.onSelect} />
                 <FieldDay ref="fieldDay" />
             </Panel>
         )
@@ -99,10 +101,21 @@ function priceFormatter(cell, row){
 
 */
 export default React.createClass({
-  render() {
-    return (<div>
-                <ActiveSurvey />
-                <WorkingSurveyList />
-            </div>)
-  }
+    getInitialState: function() {
+        return {selectedSurvey:""};
+    },  
+    onSurveySelected: function(survey) {
+        this.setState({selectedSurvey:survey.description});
+    },
+    render() {
+        return (<ol>
+                    <li>
+                        <ActiveSurvey onSelect={this.onSurveySelected} />
+                        <WorkingSurveyList selectedSurvey={this.state.selectedSurvey} />
+                    </li>
+                    <li>
+                        <SurveyMenu />
+                    </li>
+                </ol>)
+    }
 })

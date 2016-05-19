@@ -1,27 +1,18 @@
 import React from 'react'
 import $ from 'jquery'
-import { FormControl, Tabs, Tab } from 'react-bootstrap'
+import { FormControl, Button, Glyphicon } from 'react-bootstrap'
 import SurveyMenu from './SurveyMenu'
 
 var WorkingSurveyList = React.createClass({
-        handleSelect(eventKey) {
-        event.preventDefault();
-        alert("selected ${eventKey}");
+    handleClick: function (location, survey) {
+        alert(location + " " + survey);
     },
     render() {
         return (
-                <div>
-                    <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                        <Tab eventKey={1} title="Lower">
-                            <SurveyMenu />    
-                        </Tab>
-                        <Tab eventKey={2} title="Middle">
-                            <SurveyMenu />    
-                        </Tab>
-                        <Tab eventKey={3} title="Upper">
-                            <SurveyMenu />    
-                        </Tab>
-                    </Tabs>
+                <div className="well">
+                    <Button bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Lower")} bsSize="large">{this.props.selectedSurvey} Lower<Glyphicon className="pull-right" glyph="menu-right" /></Button>
+                    <Button bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Middle")} bsSize="large">{this.props.selectedSurvey} Middle<Glyphicon className="pull-right" glyph="menu-right" /></Button>
+                    <Button bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Upper")} bsSize="large">{this.props.selectedSurvey} Upper<Glyphicon className="pull-right" glyph="menu-right" /></Button>
                 </div>
             )
     }

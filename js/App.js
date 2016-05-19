@@ -32,7 +32,7 @@ export default React.createClass({
         <div className="selectedFieldDay"><DisplaySelectedFieldDay /></div>
         <ul className="nav nav-pills">
             <li className="active"><Link to="/home">Home</Link></li>
-            <li><Link to="/surveys">Field Days <span className="badge">{this.state.fieldDayCount}</span></Link></li>
+            <li><Link to="/surveys">Survey Days <span className="badge">{this.state.fieldDayCount}</span></Link></li>
             <li><Link to="/admin">Admin</Link></li>
             <li><Link to="/login">Login</Link></li>
         </ul>

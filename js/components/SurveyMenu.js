@@ -1,6 +1,6 @@
 import React from 'react'
 import $ from 'jquery'
-import { FormControl, Navbar, NavItem, Nav } from 'react-bootstrap'
+import { FormControl, Navbar, NavItem, Nav, Glyphicon } from 'react-bootstrap'
 
 var SurveyMenu = React.createClass({
     render() {
@@ -8,7 +8,8 @@ var SurveyMenu = React.createClass({
             <Navbar>
                 <Navbar.Header>
                     <Navbar.Brand>
-                    Surveys
+                    <Glyphicon glyph="menu-left" />
+                    <Glyphicon glyph="menu-left" />
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
@@ -17,7 +18,7 @@ var SurveyMenu = React.createClass({
                     <NavItem eventKey={2} href="#">Timed Search</NavItem>
                     <NavItem eventKey={2} href="#">Point Intercept</NavItem>
                     <NavItem eventKey={2} href="#">Species Qudrat Survey</NavItem>
-                    <NavItem eventKey={2} href="#">Add Photo's</NavItem>
+                    <NavItem eventKey={2} href="#/PhotoUpload">Add Photo's</NavItem>
                 </Nav>
             </Navbar>
           )
