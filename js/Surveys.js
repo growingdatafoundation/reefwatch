@@ -4,8 +4,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import config from "../config"
 import FieldDay from "./ModalFieldDay"
 import WorkingSurveyList from "./components/WorkingSurveyList"
-import SurveyMenu from './components/SurveyMenu'
-
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 /*
 Get Survey Data
 */
@@ -96,9 +95,7 @@ function priceFormatter(cell, row){
   return cell;
 }
 
-
 /*
-
 */
 export default React.createClass({
     getInitialState: function() {
@@ -108,14 +105,18 @@ export default React.createClass({
         this.setState({selectedSurvey:survey.description});
     },
     render() {
-        return (<ol>
-                    <li>
-                        <ActiveSurvey onSelect={this.onSurveySelected} />
-                        <WorkingSurveyList selectedSurvey={this.state.selectedSurvey} />
-                    </li>
-                    <li>
-                        <SurveyMenu />
-                    </li>
-                </ol>)
+        var path = this.props.location.pathname;
+        var segment = path.split('/')[1] || 'root';
+        return (
+            <div>
+                <div>
+                    <ActiveSurvey onSelect={this.onSurveySelected} />
+                </div>
+                <div>
+                    <WorkingSurveyList selectedSurvey={this.state.selectedSurvey} />
+                </div>
+                {this.props.children}
+            </div>
+        )
     }
 })
