@@ -14,6 +14,7 @@ import Home from './js/Home'
 import Observation from './js/Observation'
 import PhotoUpload from './js/PhotoUpload'
 import SurveyMenu from './js/SurveyMenu'
+import ExportData from './js/ExportData'
 
 var MockIndex = React.createClass({
   displayName: 'MockIndex',
@@ -37,6 +38,7 @@ render((
         </Route>
       </Route>
       <Route path="/admin" component={Admin}/>
+      <Route path="/export" component={ExportData}/>
       <Route path="/login" component={Login}/>
     </Route>
   </Router>
