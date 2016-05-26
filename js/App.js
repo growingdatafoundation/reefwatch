@@ -34,6 +34,7 @@ export default React.createClass({
             <li className="active"><Link to="/home">Home</Link></li>
             <li><Link to="/surveys">Survey Days <span className="badge">{this.state.fieldDayCount}</span></Link></li>
             <li><Link to="/admin">Admin</Link></li>
+            <li><Link to="/export">Export Data</Link></li>
             <li><Link to="/login">Login</Link></li>
         </ul>
         <div>

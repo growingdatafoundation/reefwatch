@@ -1,26 +1,13 @@
 import React from 'react'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-
 import config from "../config"
 import FieldDay from "./ModalFieldDay"
 import WorkingSurveyList from "./components/WorkingSurveyList"
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 /*
 Get Survey Data
 */
-
-const selectRowProp = {
-  mode: 'radio',
-  clickToSelect: true  // enable click to select
-};
-
-
-/*
-
-*/
 var Table = React.createClass({
-  handleComplete: function (id) {
-    alert(id);  
+  handleComplete: function (row) {
   },
   handleSelect: function (row) {
     $.publish("selectFieldDay", {"location":row.description, "date":row.date});
@@ -43,9 +30,6 @@ var Table = React.createClass({
   )}
 });
 
-/* 
-
-*/
 var Panel = React.createClass({
     render() {
         return (<div className={"panel panel-"+this.props.type}>
@@ -115,7 +99,9 @@ export default React.createClass({
                 <div>
                     <WorkingSurveyList selectedSurvey={this.state.selectedSurvey} />
                 </div>
-                {this.props.children}
+                <div  className="contentPage">
+                    {this.props.children}
+                </div>
             </div>
         )
     }

@@ -4,7 +4,7 @@ export default React.createClass({
     render() {                
         return (  
             <div>
-                <h2>Quadrat</h2>
+                <h2>Point Intercept</h2>
             </div>
         )
     }

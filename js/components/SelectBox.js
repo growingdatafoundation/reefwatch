@@ -19,7 +19,7 @@ var SelectBox = React.createClass({
                     onChange={this.props.onChange}>
                     {
                         this.props.data.map(function(item) {
-                            return <option value={item[fields[0]]}>{item[fields[1]]}</option>;
+                            return <option key={item[fields[0]]} value={item[fields[0]]}>{item[fields[1]]}</option>;
                         })
                     }
                 </FormControl>

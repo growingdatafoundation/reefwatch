@@ -1,8 +1,12 @@
 import React from 'react'
 
 export default React.createClass({
-  render() {
-    return <div>Login</div>
-  }
-})
+    render() {                
+        return (  
+            <div>
+                <h2>Login</h2>
+            </div>
+        )
+    }
+})    
 

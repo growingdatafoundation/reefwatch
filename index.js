@@ -15,25 +15,18 @@ import Observation from './js/Observation'
 import PhotoUpload from './js/PhotoUpload'
 import SurveyMenu from './js/SurveyMenu'
 import ExportData from './js/ExportData'
-
-var MockIndex = React.createClass({
-  displayName: 'MockIndex',
-
-  render: function () {
-    return React.createElement('div', null);
-  }
-});
+import PointIntercept from './js/PointIntercept'
 
 render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <Route path="/home" component={Home}/>
       <Route path="/surveys" component={Surveys}>
-        <IndexRoute component={MockIndex} />
         <Route path="/surveymenu" component={SurveyMenu}>
           <Route path="/observation" component={Observation}/>
           <Route path="/timed" component={TimedSearch}/>
           <Route path="/quadrat" component={Quadrat}/>
+          <Route path="/intercept" component={PointIntercept}/>
           <Route path="/photoupload" component={PhotoUpload}/>
         </Route>
       </Route>
