@@ -2,15 +2,24 @@ import React from 'react'
 import config from "../config"
 import FieldDay from "./ModalFieldDay"
 import WorkingSurveyList from "./components/WorkingSurveyList"
+import Panel from "./components/Panel"
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+
 /*
+Author: Nathan Hill
+
+Description:
 Get Survey Data
+
+*/
+
+/*
 */
 var Table = React.createClass({
   handleComplete: function (row) {
   },
   handleSelect: function (row) {
-    $.publish("selectFieldDay", {"location":row.description, "date":row.date});
+    $.publish("selectFieldDay", {location: row.description, date: row.date});
     this.props.onSelect(row);
   },
   BuildButtons: function(cell, row, enumObject){
@@ -30,16 +39,8 @@ var Table = React.createClass({
   )}
 });
 
-var Panel = React.createClass({
-    render() {
-        return (<div className={"panel panel-"+this.props.type}>
-                    <div className="panel-heading">{this.props.heading}</div>
-                    <div className="panel-body">{this.props.children}</div>
-                </div>)
-    }
-})
-
-
+/*
+*/
 var ActiveSurvey = React.createClass({
     handleBtnClick: function(e) {
         this.refs.fieldDay.open();
@@ -75,10 +76,6 @@ var ActiveSurvey = React.createClass({
     }
 })
 
-function priceFormatter(cell, row){
-  return cell;
-}
-
 /*
 */
 export default React.createClass({
@@ -86,22 +83,34 @@ export default React.createClass({
         return {selectedSurvey:""};
     },  
     onSurveySelected: function(survey) {
-        this.setState({selectedSurvey:survey.description});
+        this.setState({selectedSurvey:survey});
     },
     render() {
         var path = this.props.location.pathname;
         var segment = path.split('/')[1] || 'root';
+        
         return (
             <div>
-                <div>
-                    <ActiveSurvey onSelect={this.onSurveySelected} />
-                </div>
-                <div>
-                    <WorkingSurveyList selectedSurvey={this.state.selectedSurvey} />
-                </div>
-                <div  className="contentPage">
-                    {this.props.children}
-                </div>
+                {this.state.selectedSurvey ? (
+                    <div>
+                        <div>
+                            <ActiveSurvey onSelect={this.onSurveySelected} />
+                        </div>
+                        <div>
+                            <WorkingSurveyList selectedSurvey={this.state.selectedSurvey} />
+                        </div>
+                        <div  className="contentPage">
+                            {this.props.children}
+                        </div>
+                    </div>
+                    ): // eslint-disable-line  operator-linebreak 
+                    <div>
+                        <div>
+                            <ActiveSurvey onSelect={this.onSurveySelected} />
+                        </div>
+                        <h3>Please select a survey day to to work on.</h3>
+                    </div>    
+                }
             </div>
         )
     }

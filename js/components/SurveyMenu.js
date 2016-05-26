@@ -1,12 +1,42 @@
 import React from 'react'
 import $ from 'jquery'
 import { Button, Navbar, NavItem, Nav, Glyphicon } from 'react-bootstrap'
+import config from "../../config"
 
 var SurveyMenu = React.createClass({
     closePanel: function () {
         $("div.contentPage").animate({
             left: '100%'
         });        
+    },
+    loadSurvey: function () {
+        var that = this;
+        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days/"+this.props.selectedFieldDayID+"?num="+Math.random(), function (result) {
+            that.setState({
+                survey: result
+            });
+            alert("Loaded")
+        })
+        .done(function() {
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) { 
+        })
+        .always(function() {
+        });
+    },
+    getInitialState: function() {
+        return {"survey":{}};
+    },  
+    componentDidMount: function() {
+        this.loadSurvey();
+    },
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
+    },
+    componentDidUpdate: function (prevProps, prevState) {
+        if(prevProps.selectedFieldDayID!=this.props.selectedFieldDayID) {
+            this.loadSurvey();
+        }
     },
     render() {
         return (
@@ -22,6 +52,9 @@ var SurveyMenu = React.createClass({
                     <NavItem eventKey={3} href="#/intercept">Point Intercept</NavItem>
                     <NavItem eventKey={4} href="#/Quadrat">Species Qudrat Survey</NavItem>
                     <NavItem eventKey={5} href="#/PhotoUpload">Add Photo's</NavItem>
+                </Nav>
+                <Nav pullRight>
+                    <NavItem eventKey={6} href="#">{this.state.survey.description}</NavItem>
                 </Nav>
             </Navbar>
           )

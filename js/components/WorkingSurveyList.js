@@ -10,11 +10,12 @@ var WorkingSurveyList = React.createClass({
         });
     },
     render() {
+        var link = "#/surveymenu/"+this.props.selectedSurvey.id;
         return (
                 <div className="well">
-                    <Button href="#/surveymenu" bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Lower")} bsSize="large">{this.props.selectedSurvey} Lower<Glyphicon className="pull-right" glyph="menu-right" /></Button>
-                    <Button href="#/surveymenu" bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Middle")} bsSize="large">{this.props.selectedSurvey} Middle<Glyphicon className="pull-right" glyph="menu-right" /></Button>
-                    <Button href="#/surveymenu" bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Upper")} bsSize="large">{this.props.selectedSurvey} Upper<Glyphicon className="pull-right" glyph="menu-right" /></Button>
+                    <Button href={link} bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Lower")} bsSize="large">{this.props.selectedSurvey.description} Lower<Glyphicon className="pull-right" glyph="menu-right" /></Button>
+                    <Button href={link} bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Middle")} bsSize="large">{this.props.selectedSurvey.description} Middle<Glyphicon className="pull-right" glyph="menu-right" /></Button>
+                    <Button href={link} bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Upper")} bsSize="large">{this.props.selectedSurvey.description} Upper<Glyphicon className="pull-right" glyph="menu-right" /></Button>
                 </div>
             )
     }

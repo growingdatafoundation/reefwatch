@@ -2,8 +2,14 @@ import React from 'react'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
 export default React.createClass({
-    cellEditProp: function () {
+    beforeSave: function (row, cellName, cellValue) {
       
+    },
+    validateNumber: function (value) {
+        if (isNaN(value)) {
+            return 'Please only enter numbers.'
+        }
+        return true;
     },
     render() {                
         var species = [
@@ -65,13 +71,13 @@ export default React.createClass({
         return (  
             <div>
                 <h2>Timed Search</h2>
-                <BootstrapTable data={data} cellEdit={{mode: "click"}}>
-                  <TableHeaderColumn dataField="species" isKey={true}>Species</TableHeaderColumn>
-                  <TableHeaderColumn dataField="submerged">Submerged</TableHeaderColumn>
-                  <TableHeaderColumn dataField="exposed">Exposed</TableHeaderColumn>
-                  <TableHeaderColumn dataField="crevice">In a Crevice</TableHeaderColumn>
-                  <TableHeaderColumn dataField="sandy">On a Sandy Patch</TableHeaderColumn>
-                  <TableHeaderColumn dataField="other">Other?</TableHeaderColumn>
+                <BootstrapTable data={data} cellEdit={{mode: "click", blurToSave: true, beforeSaveCell: this.beforeSave}}>
+                  <TableHeaderColumn width="30%"  dataField="species" isKey={true}>Species</TableHeaderColumn>
+                  <TableHeaderColumn width="10%" editable={{validator: this.validateNumber}} dataField="submerged">Submerged</TableHeaderColumn>
+                  <TableHeaderColumn width="10%" dataField="exposed">Exposed</TableHeaderColumn>
+                  <TableHeaderColumn width="10%" dataField="crevice">In a Crevice</TableHeaderColumn>
+                  <TableHeaderColumn width="10%" dataField="sandy">On a Sandy Patch</TableHeaderColumn>
+                  <TableHeaderColumn width="30%" dataField="other">Other?</TableHeaderColumn>
                 </BootstrapTable>
                 
             </div>

@@ -20,9 +20,11 @@ import PointIntercept from './js/PointIntercept'
 render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
+      <IndexRoute component={Home} />
       <Route path="/home" component={Home}/>
       <Route path="/surveys" component={Surveys}>
-        <Route path="/surveymenu" component={SurveyMenu}>
+        <Route path="/surveymenu/:fieldDay" component={SurveyMenu}>
+          <IndexRoute component={Observation} />
           <Route path="/observation" component={Observation}/>
           <Route path="/timed" component={TimedSearch}/>
           <Route path="/quadrat" component={Quadrat}/>
