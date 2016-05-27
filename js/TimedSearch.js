@@ -72,12 +72,12 @@ export default React.createClass({
             <div>
                 <h2>Timed Search</h2>
                 <BootstrapTable data={data} cellEdit={{mode: "click", blurToSave: true, beforeSaveCell: this.beforeSave}}>
-                  <TableHeaderColumn width="30%"  dataField="species" isKey={true}>Species</TableHeaderColumn>
-                  <TableHeaderColumn width="10%" editable={{validator: this.validateNumber}} dataField="submerged">Submerged</TableHeaderColumn>
-                  <TableHeaderColumn width="10%" dataField="exposed">Exposed</TableHeaderColumn>
-                  <TableHeaderColumn width="10%" dataField="crevice">In a Crevice</TableHeaderColumn>
-                  <TableHeaderColumn width="10%" dataField="sandy">On a Sandy Patch</TableHeaderColumn>
-                  <TableHeaderColumn width="30%" dataField="other">Other?</TableHeaderColumn>
+                  <TableHeaderColumn width="20%" dataField="species" isKey={true}>Species</TableHeaderColumn>
+                  <TableHeaderColumn width="15%" editable={{validator: this.validateNumber}} dataField="submerged">Submerged</TableHeaderColumn>
+                  <TableHeaderColumn width="15%" editable={{validator: this.validateNumber}} dataField="exposed">Exposed</TableHeaderColumn>
+                  <TableHeaderColumn width="15%" editable={{validator: this.validateNumber}} dataField="crevice">In a Crevice</TableHeaderColumn>
+                  <TableHeaderColumn width="15%" editable={{validator: this.validateNumber}} dataField="sandy">On a Sandy Patch</TableHeaderColumn>
+                  <TableHeaderColumn width="20%" dataField="other">Other?</TableHeaderColumn>
                 </BootstrapTable>
                 
             </div>

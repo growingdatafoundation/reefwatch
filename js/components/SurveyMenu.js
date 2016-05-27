@@ -15,7 +15,6 @@ var SurveyMenu = React.createClass({
             that.setState({
                 survey: result
             });
-            alert("Loaded")
         })
         .done(function() {
         })
