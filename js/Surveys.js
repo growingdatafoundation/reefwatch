@@ -68,7 +68,7 @@ var ActiveSurvey = React.createClass({
     render() {
         return ( 
             <Panel heading={"Current Survey Days"} type={"primary"}>
-                <button className="btn btn-primary" onClick={this.handleBtnClick}>Add</button>
+                <button className="btn btn-primary" style={{"marginLeft": "10px"}} onClick={this.handleBtnClick}>Add</button>
                 <Table surveys={this.state.surveys} onSelect={this.props.onSelect} />
                 <FieldDay ref="fieldDay" />
             </Panel>

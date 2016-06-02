@@ -53,7 +53,7 @@ var CloudCover = React.createClass({
   },
   render() {
     return (
-            <div>
+            <div className="row">
                 <div className="col-xs-4">
                     <SelectBox  onChange={this.handleCloudCoverChange} data={this.state.cloudCover} />
                 </div>

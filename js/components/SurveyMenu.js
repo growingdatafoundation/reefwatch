@@ -11,17 +11,19 @@ var SurveyMenu = React.createClass({
     },
     loadSurvey: function () {
         var that = this;
-        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days/"+this.props.selectedFieldDayID+"?num="+Math.random(), function (result) {
-            that.setState({
-                survey: result
+        if(this.props.selectedFieldDayID) {
+            this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days/"+this.props.selectedFieldDayID+"?num="+Math.random(), function (result) {
+                that.setState({
+                    survey: result
+                });
+            })
+            .done(function() {
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) { 
+            })
+            .always(function() {
             });
-        })
-        .done(function() {
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) { 
-        })
-        .always(function() {
-        });
+        }
     },
     getInitialState: function() {
         return {"survey":{}};

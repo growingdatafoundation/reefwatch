@@ -7,7 +7,7 @@ var WorkingSurveyList = React.createClass({
     handleClick: function (location, survey) {
         $("div.contentPage").animate({
             left: '0px'
-        });
+        });       
     },
     render() {
         var link = "#/surveymenu/"+this.props.selectedSurvey.id;

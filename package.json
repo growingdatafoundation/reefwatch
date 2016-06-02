@@ -53,6 +53,7 @@
     "npm": "^3.8.8",
     "path": "^0.12.7",
     "react-addons-test-utils": "^0.14.8",
+    "react-bootstrap-typeahead": "^0.4.1",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
     "underscore": "^1.8.3",

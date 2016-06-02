@@ -69,7 +69,6 @@ var Observation = React.createClass({
       return initialState;
   },
   handleTime: function (timeValue) {
-    alert(timeValue);  
   },
   handleChange: function (e) {
       
@@ -80,103 +79,106 @@ var Observation = React.createClass({
   },
   render() {
     return (
-      <form id="formObservation" data-toggle="validator" onSubmit={this.submit} role="form">
-        <FormGroup controlId="time">
-          <ControlLabel controlId="time">Observation Time</ControlLabel>
-          <DateTimeField
-              mode="time"
-              id="time"
-              inputProps={{required:"required", name:"time"}}
-              onChange={this.handleTime}
-          />
-          <FormControl.Feedback />
-          <HelpBlock></HelpBlock>
-        </FormGroup>
-        <FormGroup controlId="otherLocation">
-            <ControlLabel controlId="otherLocation">Other Location</ControlLabel>
-            <FormControl
-                required
-                type="text"
-                value={this.state.otherLocation}
-                placeholder=""
-                onChange={this.handleChange}
-                id="otherLocation"
-                name="otherLocation"
-            />
-            <FormControl.Feedback />
-            <HelpBlock></HelpBlock>
-        </FormGroup>
-        <FormGroup controlId="volunteers">
-            <ControlLabel controlId="volunteers">Volunteers</ControlLabel>
-            <Typeahead
-              required
-              labelKey="volunteer"
-              onChange={this.handleChange}
-              options={this.state.volunteers}
-              id="volunteers"
-              allowNew={true}
-              multiple={true}
-            />
-            <FormControl.Feedback />
-            <HelpBlock></HelpBlock>
-        </FormGroup>
-        <FormGroup controlId="weatherComment">
-            <ControlLabel controlId="weatherComment">Weather Comment </ControlLabel>
-            <FormControl
-                required
-                type="text"
-                value={this.state.weatherComment}
-                placeholder="weatherComment"
-                onChange={this.handleChange}
-                id="weatherComment"
-                name="weatherComment"
-            />
-            <FormControl.Feedback />
-            <HelpBlock></HelpBlock>
-        </FormGroup>
-        <FormGroup controlId="seaState">
-            <ControlLabel controlId="seaState">Sea State</ControlLabel>
-                <SelectBox id="seaState" onChange={this.handleChange} name="seaState" data={this.state.seaState} />
-            <FormControl.Feedback />
-            <HelpBlock></HelpBlock>
-        </FormGroup>
-        <FormGroup controlId="windForce">
-            <ControlLabel controlId="windForce">Wind Force</ControlLabel>
-                <SelectBox id="windForce" onChange={this.handleChange} name="windForce" data={this.state.windForce} />
-            <FormControl.Feedback />
-            <HelpBlock></HelpBlock>
-        </FormGroup>
-        <FormGroup controlId="windDirection">
-            <ControlLabel controlId="windDirection">Wind Direction</ControlLabel>
-                <SelectBox id="windDirection" onChange={this.handleChange} name="windDirection" data={this.state.windDirections} />
-            <FormControl.Feedback />
-            <HelpBlock></HelpBlock>
-        </FormGroup>
-        <FormGroup controlId="rainfall">
-            <ControlLabel controlId="rainfall">Rainfall</ControlLabel>
-                <SelectBox id="rainfall" onChange={this.handleChange} name="rainfall" data={this.state.rainfall} />
-            <FormControl.Feedback />
-            <HelpBlock></HelpBlock>
-        </FormGroup>
-        <FormGroup controlId="cloudCover">
-            <ControlLabel controlId="cloudCover">Cloud Cover</ControlLabel>
-            <CloudCover
-              id="cloudCover"
-              cloudCoverValue={this.state.cloudCover}
-              required
-            />
-            <FormControl.Feedback />
-            <HelpBlock></HelpBlock>
-        </FormGroup>
-        <FormGroup controlId="">
-            <ControlLabel controlId="exceptionalWeatherConditions">Recent Exceptional Weather Conditions</ControlLabel>
-                <FormControl componentClass="textarea" placeholder="textarea" value={this.state.exceptionalWeatherConditions}
-                placeholder="Any recent tidal, weather, or other unusual events (e.g. hevy rain shortly before survey, storm, heatwave, wind held tide higher than expected)"
-                onChange={this.handleChange} name="exceptionalWeatherConditions" />
-            <FormControl.Feedback />
-            <HelpBlock></HelpBlock>
-        </FormGroup>
-      </form>
+        <div className="container">
+            <h2>Observation</h2>
+            <form id="formObservation" data-toggle="validator" onSubmit={this.submit} role="form">
+                <FormGroup controlId="time">
+                <ControlLabel controlId="time">Observation Time</ControlLabel>
+                <DateTimeField
+                    mode="time"
+                    id="time"
+                    inputProps={{required:"required", name:"time"}}
+                    onChange={this.handleTime}
+                />
+                <FormControl.Feedback />
+                <HelpBlock></HelpBlock>
+                </FormGroup>
+                <FormGroup controlId="otherLocation">
+                    <ControlLabel controlId="otherLocation">Other Location</ControlLabel>
+                    <FormControl
+                        required
+                        type="text"
+                        value={this.state.otherLocation}
+                        placeholder=""
+                        onChange={this.handleChange}
+                        id="otherLocation"
+                        name="otherLocation"
+                    />
+                    <FormControl.Feedback />
+                    <HelpBlock></HelpBlock>
+                </FormGroup>
+                <FormGroup controlId="volunteers">
+                    <ControlLabel controlId="volunteers">Volunteers</ControlLabel>
+                    <Typeahead
+                    required
+                    labelKey="volunteer"
+                    onChange={this.handleChange}
+                    options={this.state.volunteers}
+                    id="volunteers"
+                    allowNew={true}
+                    multiple={true}
+                    />
+                    <FormControl.Feedback />
+                    <HelpBlock></HelpBlock>
+                </FormGroup>
+                <FormGroup controlId="weatherComment">
+                    <ControlLabel controlId="weatherComment">Weather Comment </ControlLabel>
+                    <FormControl
+                        required
+                        type="text"
+                        value={this.state.weatherComment}
+                        placeholder="weatherComment"
+                        onChange={this.handleChange}
+                        id="weatherComment"
+                        name="weatherComment"
+                    />
+                    <FormControl.Feedback />
+                    <HelpBlock></HelpBlock>
+                </FormGroup>
+                <FormGroup controlId="seaState">
+                    <ControlLabel controlId="seaState">Sea State</ControlLabel>
+                        <SelectBox id="seaState" onChange={this.handleChange} name="seaState" data={this.state.seaState} />
+                    <FormControl.Feedback />
+                    <HelpBlock></HelpBlock>
+                </FormGroup>
+                <FormGroup controlId="windForce">
+                    <ControlLabel controlId="windForce">Wind Force</ControlLabel>
+                        <SelectBox id="windForce" onChange={this.handleChange} name="windForce" data={this.state.windForce} />
+                    <FormControl.Feedback />
+                    <HelpBlock></HelpBlock>
+                </FormGroup>
+                <FormGroup controlId="windDirection">
+                    <ControlLabel controlId="windDirection">Wind Direction</ControlLabel>
+                        <SelectBox id="windDirection" onChange={this.handleChange} name="windDirection" data={this.state.windDirections} />
+                    <FormControl.Feedback />
+                    <HelpBlock></HelpBlock>
+                </FormGroup>
+                <FormGroup controlId="rainfall">
+                    <ControlLabel controlId="rainfall">Rainfall</ControlLabel>
+                        <SelectBox id="rainfall" onChange={this.handleChange} name="rainfall" data={this.state.rainfall} />
+                    <FormControl.Feedback />
+                    <HelpBlock></HelpBlock>
+                </FormGroup>
+                <FormGroup controlId="cloudCover">
+                    <ControlLabel controlId="cloudCover">Cloud Cover</ControlLabel>
+                    <CloudCover
+                    id="cloudCover"
+                    cloudCoverValue={this.state.cloudCover}
+                    required
+                    />
+                    <FormControl.Feedback />
+                    <HelpBlock></HelpBlock>
+                </FormGroup>
+                <FormGroup controlId="">
+                    <ControlLabel controlId="exceptionalWeatherConditions">Recent Exceptional Weather Conditions</ControlLabel>
+                        <FormControl componentClass="textarea" placeholder="textarea" value={this.state.exceptionalWeatherConditions}
+                        placeholder="Any recent tidal, weather, or other unusual events (e.g. hevy rain shortly before survey, storm, heatwave, wind held tide higher than expected)"
+                        onChange={this.handleChange} name="exceptionalWeatherConditions" />
+                    <FormControl.Feedback />
+                    <HelpBlock></HelpBlock>
+                </FormGroup>
+            </form>
+        </div>
     );
   }
 })

@@ -69,9 +69,9 @@ export default React.createClass({
 
 
         return (  
-            <div>
+            <div className="container">
                 <h2>Timed Search</h2>
-                <BootstrapTable data={data} cellEdit={{mode: "click", blurToSave: true, beforeSaveCell: this.beforeSave}}>
+                <BootstrapTable data={data} striped={true} cellEdit={{mode: "click", blurToSave: true, beforeSaveCell: this.beforeSave}}>
                   <TableHeaderColumn width="20%" dataField="species" isKey={true}>Species</TableHeaderColumn>
                   <TableHeaderColumn width="15%" editable={{validator: this.validateNumber}} dataField="submerged">Submerged</TableHeaderColumn>
                   <TableHeaderColumn width="15%" editable={{validator: this.validateNumber}} dataField="exposed">Exposed</TableHeaderColumn>
