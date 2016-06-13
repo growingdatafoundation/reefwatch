@@ -45,8 +45,9 @@ var fieldDay =  React.createClass({
         var state = this.state;
         var formData = new FormData();
         for ( var key in state.fieldDay ) {
-            formData.append(key, state.fieldDay[key]);
+            formData[key] = state.fieldDay[key];
         }
+        console.log(formData);
         var that = this;
         $.ajax({
             url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days?num="+Math.random(),
@@ -127,7 +128,7 @@ var fieldDay =  React.createClass({
                         </FormGroup>
                         <FormGroup controlId="leader">
                             <ControlLabel controlId="leader">Leader</ControlLabel>
-                                <SelectBox id="leader" fields={["id", "leader"]} onChange={this.handleChange} name="location_id" data={this.state.leaders} />
+                                <SelectBox id="leader" fields={["id", "leader"]} onChange={this.handleChange} name="leader" data={this.state.leaders} />
                             <FormControl.Feedback />
                             <HelpBlock></HelpBlock>
                         </FormGroup>

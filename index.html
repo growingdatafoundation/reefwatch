@@ -18,18 +18,60 @@
             z-index: 1000;
         }
         
-        .verticalText {
-            -moz-transform: rotate(90deg);
-            -webkit-transform: rotate(90deg) ;
-            -o-transform: rotate(90deg) ;
-            -ms-transform: rotate(90deg) ;
-            transform: rotate(90deg);
-            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
-            width: auto;
-            min-width: 0;
-            display: table;
-            height: auto;
+        
+        /* START001: Needed for vertical text in tables */
+
+        th.rotate {
+            /* Something you can count on */
+            height: 140px;
+            white-space: nowrap;
         }
+
+        th.rotate > div {
+            transform: 
+                /* Magic Numbers */
+                translate(25px, 51px)
+                /* 45 is really 360 - 45 */
+                rotate(315deg);
+            width: 30px;
+        }
+        th.rotate > div > span {
+            border-bottom: 1px solid #ccc;
+            padding: 5px 10px;
+        }
+
+        .table-header-rotated {
+            border-collapse: collapse;
+        }
+        .csstransforms .table-header-rotated td {
+            width: 30px;
+        }
+        .no-csstransforms .table-header-rotated th {
+            padding: 5px 10px;
+        }
+        .table-header-rotated td {
+            text-align: center;
+            padding: 10px 5px;
+            border: 1px solid #ccc;
+        }
+        .csstransforms .table-header-rotated th.rotate {
+            height: 140px;
+            white-space: nowrap;
+        }
+        .csstransforms .table-header-rotated th.rotate > div {
+            -webkit-transform: translate(25px, 51px) rotate(315deg);
+                    transform: translate(25px, 51px) rotate(315deg);
+            width: 30px;
+        }
+        .csstransforms .table-header-rotated th.rotate > div > span {
+            border-bottom: 1px solid #ccc;
+            padding: 5px 10px;
+        }
+        .table-header-rotated th.row-header {
+            padding: 0 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        /* END001 */
         
     </style>
 </head>

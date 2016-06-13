@@ -34,7 +34,6 @@ render((
       </Route>
       <Route path="/admin" component={Admin}/>
       <Route path="/export" component={ExportData}/>
-      <Route path="/login" component={Login}/>
     </Route>
   </Router>
 ), document.getElementById('app'))
