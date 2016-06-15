@@ -6,6 +6,7 @@ module.exports = {
     output: {
         filename: 'bundle.js'
     },
+    headers: { "Access-Control-Allow-Origin": "*"},
     module: {
         loaders: [
             { test: /\.js$/, exclude: /node_modules/,  loader: 'babel-loader?presets[]=es2015&presets[]=react' }, //include: [ path.resolve("./node_modules/form-generator-react/dist") ],

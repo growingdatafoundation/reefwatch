@@ -13,12 +13,12 @@ var gridRow = React.createClass({
                             <tr key={index}> 
                                 {
                                     item.row.map(function(row, rowIndex) {
-                                        return <GridRowCell data={row} controlType={this.props.data.columnData[0].controlType} />;
-                                    })
+                                        return <GridRowCell data={row} controlType={this.props.data.columnData[rowIndex].controlType} />;
+                                    }, this)
                                 }
                             </tr>
                         );
-                    })
+                    }, this)
                 }
                 </tbody>
             )

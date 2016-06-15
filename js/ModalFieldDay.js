@@ -45,15 +45,14 @@ var fieldDay =  React.createClass({
         var state = this.state;
         var formData = new FormData();
         for ( var key in state.fieldDay ) {
-            formData[key] = state.fieldDay[key];
+            formData.append(key, state.fieldDay[key]);
         }
-        console.log(formData);
         var that = this;
         $.ajax({
-            url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days?num="+Math.random(),
+            url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days",
             data        : formData,
             processData : false,
-            contentType : false,
+            contentType: false,
             type: 'POST'
         }).done(function(data){
             that.setState({ showModal: false });

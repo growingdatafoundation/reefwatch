@@ -23,17 +23,15 @@
 
         th.rotate {
             /* Something you can count on */
-            height: 140px;
+            height: 100px;
             white-space: nowrap;
         }
 
         th.rotate > div {
             transform: 
-                /* Magic Numbers */
-                translate(25px, 51px)
                 /* 45 is really 360 - 45 */
                 rotate(315deg);
-            width: 30px;
+                width: 50px;
         }
         th.rotate > div > span {
             border-bottom: 1px solid #ccc;
@@ -44,7 +42,7 @@
             border-collapse: collapse;
         }
         .csstransforms .table-header-rotated td {
-            width: 30px;
+            width: 50px;
         }
         .no-csstransforms .table-header-rotated th {
             padding: 5px 10px;
@@ -59,8 +57,8 @@
             white-space: nowrap;
         }
         .csstransforms .table-header-rotated th.rotate > div {
-            -webkit-transform: translate(25px, 51px) rotate(315deg);
-                    transform: translate(25px, 51px) rotate(315deg);
+            -webkit-transform: rotate(315deg);
+                    transform: rotate(315deg);
             width: 30px;
         }
         .csstransforms .table-header-rotated th.rotate > div > span {
@@ -89,6 +87,30 @@
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="./node_modules/react-bootstrap-table/dist/react-bootstrap-table.min.js"></script>
+<script>
+    function GetVendorPrefix(arrayOfPrefixes) {
+
+    var tmp = document.createElement("div");
+    var result = "";
+
+    for (var i = 0; i < arrayOfPrefixes.length; ++i) {
+
+    if (typeof tmp.style[arrayOfPrefixes[i]] != 'undefined'){
+        result = arrayOfPrefixes[i];
+        break;
+    }
+    else {
+        result = null;
+    }
+    
+    }
+
+    return result;
+    }
+    
+    var transformPrefix = GetVendorPrefix(["transform", "msTransform", "MozTransform", "WebkitTransform", "OTransform"]);
+
+</script>
 </body>
 </html>
 

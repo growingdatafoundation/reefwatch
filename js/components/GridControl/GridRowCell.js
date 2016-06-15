@@ -4,18 +4,25 @@ import { Modal, Button, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Ch
 
 var gridRowCell = React.createClass({
     buildControl: function(controlType) {
-        alert(controlType);
         var result = "";
         switch(controlType) {
             case "text":
                 result = <FormControl
-                        type="text"
-                        value={this.props.value} />;
+                            type="text"
+                            value={this.props.value} />;
                 break;
             case "display":
                 result = this.props.value;
                 break;
             case "radio":
+                result = <FormControl
+                            type="radio"
+                            value={this.props.value} />;
+                break;
+            case "check":
+                result = <FormControl
+                            type="checkbox"
+                            value={this.props.value} />;
                 break;
             default:
                 break;

@@ -6,7 +6,7 @@ import GridRow from './GridRow'
 var grid = React.createClass({
     render() {
         return (
-                <table className="table-header-rotated">
+                <table ref="gridTable" className="table-header-rotated">
                     <GridHeaderRow data={this.props.data.columnData} />
                     <GridRow data={this.props.data} />
                 </table>
