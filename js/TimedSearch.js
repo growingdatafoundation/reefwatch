@@ -1,7 +1,58 @@
 import React from 'react'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import Grid from './components/GridControl/Grid'
 
 export default React.createClass({
+    getInitialState: function() {
+        var species = [
+          {value: 1, display: "Rock Crab / Reef Crab"},
+          {value: 2, display: "Pebble Crab"},
+          {value: 3, display: "Crab Other"},
+          {value: 4, display: "Anemones"},
+          {value: 5, display: "Nerita atramentosa"},
+          {value: 6, display: "Austrocochlea spp."},
+          {value: 7, display: "Bembicium spp."},
+          {value: 8, display: "Lepsiella spp."},
+          {value: 9, display: "Checkerboard snail"},
+          {value: 10, display: "True limpet >5 mm"},
+          {value: 11, display: "Siphon limpets"},
+          {value: 12, display: "Rock whelk"},
+          {value: 13, display: "Barnacles"},
+          {value: 14, display: "Mussels"},
+          {value: 15, display: "Tube worms"},
+          {value: 16, display: "Nudibranchs"},
+          {value: 17, display: "Sea stars"},
+          {value: 18, display: "Chitons"},
+          {value: 19, display: "Elephant snail"},
+          {value: 20, display: "Sea centipede"},
+          {value: 21, display: "Sea hare"},
+          {value: 22, display: "Feral marine species"},
+          {value: 23, display: "Marine debris - plastic"},
+          {value: 24, display: "Marine debris - non-plastic"},
+          {value: 25, display: "Other"}
+        ];
+        
+        return { 
+            columnData: [{ columnHeaderText: "species", IsVertical: false, controlType: "select", data: species, IsRowHeader: true }, 
+                            { columnHeaderText: "submerged (in water)", IsVertical: true, controlType: "number"}, 
+                            { columnHeaderText: "exposed", IsVertical: true, controlType: "number"}, 
+                            { columnHeaderText: "In a crevice", IsVertical: true, controlType: "number"}, 
+                            { columnHeaderText: "On a sandy patch", IsVertical: true, controlType: "number"}, 
+                            { columnHeaderText: "other?", IsVertical: false, controlType: "text"}, 
+                          ],
+            rowData: [ 
+                { 
+                    row: [
+                        { value: "Species"},   
+                        { value: "0"},   
+                        { value: "0"},   
+                        { value: "0"},   
+                        { value: "0"},   
+                        { value: "0"}
+                    ]
+                }
+            ]};
+    },  
     beforeSave: function (row, cellName, cellValue) {
       
     },
@@ -11,75 +62,37 @@ export default React.createClass({
         }
         return true;
     },
+    addRow: function () {
+        var rowData = this.state.rowData;
+        var row = { 
+                    row: [
+                        { value: "test"},   
+                        { value: "0"},   
+                        { value: "0"},   
+                        { value: "0"},   
+                        { value: "0"},   
+                        { value: "0"}
+                    ]
+                };
+        rowData.push(row);
+        this.setState({rowData: rowData});
+
+    },
     render() {                
-        var species = [
-          {id: 1, atlas: "[11cabb79-55f7-4bb0-900f-199d48d3e9ac]", species: "Rock Crab / Reef Crab"},
-          {id: 2, atlas: "[2fa1a3ed-e1ce-421f-8075-12246d90b03e,a208f58d-e5b0-44df-86bd-3300369ab8b4]", species: "Pebble Crab"},
-          {id: 3, atlas: "", species: "Crab Other"},
-          {id: 4, atlas: "", species: "Anemones"},
-          {id: 5, atlas: "", species: "Nerita atramentosa"},
-          {id: 6, atlas: "", species: "Austrocochlea spp."},
-          {id: 7, atlas: "", species: "Bembicium spp."},
-          {id: 8, atlas: "", species: "Lepsiella spp."},
-          {id: 9, atlas: "", species: "Checkerboard snail"},
-          {id: 10, atlas: "", species: "True limpet >5 mm"},
-          {id: 11, atlas: "", species: "Siphon limpets"},
-          {id: 12, atlas: "", species: "Rock whelk"},
-          {id: 13, atlas: "", species: "Barnacles"},
-          {id: 14, atlas: "", species: "Mussels"},
-          {id: 15, atlas: "", species: "Tube worms"},
-          {id: 16, atlas: "", species: "Nudibranchs"},
-          {id: 17, atlas: "", species: "Sea stars"},
-          {id: 18, atlas: "", species: "Chitons"},
-          {id: 19, atlas: "", species: "Elephant snail"},
-          {id: 20, atlas: "", species: "Sea centipede"},
-          {id: 21, atlas: "", species: "Sea hare"},
-          {id: 22, atlas: "", species: "Feral marine species"},
-          {id: 23, atlas: "", species: "Marine debris - plastic"},
-          {id: 24, atlas: "", species: "Marine debris - non-plastic"},
-          {id: 25, atlas: "", species: "Other"}
-        ];
+
+        
+        /*
         var data = [
-          {id: 1, atlas: "[11cabb79-55f7-4bb0-900f-199d48d3e9ac]", species: "Rock Crab / Reef Crab" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 2, atlas: "[2fa1a3ed-e1ce-421f-8075-12246d90b03e,a208f58d-e5b0-44df-86bd-3300369ab8b4]", species: "Pebble Crab" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 3, atlas: "", species: "Crab Other" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 4, atlas: "", species: "Anemones" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 5, atlas: "", species: "Nerita atramentosa" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 6, atlas: "", species: "Austrocochlea spp." , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 7, atlas: "", species: "Bembicium spp." , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 8, atlas: "", species: "Lepsiella spp." , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 9, atlas: "", species: "Checkerboard snail" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 10, atlas: "", species: "True limpet >5 mm" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 11, atlas: "", species: "Siphon limpets" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 12, atlas: "", species: "Rock whelk" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 13, atlas: "", species: "Barnacles" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 14, atlas: "", species: "Mussels" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 15, atlas: "", species: "Tube worms" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 16, atlas: "", species: "Nudibranchs" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 17, atlas: "", species: "Sea stars" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 18, atlas: "", species: "Chitons" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 19, atlas: "", species: "Elephant snail" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 20, atlas: "", species: "Sea centipede" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 21, atlas: "", species: "Sea hare" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 22, atlas: "", species: "Feral marine species" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 23, atlas: "", species: "Marine debris - plastic" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 24, atlas: "", species: "Marine debris - non-plastic" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" },
-          {id: 25, atlas: "", species: "Other" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" }
+          {id: 1, atlas: "", species: "" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" }
         ];
-
-
+        */
+            
+            
         return (  
             <div className="container">
                 <h2>Timed Search</h2>
-                <BootstrapTable data={data} striped={true} cellEdit={{mode: "click", blurToSave: true, beforeSaveCell: this.beforeSave}}>
-                  <TableHeaderColumn width="20%" dataField="species" isKey={true}>Species</TableHeaderColumn>
-                  <TableHeaderColumn width="15%" editable={{validator: this.validateNumber}} dataField="submerged">Submerged</TableHeaderColumn>
-                  <TableHeaderColumn width="15%" editable={{validator: this.validateNumber}} dataField="exposed">Exposed</TableHeaderColumn>
-                  <TableHeaderColumn width="15%" editable={{validator: this.validateNumber}} dataField="crevice">In a Crevice</TableHeaderColumn>
-                  <TableHeaderColumn width="15%" editable={{validator: this.validateNumber}} dataField="sandy">On a Sandy Patch</TableHeaderColumn>
-                  <TableHeaderColumn width="20%" dataField="other">Other?</TableHeaderColumn>
-                </BootstrapTable>
-                
+                <Grid data={this.state} />
+                <button className="btn btn-primary" style={{"marginLeft": "10px"}} onClick={this.addRow}>Add</button>
             </div>
         )
     }

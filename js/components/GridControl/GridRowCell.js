@@ -1,6 +1,7 @@
 import React from 'react'
 import $ from 'jquery'
 import { Modal, Button, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Checkbox } from 'react-bootstrap';
+import SelectBox from '../SelectBox'
 
 var gridRowCell = React.createClass({
     buildControl: function(controlType) {
@@ -14,9 +15,10 @@ var gridRowCell = React.createClass({
             case "display":
                 result = this.props.value;
                 break;
-            case "radio":
+            case "number":
                 result = <FormControl
-                            type="radio"
+                            className="number-field"
+                            type="text"
                             value={this.props.value} />;
                 break;
             case "check":
@@ -24,6 +26,9 @@ var gridRowCell = React.createClass({
                             type="checkbox"
                             value={this.props.value} />;
                 break;
+            case "select":
+                result = <SelectBox data={this.props.controlData} />;
+                break;            
             default:
                 break;
         }

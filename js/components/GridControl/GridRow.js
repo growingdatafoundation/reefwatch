@@ -13,7 +13,7 @@ var gridRow = React.createClass({
                             <tr key={index}> 
                                 {
                                     item.row.map(function(row, rowIndex) {
-                                        return <GridRowCell data={row} controlType={this.props.data.columnData[rowIndex].controlType} />;
+                                        return <GridRowCell data={row} controlData={this.props.data.columnData[rowIndex].data} controlType={this.props.data.columnData[rowIndex].controlType} />;
                                     }, this)
                                 }
                             </tr>
