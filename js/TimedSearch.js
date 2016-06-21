@@ -38,7 +38,7 @@ export default React.createClass({
                             { columnHeaderText: "exposed", IsVertical: true, controlType: "number"}, 
                             { columnHeaderText: "In a crevice", IsVertical: true, controlType: "number"}, 
                             { columnHeaderText: "On a sandy patch", IsVertical: true, controlType: "number"}, 
-                            { columnHeaderText: "other?", IsVertical: false, controlType: "text"}, 
+                            { columnHeaderText: "other?", IsVertical: false, controlType: "text"}
                           ],
             rowData: [ 
                 { 
