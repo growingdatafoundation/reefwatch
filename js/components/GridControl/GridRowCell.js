@@ -10,21 +10,22 @@ var gridRowCell = React.createClass({
             case "text":
                 result = <FormControl
                             type="text"
-                            value={this.props.value} />;
+                            value={this.props.data.value} />;
                 break;
             case "display":
-                result = this.props.value;
+                result = this.props.data.value;
                 break;
             case "number":
                 result = <FormControl
                             className="number-field"
                             type="text"
-                            value={this.props.value} />;
+                            value={this.props.data.value} />;
                 break;
             case "check":
+                var checkedValue = (this.props.data.value) ? "checked" : "";
                 result = <FormControl
                             type="checkbox"
-                            value={this.props.value} />;
+                            checked={checkedValue} />;
                 break;
             case "select":
                 result = <SelectBox data={this.props.controlData} />;

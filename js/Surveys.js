@@ -30,7 +30,7 @@ var Table = React.createClass({
  },
  render() {
     return (
-    <BootstrapTable ref={this.props.myref} data={this.props.surveys} pagination={true} striped={true}>
+    <BootstrapTable ref={this.props.myref} data={this.props.surveys} pagination={true} striped={true} >
         <TableHeaderColumn width="50" dataField="id" isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
         <TableHeaderColumn width="100" dataField="date" dataSort={true}>Date</TableHeaderColumn>
         <TableHeaderColumn dataField="description" dataSort={true}>Description</TableHeaderColumn>

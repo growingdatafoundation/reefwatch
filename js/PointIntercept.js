@@ -1,7 +1,14 @@
 import React from 'react'
-import Grid from './components/GridControl/Grid'
+import CustomGrid from './components/GridControl/Grid'
+import { Grid, Col, Row } from 'react-bootstrap';
 
 export default React.createClass({
+    validateNumber: function (value) {
+        if (isNaN(value)) {
+            return 'Please only enter numbers.'
+        }
+        return true;
+    },
     render() { 
         var data = { 
             columnData: [{ columnHeaderText: "", IsVertical: false, controlType: "display"}, 
@@ -21,41 +28,41 @@ export default React.createClass({
                 { 
                     row: [
                         { value: "10", IsRowHeader: true },   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"}   
+                        { value: ""},   
+                        { value: false},   
+                        { value: false},   
+                        { value: false},   
+                        { value: false},   
+                        { value: false},   
+                        { value: false},   
+                        { value: false},   
+                        { value: false},   
+                        { value: false},   
+                        { value: ""}   
                     ]
                 },
                 { 
                     row: [
                         { value: "20", IsRowHeader: true},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"}   
+                        { value: ""},   
+                        { value: false},   
+                        { value: false},   
+                        { value: false},   
+                        { value: false},   
+                        { value: false},   
+                        { value: false},   
+                        { value: false},   
+                        { value: true},   
+                        { value: true},   
+                        { value: ""}   
                     ] 
                 },
                 { 
                     row: [
                         { value: "30", IsRowHeader: true},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
+                        { value: ""},   
+                        { value: true},   
+                        { value: false},   
                         { value: "1"},   
                         { value: "1"},   
                         { value: "1"},   
@@ -84,11 +91,19 @@ export default React.createClass({
                 }
             ]
         };
-        return (  
-            <div>
-                <h2>Point Intercept</h2>
-                <Grid data={data} />
-            </div>
+        return (
+            <Grid>
+                <Row>
+                    <Col md={12}>
+                        <h2>Point Intercept</h2>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={12}>
+                        <CustomGrid data={data} />
+                    </Col>
+                </Row>
+            </Grid>
         )
     }
 }) 

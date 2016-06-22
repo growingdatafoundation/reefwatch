@@ -56,10 +56,52 @@ var fieldDay =  React.createClass({
             type: 'POST'
         }).done(function(data){
             that.setState({ showModal: false });
+            that.saveTides(data.getResponseHeader("id"));
+            that.saveSites(data.getResponseHeader("id"));
         })
         .fail(function(jqXHR, textStatus, errorThrown) { 
             alert("Failed");
         });
+    },
+    saveTides: function (id) {
+        /*
+        alert(id)
+        var state = this.state;
+        var that = this;
+        $.ajax({
+            url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days/"+id+"/tides",
+            data        : formData,
+            processData : false,
+            contentType: false,
+            type: 'POST'
+        }).done(function(data){
+            that.setState({ showModal: false });
+            that.saveTides(data);
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) { 
+            alert("Failed");
+        });
+        */
+    },
+    saveSites: function (id) {
+        /*
+        alert(id)
+        var state = this.state;
+        var that = this;
+        $.ajax({
+            url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days/"+id+"/sites",
+            data        : formData,
+            processData : false,
+            contentType: false,
+            type: 'POST'
+        }).done(function(data){
+            that.setState({ showModal: false });
+            that.saveTides(data);
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) { 
+            alert("Failed");
+        });
+        */
     },
     handleChange: function(e) {
         var fieldDayCopy = this.state.fieldDay;
@@ -126,7 +168,7 @@ var fieldDay =  React.createClass({
                             <HelpBlock>Validation is based on string length.</HelpBlock>
                         </FormGroup>
                         <FormGroup controlId="leader">
-                            <ControlLabel controlId="leader">Leader</ControlLabel>
+                            <ControlLabel controlId="leader">Project Officer</ControlLabel>
                                 <SelectBox id="leader" fields={["id", "leader"]} onChange={this.handleChange} name="leader" data={this.state.leaders} />
                             <FormControl.Feedback />
                             <HelpBlock></HelpBlock>

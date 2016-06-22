@@ -1,6 +1,7 @@
 import React from 'react'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-import Grid from './components/GridControl/Grid'
+import { Grid, Col, Row } from 'react-bootstrap';
+import CustomGrid from './components/GridControl/Grid'
 
 export default React.createClass({
     getInitialState: function() {
@@ -89,11 +90,21 @@ export default React.createClass({
             
             
         return (  
-            <div className="container">
-                <h2>Timed Search</h2>
-                <Grid data={this.state} />
-                <button className="btn btn-primary" style={{"marginLeft": "10px"}} onClick={this.addRow}>Add</button>
-            </div>
+            <Grid>
+                <Row>
+                    <Col md={12}>
+                        <h2>Timed Search</h2>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={8}>
+                        <CustomGrid data={this.state} />
+                    </Col>
+                    <Col md={4}>
+                        <button className="btn btn-primary" style={{"marginLeft": "10px"}} onClick={this.addRow}>Add</button>
+                    </Col>
+                </Row>
+            </Grid>
         )
     }
 }) 

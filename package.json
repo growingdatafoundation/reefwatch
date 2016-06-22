@@ -28,6 +28,7 @@
     "clean-fg": "rm -R ./node_modules/form-generator-react/ && npm install",
     "eslint": "eslint **/*.js",
     "webpack": "./node_modules/webpack/bin/webpack.js",
+    "webpack-check": "./node_modules/webpack/bin/webpack.js | webpack-bundle-size-analyzer",
     "test": "./node_modules/jest-cli/bin/jest.js",
     "test-changes": "./node_modules/jest-cli/bin/jest.js --changedonly"
   },

@@ -20,8 +20,9 @@ var GridHeaderCell = React.createClass({
         }  else {
             var cell = this.refs.tableHeaderCell;
             var x = (cell.offsetWidth/2) - (this.getTextWidth(this.props.data.columnHeaderText, "bold 12pt arial")/2);
-            var y = 35;
+            var y = 0;
             cell.style[transformPrefix] = "translate("+x+"px, "+y+"px)";
+            cell.style.verticalAlign = "bottom";
         }
     },          
     render() {
