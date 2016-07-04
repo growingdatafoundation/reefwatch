@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Col, Row } from 'react-bootstrap';
 import CustomGrid from './components/GridControl/Grid'
-
+/*
 export default React.createClass({
     getInitialState: function() {
         return { 
@@ -22,9 +22,9 @@ export default React.createClass({
                             { columnHeaderText: "Other", IsVertical: false, controlType: "text"},
                             { columnHeaderText: "Other", IsVertical: false, controlType: "text"}
                           ],
-            rowData: [ 
+            rows: [ 
                 { 
-                    row: [
+                    fields: [
                         { value: "Species"},   
                         { value: 0},   
                         { value: 0},   
@@ -57,7 +57,7 @@ export default React.createClass({
     addRow: function () {
         var rowData = this.state.rowData;
         var row = { 
-                    row: [
+                    fields: [
                         { value: "test"},   
                         { value: "0"},   
                         { value: "0"},   
@@ -87,3 +87,4 @@ export default React.createClass({
         )
     }
 }) 
+*/

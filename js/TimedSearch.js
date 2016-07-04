@@ -2,56 +2,53 @@ import React from 'react'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Grid, Col, Row } from 'react-bootstrap';
 import CustomGrid from './components/GridControl/Grid'
+import * as Data from "../data/data"
+
+var selectedSpecies = [];
+
 
 export default React.createClass({
+    onChange: function(row, e) {
+        var species = e.target.value;
+        var key = row.key;
+        if(this.speciesIsValid(species)) {
+            var stateRow = this.state.rowData[key];
+            stateRow.fields[0].value = species;
+            this.setState(stateRow);
+
+            alert(e.target.value)
+        }
+    },
+    onChangeSpecies: function (row, e) {
+        var species = e.target.value;
+        if(this.speciesIsValid(species)) {
+            selectedSpecies.push(species);
+            var rows = this.state.rowData;
+            //update the correct row in the state
+            this.setState();
+
+            alert(e.target.value)
+        }
+    },
+    speciesIsValid: function (species) {
+        //Does data already contain row
+        return !selectedSpecies.includes(species);
+    },
     getInitialState: function() {
-        var species = [
-          {value: 1, display: "Rock Crab / Reef Crab"},
-          {value: 2, display: "Pebble Crab"},
-          {value: 3, display: "Crab Other"},
-          {value: 4, display: "Anemones"},
-          {value: 5, display: "Nerita atramentosa"},
-          {value: 6, display: "Austrocochlea spp."},
-          {value: 7, display: "Bembicium spp."},
-          {value: 8, display: "Lepsiella spp."},
-          {value: 9, display: "Checkerboard snail"},
-          {value: 10, display: "True limpet >5 mm"},
-          {value: 11, display: "Siphon limpets"},
-          {value: 12, display: "Rock whelk"},
-          {value: 13, display: "Barnacles"},
-          {value: 14, display: "Mussels"},
-          {value: 15, display: "Tube worms"},
-          {value: 16, display: "Nudibranchs"},
-          {value: 17, display: "Sea stars"},
-          {value: 18, display: "Chitons"},
-          {value: 19, display: "Elephant snail"},
-          {value: 20, display: "Sea centipede"},
-          {value: 21, display: "Sea hare"},
-          {value: 22, display: "Feral marine species"},
-          {value: 23, display: "Marine debris - plastic"},
-          {value: 24, display: "Marine debris - non-plastic"},
-          {value: 25, display: "Other"}
-        ];
+        
+        //TODO: Load species data from DB
+        var species = Data.LoadSpecies();
         
         return { 
-            columnData: [{ columnHeaderText: "species", IsVertical: false, controlType: "select", data: species, IsRowHeader: true }, 
-                            { columnHeaderText: "submerged (in water)", IsVertical: true, controlType: "number"}, 
-                            { columnHeaderText: "exposed", IsVertical: true, controlType: "number"}, 
-                            { columnHeaderText: "In a crevice", IsVertical: true, controlType: "number"}, 
-                            { columnHeaderText: "On a sandy patch", IsVertical: true, controlType: "number"}, 
-                            { columnHeaderText: "other?", IsVertical: false, controlType: "text"}
+            columnData: [{ fieldName: "species", columnHeaderText: "species", IsKey: true, IsVertical: false, ChangeEvent: this.onChangeSpecies, controlType: "select", data: species, IsRowHeader: true }, 
+                            { fieldName: "submerged", columnHeaderText: "submerged (in water)", ChangeEvent: this.onChange, IsVertical: true, controlType: "number"}, 
+                            { fieldName: "exposed", columnHeaderText: "exposed", IsVertical: true, ChangeEvent: this.onChange, controlType: "number"}, 
+                            { fieldName: "crevice", columnHeaderText: "In a crevice", IsVertical: true, ChangeEvent: this.onChange, controlType: "number"}, 
+                            { fieldName: "sandy", columnHeaderText: "On a sandy patch", IsVertical: true, ChangeEvent: this.onChange, controlType: "number"}, 
+                            { fieldName: "other", columnHeaderText: "other?", IsVertical: false, ChangeEvent: this.onChange, controlType: "text"}
                           ],
-            rowData: [ 
-                { 
-                    row: [
-                        { value: "Species"},   
-                        { value: "0"},   
-                        { value: "0"},   
-                        { value: "0"},   
-                        { value: "0"},   
-                        { value: "0"}
-                    ]
-                }
+            rows: [ 
+                { species: 2, submerged: 0, exposed: 0, crevice: 0, sandy: 0, other: "" }    
             ]};
     },  
     beforeSave: function (row, cellName, cellValue) {
@@ -66,19 +63,13 @@ export default React.createClass({
     addRow: function () {
         var rowData = this.state.rowData;
         var row = { 
-                    row: [
-                        { value: "test"},   
-                        { value: "0"},   
-                        { value: "0"},   
-                        { value: "0"},   
-                        { value: "0"},   
-                        { value: "0"}
+                    rows: [
+                        { species: 2, submerged: 0, exposed: 0, crevice: 0, sandy: 0, other: "" }    
                     ]
                 };
         rowData.push(row);
         this.setState({rowData: rowData});
-
-    },
+    },   
     render() {                
 
         

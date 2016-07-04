@@ -31,9 +31,9 @@ var Table = React.createClass({
  render() {
     return (
     <BootstrapTable ref={this.props.myref} data={this.props.surveys} pagination={true} striped={true} >
-        <TableHeaderColumn width="50" dataField="id" isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
+        <TableHeaderColumn dataField="id" hidden={true} isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
         <TableHeaderColumn width="100" dataField="date" dataSort={true}>Date</TableHeaderColumn>
-        <TableHeaderColumn dataField="description" dataSort={true}>Description</TableHeaderColumn>
+        <TableHeaderColumn dataField="location" dataSort={true}>Location</TableHeaderColumn>
         <TableHeaderColumn width="200" dataAlign="center" dataField="id" dataFormat={this.BuildButtons}>Actions</TableHeaderColumn>
     </BootstrapTable>
   )}

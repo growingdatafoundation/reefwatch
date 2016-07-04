@@ -8,14 +8,13 @@ var gridRow = React.createClass({
         return (
                 <tbody>
                 {
-                    this.props.data.rowData.map(function(item, index) {
+                    this.props.data.map(function(row, index) {
                         return ( 
                             <tr key={index}> 
-                                {
-                                    item.row.map(function(row, rowIndex) {
-                                        return <GridRowCell data={row} controlData={this.props.data.columnData[rowIndex].data} controlType={this.props.data.columnData[rowIndex].controlType} />;
-                                    }, this)
-                                }
+                                { Object.keys(row).map(function (key) {
+                                    var field = row[key];
+                                    return <GridRowCell key={key} columnData={this.props.columnData[key]} data={field} row={row} />;
+                                }, this)}
                             </tr>
                         );
                     }, this)

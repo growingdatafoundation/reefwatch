@@ -10,6 +10,7 @@ var gridRowCell = React.createClass({
             case "text":
                 result = <FormControl
                             type="text"
+                            onChange={this.props.columnData.ChangeEvent.bind(null, this.props.row)}
                             value={this.props.data.value} />;
                 break;
             case "display":
@@ -19,16 +20,18 @@ var gridRowCell = React.createClass({
                 result = <FormControl
                             className="number-field"
                             type="text"
+                            onChange={this.props.columnData.ChangeEvent.bind(null, this.props.row)}
                             value={this.props.data.value} />;
                 break;
             case "check":
                 var checkedValue = (this.props.data.value) ? "checked" : "";
                 result = <FormControl
                             type="checkbox"
+                            onChange={this.props.columnData.ChangeEvent.bind(null, this.props.row)}
                             checked={checkedValue} />;
                 break;
             case "select":
-                result = <SelectBox data={this.props.controlData} />;
+                result = <SelectBox onChange={this.props.columnData.ChangeEvent.bind(null, this.props.row)} data={this.props.columnData.data} />;
                 break;            
             default:
                 break;
@@ -43,7 +46,7 @@ var gridRowCell = React.createClass({
                 </th>
                 :
                 <td key={this.props.key}>
-                    {this.buildControl(this.props.controlType)}
+                    {this.buildControl(this.props.columnData.controlType)}
                 </td>
         )
     }

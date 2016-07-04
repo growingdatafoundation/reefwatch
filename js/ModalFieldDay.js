@@ -145,22 +145,6 @@ var fieldDay =  React.createClass({
                             <FormControl.Feedback />
                             <HelpBlock>This should be the date the survey was completed. Its important to remember that surveys must be completed on the same day for a single location.</HelpBlock>
                         </FormGroup>
-                        {/*
-                        <FormGroup controlId="description">
-                            <ControlLabel controlId="description">Survey description</ControlLabel>
-                            <FormControl
-                                required
-                                type="text"
-                                value={this.state.fieldDay.description}
-                                placeholder="Survey Description"
-                                onChange={this.handleChange}
-                                id="description"
-                                name="description"
-                            />
-                            <FormControl.Feedback />
-                            <HelpBlock>Validation is based on string length.</HelpBlock>
-                        </FormGroup>
-                        */}
                         <FormGroup controlId="location_id">
                             <ControlLabel>Survey location</ControlLabel>
                                 <SelectBox id="location_id" onChange={this.handleChange} name="location_id" data={this.state.locations} />
