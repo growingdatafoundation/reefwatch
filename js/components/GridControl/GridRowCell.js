@@ -11,20 +11,20 @@ var gridRowCell = React.createClass({
                 result = <FormControl
                             type="text"
                             onChange={this.props.columnData.ChangeEvent.bind(null, this.props.row)}
-                            value={this.props.data.value} />;
+                            value={this.props.data} />;
                 break;
             case "display":
-                result = this.props.data.value;
+                result = this.props.data;
                 break;
             case "number":
                 result = <FormControl
                             className="number-field"
                             type="text"
                             onChange={this.props.columnData.ChangeEvent.bind(null, this.props.row)}
-                            value={this.props.data.value} />;
+                            value={this.props.data} />;
                 break;
             case "check":
-                var checkedValue = (this.props.data.value) ? "checked" : "";
+                var checkedValue = (this.props.data) ? "checked" : "";
                 result = <FormControl
                             type="checkbox"
                             onChange={this.props.columnData.ChangeEvent.bind(null, this.props.row)}

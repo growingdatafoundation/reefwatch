@@ -11,7 +11,7 @@ export default React.createClass({
     onChange: function(row, e) {
         var species = e.target.value;
         var key = row.key;
-        if(this.speciesIsValid(species)) {
+        if (this.speciesIsValid(species)) {
             var stateRow = this.state.rowData[key];
             stateRow.fields[0].value = species;
             this.setState(stateRow);
@@ -21,23 +21,23 @@ export default React.createClass({
     },
     onChangeSpecies: function (row, e) {
         var species = e.target.value;
-        if(this.speciesIsValid(species)) {
+        if (this.speciesIsValid(species)) {
             selectedSpecies.push(species);
             var rows = this.state.rowData;
-            //update the correct row in the state
+            // update the correct row in the state
             this.setState();
 
             alert(e.target.value)
         }
     },
     speciesIsValid: function (species) {
-        //Does data already contain row
+        // Does data already contain row
         return !selectedSpecies.includes(species);
     },
     getInitialState: function() {
         
-        //TODO: Load species data from DB
-        var species = Data.LoadSpecies();
+        // Load species data from DB
+        var species = Data.loadSpecies();
         
         return { 
             columnData: [{ fieldName: "species", columnHeaderText: "species", IsKey: true, IsVertical: false, ChangeEvent: this.onChangeSpecies, controlType: "select", data: species, IsRowHeader: true }, 

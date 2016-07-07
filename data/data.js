@@ -1,4 +1,4 @@
-export function LoadSpecies() {
+export function loadSpecies() {
     return [
         {value: 1, display: "Rock Crab / Reef Crab"},
         {value: 2, display: "Pebble Crab"},
@@ -26,4 +26,4 @@ export function LoadSpecies() {
         {value: 24, display: "Marine debris - non-plastic"},
         {value: 25, display: "Other"}
     ];
-};
+}

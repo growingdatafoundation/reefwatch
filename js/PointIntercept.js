@@ -9,86 +9,28 @@ export default React.createClass({
         }
         return true;
     },
+    onChange: function(row, e) {
+    },
     render() { 
         var data = { 
-            columnData: [{ columnHeaderText: "", IsVertical: false, controlType: "display"}, 
-                            { columnHeaderText: "Sediment depth (mm)", IsVertical: true, controlType: "text"}, 
-                            { columnHeaderText: "Rock", IsVertical: true, controlType: "check"}, 
-                            { columnHeaderText: "Turf", IsVertical: true, controlType: "check"}, 
-                            { columnHeaderText: "Encrusting algae", IsVertical: true, controlType: "check"}, 
-                            { columnHeaderText: "Foliaceous algae", IsVertical: true, controlType: "check"}, 
-                            { columnHeaderText: "Neptunes necklace", IsVertical: true, controlType: "check"}, 
-                            { columnHeaderText: "Sea Lettuce", IsVertical: true, controlType: "check"}, 
-                            { columnHeaderText: "Seagrass", IsVertical: true, controlType: "check"}, 
-                            { columnHeaderText: "Tube worms", IsVertical: true, controlType: "check"}, 
-                            { columnHeaderText: "Mussels", IsVertical: true, controlType: "check"},
-                            { columnHeaderText: "Other", IsVertical: true, controlType: "text"} 
+            columnData: [{ fieldName: "depthlabel", ChangeEvent: this.onChange, IsKey: true, columnHeaderText: "", IsVertical: false, controlType: "display"}, 
+                            { fieldName: "sedimentdepth", ChangeEvent: this.onChange,  columnHeaderText: "Sediment depth (mm)", IsVertical: true, controlType: "text"}, 
+                            { fieldName: "rock", ChangeEvent: this.onChange,  columnHeaderText: "Rock", IsVertical: true, controlType: "check"}, 
+                            { fieldName: "turf",  ChangeEvent: this.onChange, columnHeaderText: "Turf", IsVertical: true, controlType: "check"}, 
+                            { fieldName: "encrusting",  ChangeEvent: this.onChange, columnHeaderText: "Encrusting algae", IsVertical: true, controlType: "check"}, 
+                            { fieldName: "foliaceous",  ChangeEvent: this.onChange, columnHeaderText: "Foliaceous algae", IsVertical: true, controlType: "check"}, 
+                            { fieldName: "neptunes",  ChangeEvent: this.onChange, columnHeaderText: "Neptunes necklace", IsVertical: true, controlType: "check"}, 
+                            { fieldName: "sealettuce", ChangeEvent: this.onChange,  columnHeaderText: "Sea Lettuce", IsVertical: true, controlType: "check"}, 
+                            { fieldName: "seagrass",  ChangeEvent: this.onChange, columnHeaderText: "Seagrass", IsVertical: true, controlType: "check"}, 
+                            { fieldName: "tubeworms", ChangeEvent: this.onChange, columnHeaderText: "Tube worms", IsVertical: true, controlType: "check"}, 
+                            { fieldName: "mussels",  ChangeEvent: this.onChange, columnHeaderText: "Mussels", IsVertical: true, controlType: "check"},
+                            { fieldName: "other", ChangeEvent: this.onChange,  columnHeaderText: "Other", IsVertical: true, controlType: "text"} 
                           ],
-            rowData: [ 
-                { 
-                    row: [
-                        { value: "10", IsRowHeader: true },   
-                        { value: ""},   
-                        { value: false},   
-                        { value: false},   
-                        { value: false},   
-                        { value: false},   
-                        { value: false},   
-                        { value: false},   
-                        { value: false},   
-                        { value: false},   
-                        { value: false},   
-                        { value: ""}   
-                    ]
-                },
-                { 
-                    row: [
-                        { value: "20", IsRowHeader: true},   
-                        { value: ""},   
-                        { value: false},   
-                        { value: false},   
-                        { value: false},   
-                        { value: false},   
-                        { value: false},   
-                        { value: false},   
-                        { value: false},   
-                        { value: true},   
-                        { value: true},   
-                        { value: ""}   
-                    ] 
-                },
-                { 
-                    row: [
-                        { value: "30", IsRowHeader: true},   
-                        { value: ""},   
-                        { value: true},   
-                        { value: false},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"}   
-                    ] 
-                },
-                { 
-                    row: [
-                        { value: "40", IsRowHeader: true},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"},   
-                        { value: "1"}   
-                    ] 
-                }
+            rows: [ 
+                    { depthlabel: "10", sedimentdepth: "", rock: false, turf: false, encrusting: false, foliaceous: false, neptunes: false, sealettuce: false, seagrass: false, tubeworms: true, mussels: true, other: ""},
+                    { depthlabel: "20", sedimentdepth: "", rock: false, turf: false, encrusting: false, foliaceous: false, neptunes: false, sealettuce: false, seagrass: false, tubeworms: true, mussels: true, other: ""},
+                    { depthlabel: "30", sedimentdepth: "", rock: false, turf: false, encrusting: false, foliaceous: false, neptunes: false, sealettuce: false, seagrass: false, tubeworms: true, mussels: true, other: ""},
+                    { depthlabel: "40", sedimentdepth: "", rock: false, turf: false, encrusting: false, foliaceous: false, neptunes: false, sealettuce: false, seagrass: false, tubeworms: true, mussels: true, other: ""}
             ]
         };
         return (
