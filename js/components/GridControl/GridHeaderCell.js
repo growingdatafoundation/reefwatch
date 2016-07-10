@@ -10,8 +10,17 @@ var GridHeaderCell = React.createClass({
         var metrics = context.measureText(text);
         return metrics.width;
     },
+    componentDidUpdate: function () {
+        this.renderLabels();
+    },
     componentDidMount: function() {
-        //should never use props in here... whats the alternative?
+        this.renderLabels();
+        window.addEventListener('resize', this.renderLabels);
+    },          
+    componentWillUnmount: function() {
+        window.removeEventListener('resize', this.renderLabels);
+    },
+    renderLabels: function () {
         if(this.props.data.IsVertical) {
             var cell = this.refs.tableHeaderCell;
             var x = cell.offsetWidth -17;
@@ -24,7 +33,7 @@ var GridHeaderCell = React.createClass({
             cell.style[transformPrefix] = "translate("+x+"px, "+y+"px)";
             cell.style.verticalAlign = "bottom";
         }
-    },          
+    },
     render() {
         var roateColumnText = (this.props.data.IsVertical) ? 'rotate': '';
             return (

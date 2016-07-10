@@ -14,8 +14,8 @@ var grid = React.createClass({
     render() {
         return (
                 <table ref="gridTable" className="table-header-rotated">
-                    <GridHeaderRow data={this.props.data.columnData} />
-                    <GridRow data={this.props.data.rows} columnData={this.buildAssociatedArrayByFieldName()} />
+                    {(this.props.data.rows.length>0) ? <GridHeaderRow data={this.props.data.columnData} /> : <thead></thead>}
+                    {(this.props.data.rows.length>0) ? <GridRow data={this.props.data.rows} columnData={this.buildAssociatedArrayByFieldName()} /> : <tbody></tbody>}
                 </table>
             )
     }

@@ -1,55 +1,43 @@
 import React from 'react'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-import { Grid, Col, Row } from 'react-bootstrap';
+import { Form, Button, FormGroup, ControlLabel, FormControl, Grid, Col, Row } from 'react-bootstrap';
 import CustomGrid from './components/GridControl/Grid'
 import * as Data from "../data/data"
-
-var selectedSpecies = [];
+import Panel from "./components/Panel"
+import SelectBox from "./components/SelectBox"
 
 
 export default React.createClass({
-    onChange: function(row, e) {
+    onChange: function(key, row, e) {
         var species = e.target.value;
-        var key = row.key;
-        if (this.speciesIsValid(species)) {
-            var stateRow = this.state.rowData[key];
-            stateRow.fields[0].value = species;
-            this.setState(stateRow);
-
-            alert(e.target.value)
-        }
+        row[key] = species;
+        this.setState(row);
     },
-    onChangeSpecies: function (row, e) {
+    onChangeSpecies: function (key, row, e) {
         var species = e.target.value;
-        if (this.speciesIsValid(species)) {
-            selectedSpecies.push(species);
-            var rows = this.state.rowData;
-            // update the correct row in the state
-            this.setState();
-
-            alert(e.target.value)
-        }
+        this.selectedSpecies.push(species);
+        var rows = this.state.rowData;
+        // update the correct row in the state
+        this.setState();
     },
     speciesIsValid: function (species) {
         // Does data already contain row
-        return !selectedSpecies.includes(species);
+        return (!this.state.selectedSpecies.indexOf(species)!==-1);
     },
     getInitialState: function() {
         
         // Load species data from DB
-        var species = Data.loadSpecies();
-        
+        var species = Data.loadSpecies();        
         return { 
-            columnData: [{ fieldName: "species", columnHeaderText: "species", IsKey: true, IsVertical: false, ChangeEvent: this.onChangeSpecies, controlType: "select", data: species, IsRowHeader: true }, 
-                            { fieldName: "submerged", columnHeaderText: "submerged (in water)", ChangeEvent: this.onChange, IsVertical: true, controlType: "number"}, 
-                            { fieldName: "exposed", columnHeaderText: "exposed", IsVertical: true, ChangeEvent: this.onChange, controlType: "number"}, 
-                            { fieldName: "crevice", columnHeaderText: "In a crevice", IsVertical: true, ChangeEvent: this.onChange, controlType: "number"}, 
-                            { fieldName: "sandy", columnHeaderText: "On a sandy patch", IsVertical: true, ChangeEvent: this.onChange, controlType: "number"}, 
-                            { fieldName: "other", columnHeaderText: "other?", IsVertical: false, ChangeEvent: this.onChange, controlType: "text"}
+            species: species,
+            columnData: [{ fieldName: "species", ReadOnly: true, columnHeaderText: "species", IsKey: true, IsVertical: false, ChangeEvent: this.onChangeSpecies, controlType: "select", data: species, IsRowHeader: true }, 
+                            { fieldName: "submerged", ReadOnly: true, columnHeaderText: "submerged (in water)", ChangeEvent: this.onChange, IsVertical: true, controlType: "number"}, 
+                            { fieldName: "exposed", ReadOnly: true, columnHeaderText: "exposed", IsVertical: true, ChangeEvent: this.onChange, controlType: "number"}, 
+                            { fieldName: "crevice", ReadOnly: true, columnHeaderText: "In a crevice", IsVertical: true, ChangeEvent: this.onChange, controlType: "number"}, 
+                            { fieldName: "sandy", ReadOnly: true, columnHeaderText: "On a sandy patch", IsVertical: true, ChangeEvent: this.onChange, controlType: "number"}, 
+                            { fieldName: "other", ReadOnly: true, columnHeaderText: "other?", IsVertical: false, ChangeEvent: this.onChange, controlType: "text"}
                           ],
-            rows: [ 
-                { species: 2, submerged: 0, exposed: 0, crevice: 0, sandy: 0, other: "" }    
-            ]};
+            rows: []};
     },  
     beforeSave: function (row, cellName, cellValue) {
       
@@ -60,26 +48,16 @@ export default React.createClass({
         }
         return true;
     },
-    addRow: function () {
-        var rowData = this.state.rowData;
-        var row = { 
-                    rows: [
-                        { species: 2, submerged: 0, exposed: 0, crevice: 0, sandy: 0, other: "" }    
-                    ]
-                };
+    addRow: function (e) {
+        e.preventDefault();
+        var rowData = this.state.rows;
+        var row = { species: e.target[0].value, submerged: e.target[1].value, 
+            exposed: e.target[2].value, crevice: e.target[3].value, sandy: e.target[4].value, 
+            other: e.target[5].value };
         rowData.push(row);
-        this.setState({rowData: rowData});
-    },   
+        this.setState({rows: rowData});
+    },
     render() {                
-
-        
-        /*
-        var data = [
-          {id: 1, atlas: "", species: "" , submerged: 0, exposed: 0, crevice: 0,  sandy: 0,  other: "" }
-        ];
-        */
-            
-            
         return (  
             <Grid>
                 <Row>
@@ -88,11 +66,41 @@ export default React.createClass({
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={8}>
-                        <CustomGrid data={this.state} />
+                    <Col md={12}>
+                        <Panel heading={"Species Found"} type={"primary"}>
+                            <Form inline onSubmit={this.addRow}>
+                                <FormGroup controlId="species">
+                                    <ControlLabel>Survey location</ControlLabel>
+                                    <SelectBox ref="species" name="species" data={this.state.species} />
+                                </FormGroup>
+                                <FormGroup controlId="submerged">
+                                    <ControlLabel>Submerged</ControlLabel>
+                                    <FormControl ref="submerged" name="submerged" className="number-field" type="text" />
+                                </FormGroup>
+                                <FormGroup controlId="exposed">
+                                    <ControlLabel>exposed</ControlLabel>
+                                    <FormControl ref="exposed" name="exposed" className="number-field" type="text" />
+                                </FormGroup>
+                                <FormGroup controlId="crevice">
+                                    <ControlLabel>crevice</ControlLabel>
+                                    <FormControl ref="crevice" name="crevice" className="number-field" type="text" />
+                                </FormGroup>
+                                <FormGroup controlId="sandy">
+                                    <ControlLabel>sandy</ControlLabel>
+                                    <FormControl ref="sandy" name="sandy" className="number-field" type="text" />
+                                </FormGroup>
+                                <FormGroup controlId="other">
+                                    <ControlLabel>Other</ControlLabel>
+                                    <FormControl ref="other" name="other" className="number-field" type="text" />
+                                </FormGroup>
+                                <button className="btn btn-primary" style={{"marginLeft": "10px"}}>Add</button>
+                            </Form>
+                        </Panel>
                     </Col>
-                    <Col md={4}>
-                        <button className="btn btn-primary" style={{"marginLeft": "10px"}} onClick={this.addRow}>Add</button>
+                </Row>
+                <Row>
+                    <Col md={12}>
+                        <CustomGrid data={this.state} />
                     </Col>
                 </Row>
             </Grid>

@@ -8,30 +8,31 @@ var gridRowCell = React.createClass({
         var result = "";
         switch(controlType) {
             case "text":
-                result = <FormControl
+                result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
                             type="text"
-                            onChange={this.props.columnData.ChangeEvent.bind(null, this.props.row)}
+                            onChange={this.props.columnData.ChangeEvent.bind(null, this.props.key, this.props.row)}
                             value={this.props.data} />;
                 break;
             case "display":
                 result = this.props.data;
                 break;
             case "number":
-                result = <FormControl
+                result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
                             className="number-field"
                             type="text"
-                            onChange={this.props.columnData.ChangeEvent.bind(null, this.props.row)}
+                            onChange={this.props.columnData.ChangeEvent.bind(null, this.props.key, this.props.row)}
                             value={this.props.data} />;
                 break;
             case "check":
                 var checkedValue = (this.props.data) ? "checked" : "";
-                result = <FormControl
+                result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
                             type="checkbox"
-                            onChange={this.props.columnData.ChangeEvent.bind(null, this.props.row)}
+                            onChange={this.props.columnData.ChangeEvent.bind(null, this.props.key, this.props.row)}
                             checked={checkedValue} />;
                 break;
             case "select":
-                result = <SelectBox onChange={this.props.columnData.ChangeEvent.bind(null, this.props.row)} data={this.props.columnData.data} />;
+                result = <SelectBox disabled={this.props.columnData.ReadOnly} onChange={this.props.columnData.ChangeEvent.bind(null, this.props.key, this.props.row)} 
+                                    value={this.props.data} data={this.props.columnData.data} />;
                 break;            
             default:
                 break;
