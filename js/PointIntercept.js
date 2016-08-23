@@ -3,17 +3,9 @@ import CustomGrid from './components/GridControl/Grid'
 import { Grid, Col, Row } from 'react-bootstrap';
 
 export default React.createClass({
-    validateNumber: function (value) {
-        if (isNaN(value)) {
-            return 'Please only enter numbers.'
-        }
-        return true;
-    },
-    onChange: function(row, e) {
-    },
-    render() { 
-        var data = { 
-            columnData: [{ fieldName: "depthlabel", ChangeEvent: this.onChange, IsKey: true, columnHeaderText: "", IsVertical: false, controlType: "display"}, 
+    getInitialState: function() {
+        return { 
+            columnData: [{ fieldName: "depthlabel", readonly: true, ChangeEvent: this.onChange, IsKey: true, columnHeaderText: "", IsVertical: false, controlType: "display"}, 
                             { fieldName: "sedimentdepth", ChangeEvent: this.onChange,  columnHeaderText: "Sediment depth (mm)", IsVertical: true, controlType: "text"}, 
                             { fieldName: "rock", ChangeEvent: this.onChange,  columnHeaderText: "Rock", IsVertical: true, controlType: "check"}, 
                             { fieldName: "turf",  ChangeEvent: this.onChange, columnHeaderText: "Turf", IsVertical: true, controlType: "check"}, 
@@ -31,8 +23,20 @@ export default React.createClass({
                     { depthlabel: "20", sedimentdepth: "", rock: false, turf: false, encrusting: false, foliaceous: false, neptunes: false, sealettuce: false, seagrass: false, tubeworms: true, mussels: true, other: ""},
                     { depthlabel: "30", sedimentdepth: "", rock: false, turf: false, encrusting: false, foliaceous: false, neptunes: false, sealettuce: false, seagrass: false, tubeworms: true, mussels: true, other: ""},
                     { depthlabel: "40", sedimentdepth: "", rock: false, turf: false, encrusting: false, foliaceous: false, neptunes: false, sealettuce: false, seagrass: false, tubeworms: true, mussels: true, other: ""}
-            ]
-        };
+            ]};
+    },
+    validateNumber: function (value) {
+        if (isNaN(value)) {
+            return 'Please only enter numbers.'
+        }
+        return true;
+    },
+    onChange: function(key, changesRow, e) {
+        var rows = this.state.rows;
+        rows.forEach(row => (row.depthlabel===changesRow.depthlabel) ? row = changesRow : row);
+        this.setState({rows: rows });
+    },
+    render() { 
         return (
             <Grid>
                 <Row>
@@ -42,7 +46,7 @@ export default React.createClass({
                 </Row>
                 <Row>
                     <Col md={12}>
-                        <CustomGrid data={data} />
+                        <CustomGrid data={this.state} />
                     </Col>
                 </Row>
             </Grid>

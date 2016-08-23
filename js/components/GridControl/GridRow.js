@@ -10,10 +10,11 @@ var gridRow = React.createClass({
                 {
                     this.props.data.map(function(row, index) {
                         return ( 
-                            <tr key={"RowID"+index}> 
+                            <tr key={"RowID"+index}>
                                 { Object.keys(row).map(function (key) {
                                     var field = row[key];
-                                    return <GridRowCell key={key} columnData={this.props.columnData[key]} data={field} row={row} />;
+                                    row['index'] = index;
+                                    return <GridRowCell key={key} fieldKey={key} columnData={this.props.columnData[key]} data={field} row={row} />;
                                 }, this)}
                             </tr>
                         );

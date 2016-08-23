@@ -49,9 +49,15 @@ var ActiveSurvey = React.createClass({
         return {"surveys":[]};
     },  
     getLocation: function (locationId) {
+        var that = this;
         this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"locations/"+locationId+"?num="+Math.random(), function (result) {
             var data = result.description;
             return data;
+        })
+        .done(function() {
+            that.setState({
+                surveys: result.data
+            });
         })
         .fail(function(jqXHR, textStatus, errorThrown) { 
         });
@@ -60,13 +66,6 @@ var ActiveSurvey = React.createClass({
         var that = this;
         this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days?num="+Math.random(), function (result) {
             var data = result.data;
-            data.forEach((row) => {
-                if (row.location_id) {
-                   var location = that.getLocation(row.location_id);
-                   row.location = location;
-                }
-            });
-
             that.setState({
                 surveys: result.data
             });

@@ -35,7 +35,7 @@ export default React.createClass({
             <li><Link to="/surveys">Survey Days <span className="badge">{this.state.fieldDayCount}</span></Link></li>
             <li><Link to="/admin">Admin</Link></li>
             <li><Link to="/export">Export Data</Link></li>
-            <li><a href="http://0.0.0.0:3001/auth/login/dummy?user_name=Nathan&user_handle=Nathan+hill">Login</a></li>
+            <li><a href={config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"auth/login/google"}>Login</a></li>
         </ul>
         <div>
           {this.props.children}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Col, Row } from 'react-bootstrap';
+import { Grid, Col, Row } from 'react-bootstrap'
 import CustomGrid from './components/GridControl/Grid'
 
 export default React.createClass({
@@ -33,7 +33,11 @@ export default React.createClass({
     beforeSave: function (row, cellName, cellValue) {
       
     },
-    onChange: function(row, e) {
+    onChange: function(key, row, e) {
+        var rows = this.state.rows;
+        row[key] = e.target.value;
+        rows[row.index] = row;
+        this.setState({rows: rows});
     },        
     validateNumber: function (value) {
         if (isNaN(value)) {
