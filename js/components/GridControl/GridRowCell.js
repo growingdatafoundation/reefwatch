@@ -28,7 +28,7 @@ var gridRowCell = React.createClass({
                 result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
                             type="checkbox"
                             onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
-                            checked={checkedValue} />;
+                            defaultChecked={checkedValue} />;
                 break;
             case "select":
                 result = <SelectBox disabled={this.props.columnData.ReadOnly} onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)} 
@@ -43,7 +43,7 @@ var gridRowCell = React.createClass({
         return (
             ("IsRowHeader" in this.props.columnData)  ?
                 <th className='row-header' key={this.props.key}>
-                    {this.props.data.value}
+                    {this.props.data}
                 </th>
                 :
                 <td key={this.props.key}>

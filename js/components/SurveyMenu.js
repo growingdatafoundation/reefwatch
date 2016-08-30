@@ -41,7 +41,7 @@ var SurveyMenu = React.createClass({
     },
     render() {
         return (
-            <Navbar>
+            <Navbar inverse>
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Button className="pull-right" onClick={this.closePanel}>Back</Button>
@@ -51,8 +51,8 @@ var SurveyMenu = React.createClass({
                     <NavItem eventKey={1} href="#/observation">Observation</NavItem>
                     <NavItem eventKey={2} href="#/timed">Timed Search</NavItem>
                     <NavItem eventKey={3} href="#/intercept">Point Intercept</NavItem>
-                    <NavItem eventKey={4} href="#/Quadrat">Species Qudrat Survey</NavItem>
-                    <NavItem eventKey={5} href="#/PhotoUpload">Add Photo's</NavItem>
+                    <NavItem eventKey={4} href="#/quadrat">Species Qudrat Survey</NavItem>
+                    <NavItem eventKey={5} href="#/photoUpload">Add Photo's</NavItem>
                 </Nav>
                 <Nav pullRight>
                     <NavItem eventKey={6} href="#">{this.state.survey.description}</NavItem>

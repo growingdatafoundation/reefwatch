@@ -6,10 +6,12 @@
   "dependencies": {
     "bootstrap": "^3.3.6",
     "bootstrap-validator": "^0.10.2",
+    "history": "^1.17.0",
     "jquery": "^2.2.1",
     "meraki-slider": "^1.3.5",
     "moment": "^2.13.0",
     "normalize.css": "^4.1.1",
+    "react": "^0.14.8",
     "react-addons-css-transition-group": "^15.1.0",
     "react-addons-test-utils": "^15.0.2",
     "react-bootstrap": "^0.29.3",
@@ -19,18 +21,17 @@
     "react-dom": "^0.14.7",
     "react-dropzone": "^3.4.0",
     "react-router": "^2.4.0",
-    "react-select": "^1.0.0-beta11",
-    "react": "^0.14.8"
+    "react-select": "^1.0.0-beta11"
   },
   "scripts": {
-    "start": "webpack-dev-server --host 0.0.0.0 --port 3000 --inline --content-base .",
+    "start": "webpack-dev-server --host 0.0.0.0 --port 3000 --inline --content-base . --hot",
     "clean": "rm -R ./node_modules/",
     "clean-fg": "rm -R ./node_modules/form-generator-react/ && npm install",
     "eslint": "eslint **/*.js",
-    "webpack": "./node_modules/webpack/bin/webpack.js",
-    "webpack-check": "./node_modules/webpack/bin/webpack.js | webpack-bundle-size-analyzer",
-    "test": "./node_modules/jest-cli/bin/jest.js",
-    "test-changes": "./node_modules/jest-cli/bin/jest.js --changedonly"
+    "webpack": "./node_modules/.bin/webpack",
+    "webpack-check": "./node_modules/.bin/webpack | webpack-bundle-size-analyzer",
+    "test": "./node_modules/.bin/jest",
+    "test-changes": "./node_modules/.bin/jest --changedonly"
   },
   "devDependencies": {
     "babel-core": "^6.5.1",

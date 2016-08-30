@@ -21,16 +21,7 @@ var fieldDay =  React.createClass({
         .fail(function(jqXHR, textStatus, errorThrown) { 
         })
         initialState.fieldDay = {};
-        
         initialState.leaders = [];
-        initialState.leaders.push({id: 1, leader: "Jarkko Oikarinen"});
-        initialState.leaders.push({id: 2, leader: "David Wise"});
-        initialState.leaders.push({id: 3, leader: "Alan Turing"});
-        initialState.leaders.push({id: 4, leader: "Bob Kahn"});
-        initialState.leaders.push({id: 5, leader: "Vint Cerf"});
-        initialState.leaders.push({id: 6, leader: "Ralph Baer"});
-        initialState.leaders.push({id: 7, leader: "Ray Tomlinson"});
-        initialState.leaders.push({id: 8, leader: "Dennis Ritchie"});
 
         return initialState;
     },

@@ -27,3 +27,45 @@ export function loadSpecies() {
         {value: 25, display: "Other"}
     ];
 }
+
+export function loadWindForce() {
+    return [
+        {value: 1, display: "Light air"},
+        {value: 2, display: "Gentle breeze"},
+        {value: 3, display: "Moderate breeze"},
+        {value: 4, display: "Fresh breeze"},
+        {value: 5, display: "Strong Breeze"}
+    ];
+}
+
+export function loadSeaState() {
+    return [
+        {value: 1, display: "Calm"},
+        {value: 2, display: "Smooth"},
+        {value: 3, display: "Slight"},
+        {value: 4, display: "Moderate"},
+        {value: 5, display: "Rough"}
+    ];
+}
+
+export function loadRainfall() {
+    return [
+        {value: 1, display: "Nil"},
+        {value: 2, display: "Light"},
+        {value: 3, display: "Moderate"},
+        {value: 4, display: "Heavy"}
+    ];
+}
+
+export function loadWindDirections() {
+    return [
+        {value: 1, display: "North"},
+        {value: 2, display: "South"},
+        {value: 3, display: "West"},
+        {value: 4, display: "East"},
+        {value: 5, display: "North West"},
+        {value: 6, display: "North East"},
+        {value: 7, display: "South West"},
+        {value: 8, display: "South East"}
+    ];
+}

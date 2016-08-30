@@ -33,7 +33,7 @@ export default React.createClass({
     },
     onChange: function(key, changesRow, e) {
         var rows = this.state.rows;
-        rows.forEach(row => (row.depthlabel===changesRow.depthlabel) ? row = changesRow : row);
+        changesRow[key] = e.target.value;
         this.setState({rows: rows });
     },
     render() { 

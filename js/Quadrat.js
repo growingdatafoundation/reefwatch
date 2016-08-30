@@ -35,8 +35,8 @@ export default React.createClass({
     },
     onChange: function(key, row, e) {
         var rows = this.state.rows;
-        row[key] = e.target.value;
-        rows[row.index] = row;
+        var value = e.target.value.replace(/[^0-9]/g, '');
+        row[key] = value;
         this.setState({rows: rows});
     },        
     validateNumber: function (value) {

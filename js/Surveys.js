@@ -54,11 +54,6 @@ var ActiveSurvey = React.createClass({
             var data = result.description;
             return data;
         })
-        .done(function() {
-            that.setState({
-                surveys: result.data
-            });
-        })
         .fail(function(jqXHR, textStatus, errorThrown) { 
         });
     },

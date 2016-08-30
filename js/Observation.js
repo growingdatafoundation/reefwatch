@@ -3,81 +3,83 @@ import validator from 'bootstrap-validator';
 import { Modal, Button, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Checkbox } from 'react-bootstrap';
 import DateTimeField from 'react-bootstrap-datetimepicker';
 import moment from "moment";
+import config from '../config'
 import Typeahead from 'react-bootstrap-typeahead';
 import CloudCover from './components/CloudCover';
 import SelectBox from './components/SelectBox';
+import * as Data from "../data/data"
 
 var Observation = React.createClass({
-  getInitialState: function() {
-      var initialState = {};
-      /*
-      this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"locations?num="+Math.random(), $( "#testform" ).serialize(), function (result) {
-          initialState.locations = []; 
-          result.data.map(function (item) {
-              initialState.locations.push({value: item.id, display: item.description});
-              return initialState;
-          });
-      })
-      .fail(function(jqXHR, textStatus, errorThrown) { 
-      })
-      initialState.fieldDay = {};
-      */
-      
-      
-      initialState.volunteers = [];
-      initialState.volunteers.push({id: 1, volunteer: "Jarkko Oikarinen"});
-      initialState.volunteers.push({id: 2, volunteer: "David Wise"});
-      initialState.volunteers.push({id: 3, volunteer: "Alan Turing"});
-      initialState.volunteers.push({id: 4, volunteer: "Bob Kahn"});
-      initialState.volunteers.push({id: 5, volunteer: "Vint Cerf"});
-      initialState.volunteers.push({id: 6, volunteer: "Ralph Baer"});
-      initialState.volunteers.push({id: 7, volunteer: "Ray Tomlinson"});
-      initialState.volunteers.push({id: 8, volunteer: "Dennis Ritchie"});
- 
-      initialState.windForce = [];
-      initialState.windForce.push({value: 1, display: "Light air"});
-      initialState.windForce.push({value: 2, display: "Gentle breeze"});
-      initialState.windForce.push({value: 3, display: "Moderate breeze"});
-      initialState.windForce.push({value: 4, display: "Fresh breeze"});
-      initialState.windForce.push({value: 5, display: "Strong Breeze"});
-      
-      initialState.seaState = [];
-      initialState.seaState.push({value: 1, display: "Calm"});
-      initialState.seaState.push({value: 2, display: "Smooth"});
-      initialState.seaState.push({value: 3, display: "Slight"});
-      initialState.seaState.push({value: 4, display: "Moderate"});
-      initialState.seaState.push({value: 5, display: "Rough"});
-      
-      initialState.rainfall = [];
-      initialState.rainfall.push({value: 1, display: "Nil"});
-      initialState.rainfall.push({value: 2, display: "Light"});
-      initialState.rainfall.push({value: 3, display: "Moderate"});
-      initialState.rainfall.push({value: 4, display: "Heavy"});
-      
-      initialState.windDirections = [];
-      initialState.windDirections.push({value: 1, display: "North"});
-      initialState.windDirections.push({value: 2, display: "South"});
-      initialState.windDirections.push({value: 3, display: "West"});
-      initialState.windDirections.push({value: 4, display: "East"});
-      initialState.windDirections.push({value: 5, display: "North West"});
-      initialState.windDirections.push({value: 6, display: "North East"});
-      initialState.windDirections.push({value: 7, display: "South West"});
-      initialState.windDirections.push({value: 8, display: "South East"});
-      
-      initialState.cloudCover = 0;
-      
-      return initialState;
-  },
-  handleTime: function (timeValue) {
-  },
-  handleChange: function (e) {
-      
-  },
-  submit: function(data) {
-    // Reset fields back to default values
-    this.refs.myFormRef.reset();
-  },
-  render() {
+    getInitialState: function() {
+        var initialState = {};
+
+        /*
+        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"users?num="+Math.random(), $( "#testform" ).serialize(), function (result) {
+            initialState.volunteers = []; 
+            result.data.map(function (item) {
+                initialState.volunteers.push({value: item.id, display: item.description});
+                return initialState;
+            });
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) { 
+            alert("Fatal Error");
+        });
+        */
+
+
+
+        initialState.volunteers = [];
+        initialState.volunteers.push({id: 1, volunteer: "Jarkko Oikarinen"});
+        initialState.volunteers.push({id: 2, volunteer: "David Wise"});
+        initialState.volunteers.push({id: 3, volunteer: "Alan Turing"});
+        initialState.volunteers.push({id: 4, volunteer: "Bob Kahn"});
+        initialState.volunteers.push({id: 5, volunteer: "Vint Cerf"});
+        initialState.volunteers.push({id: 6, volunteer: "Ralph Baer"});
+        initialState.volunteers.push({id: 7, volunteer: "Ray Tomlinson"});
+        initialState.volunteers.push({id: 8, volunteer: "Dennis Ritchie"});
+    
+        initialState.windForce = Data.loadWindForce();
+        initialState.seaState = Data.loadSeaState();
+        initialState.rainfall = Data.loadRainfall();
+        initialState.windDirections = Data.loadWindDirections();
+        
+        initialState.cloudCover = 0;
+
+        initialState.observation = {};
+        
+        return initialState;
+    },
+    handleTime: function (timeValue) {
+        var observation = this.state.observation;
+        observation.time = moment(parseInt(timeValue)).format('HH:mm'); // eslint-disable-line radix
+        this.setState(observation);
+    },
+    handleChange: function(e) {
+        var observation = this.state.observation;
+        observation[e.target.name] = e.target.value;
+        this.setState(observation);
+    },
+    submit: function (e) {
+        e.preventDefault();
+        var state = this.state;
+        var formData = new FormData();
+        for ( var key in state.observation ) {
+            formData.append(key, state.observation[key]);
+        }
+        var that = this;
+        $.ajax({
+            url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"observation",
+            data        : formData,
+            processData : false,
+            contentType: false,
+            type: 'POST'
+        }).done(function(data){
+        })
+            .fail(function(jqXHR, textStatus, errorThrown) { 
+            alert("Failed");
+        });
+    },
+    render() {
     return (
         <div className="container">
             <h2>Observation</h2>
@@ -177,6 +179,7 @@ var Observation = React.createClass({
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
+                <Button bsStyle="success" type="submit">Save</Button>
             </form>
         </div>
     );

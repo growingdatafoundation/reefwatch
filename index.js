@@ -20,20 +20,20 @@ import PointIntercept from './js/PointIntercept'
 render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Home} />
-      <Route path="/home" component={Home}/>
+      <IndexRoute component={Home}></IndexRoute>
+      <Route path="/home" component={Home}></Route>
       <Route path="/surveys" component={Surveys}>
         <Route path="/surveymenu/:fieldDay" component={SurveyMenu}>
           <IndexRoute component={Observation} />
-          <Route path="/observation" component={Observation}/>
-          <Route path="/timed" component={TimedSearch}/>
-          <Route path="/quadrat" component={Quadrat}/>
-          <Route path="/intercept" component={PointIntercept}/>
-          <Route path="/photoupload" component={PhotoUpload}/>
+          <Route path="/observation" component={Observation}></Route>
+          <Route path="/timed" component={TimedSearch}></Route>
+          <Route path="/quadrat" component={Quadrat}></Route>
+          <Route path="/intercept" component={PointIntercept}></Route>
+          <Route path="/photoupload" component={PhotoUpload}></Route>
         </Route>
       </Route>
-      <Route path="/admin" component={Admin}/>
-      <Route path="/export" component={ExportData}/>
+      <Route path="/admin" component={Admin}></Route>
+      <Route path="/export" component={ExportData}></Route>
     </Route>
   </Router>
 ), document.getElementById('app'))

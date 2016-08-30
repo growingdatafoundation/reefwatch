@@ -27,15 +27,20 @@ export default React.createClass({
         this.serverRequest.abort();
     },
   render() {
+    var HomeClass = location.pathname === "/" ? "active" : "";
+    var SurveyClass = location.pathname.match(/^\/surveys/) ? "active" : "";
+    var AdminClass = location.pathname.match(/^\/admin/) ? "active" : "";
+    var ExportClass = location.pathname.match(/^\/export/) ? "active" : "";
+    var LoginText = "Login";
     return (
       <div>
         <div className="selectedFieldDay"><DisplaySelectedFieldDay /></div>
         <ul className="nav nav-pills">
-            <li className="active"><Link to="/home">Home</Link></li>
-            <li><Link to="/surveys">Survey Days <span className="badge">{this.state.fieldDayCount}</span></Link></li>
-            <li><Link to="/admin">Admin</Link></li>
-            <li><Link to="/export">Export Data</Link></li>
-            <li><a href={config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"auth/login/google"}>Login</a></li>
+            <li className={HomeClass}><Link to="/">Home</Link></li>
+            <li className={SurveyClass}><Link to="/surveys">Survey Days <span className="badge">{this.state.fieldDayCount}</span></Link></li>
+            <li className={AdminClass}><Link to="/admin">Admin</Link></li>
+            <li className={ExportClass}><Link to="/export">Export Data</Link></li>
+            <li><a href={config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"auth/login/google"}>{LoginText}</a></li>
         </ul>
         <div>
           {this.props.children}
