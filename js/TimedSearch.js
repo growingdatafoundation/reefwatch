@@ -51,7 +51,7 @@ export default React.createClass({
     addRow: function (e) {
         e.preventDefault();
         var rowData = this.state.rows;
-        var row = { species: e.target[0].value, submerged: e.target[1].value, 
+        var row = { species: e.target[0].options[e.target[0].value-1].innerText, submerged: e.target[1].value, 
             exposed: e.target[2].value, crevice: e.target[3].value, sandy: e.target[4].value, 
             other: e.target[5].value };
         rowData.push(row);

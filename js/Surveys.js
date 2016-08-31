@@ -24,7 +24,7 @@ var Table = React.createClass({
   },
   BuildButtons: function(cell, row, enumObject){
     return <div className="btn-toolbar">
-                <button onClick={this.handleComplete.bind(this, row)} className="btn btn-success btn-sm">Complete</button>
+                <button onClick={this.handleComplete.bind(this, row)} className="btn btn-success btn-sm">Completed</button>
                 <button onClick={this.handleSelect.bind(this, row)} className="btn btn-info btn-sm">Select</button>                
            </div>
  },

@@ -6,7 +6,7 @@ export default React.createClass({
     getInitialState: function() {
         return { 
             columnData: [{ fieldName: "depthlabel", readonly: true, ChangeEvent: this.onChange, IsKey: true, columnHeaderText: "", IsVertical: false, controlType: "display"}, 
-                            { fieldName: "sedimentdepth", ChangeEvent: this.onChange,  columnHeaderText: "Sediment depth (mm)", IsVertical: true, controlType: "text"}, 
+                            { fieldName: "sedimentdepth", ChangeEvent: this.onChange,  columnHeaderText: "Sediment depth (mm)", IsVertical: true, controlType: "number"}, 
                             { fieldName: "rock", ChangeEvent: this.onChange,  columnHeaderText: "Rock", IsVertical: true, controlType: "check"}, 
                             { fieldName: "turf",  ChangeEvent: this.onChange, columnHeaderText: "Turf", IsVertical: true, controlType: "check"}, 
                             { fieldName: "encrusting",  ChangeEvent: this.onChange, columnHeaderText: "Encrusting algae", IsVertical: true, controlType: "check"}, 
@@ -33,7 +33,8 @@ export default React.createClass({
     },
     onChange: function(key, changesRow, e) {
         var rows = this.state.rows;
-        changesRow[key] = e.target.value;
+        var value = e.target.value.replace(/[^0-9]/g, '');
+        changesRow[key] = value;
         this.setState({rows: rows });
     },
     render() { 

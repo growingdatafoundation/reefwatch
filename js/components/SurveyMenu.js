@@ -51,7 +51,7 @@ var SurveyMenu = React.createClass({
                     <NavItem eventKey={1} href="#/observation">Observation</NavItem>
                     <NavItem eventKey={2} href="#/timed">Timed Search</NavItem>
                     <NavItem eventKey={3} href="#/intercept">Point Intercept</NavItem>
-                    <NavItem eventKey={4} href="#/quadrat">Species Qudrat Survey</NavItem>
+                    <NavItem eventKey={4} href="#/quadrat">Species Quadrat Survey</NavItem>
                     <NavItem eventKey={5} href="#/photoUpload">Add Photo's</NavItem>
                 </Nav>
                 <Nav pullRight>

@@ -50,7 +50,7 @@ export default React.createClass({
             <Grid>
                 <Row>
                     <Col md={12}>
-                        <h2>Species Qudrat Survey</h2>
+                        <h2>Species Quadrat Survey</h2>
                     </Col>
                 </Row>
                 <Row>
