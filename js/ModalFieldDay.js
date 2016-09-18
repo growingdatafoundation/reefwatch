@@ -17,11 +17,15 @@ var fieldDay =  React.createClass({
                 initialState.locations.push({value: item.id, display: item.description});
                 return initialState;
             });
+            initialState.location_id = initialState.locations[0].value;
         })
         .fail(function(jqXHR, textStatus, errorThrown) { 
         })
         initialState.fieldDay = {};
         initialState.leaders = [];
+        initialState.surveyDate = moment();
+        initialState.high_tide_time = moment("1970-01-01 00:00");
+        initialState.low_tide_time = moment("1970-01-01 00:00");
 
         return initialState;
     },
@@ -55,8 +59,8 @@ var fieldDay =  React.createClass({
         });
     },
     saveTides: function (id) {
-        /*
         alert(id)
+        /*
         var state = this.state;
         var that = this;
         $.ajax({
@@ -75,8 +79,8 @@ var fieldDay =  React.createClass({
         */
     },
     saveSites: function (id) {
-        /*
         alert(id)
+        /*
         var state = this.state;
         var that = this;
         $.ajax({
@@ -125,11 +129,11 @@ var fieldDay =  React.createClass({
                         <FormGroup controlId="date">
                             <ControlLabel controlId="date">Survey date</ControlLabel>
                             <DateTimeField
-                                dateTime="2016-01-01"
-                                viewMode="date"
+                                dateTime={this.state.surveyDate}
+                                mode="date"
                                 id="date"
-                                inputFormat="DD/MM/YYYY"
-                                format="YYYY-MM-DD"
+                                inputFormat="DD-MM-YYYY"
+                                format="DD-MM-YYYY"
                                 inputProps={{required:"required", name:"date"}}
                                 onChange={this.handleDate}
                             />
@@ -138,7 +142,7 @@ var fieldDay =  React.createClass({
                         </FormGroup>
                         <FormGroup controlId="location_id">
                             <ControlLabel>Survey location</ControlLabel>
-                                <SelectBox id="location_id" onChange={this.handleChange} name="location_id" data={this.state.locations} />
+                                <SelectBox id="location_id" onChange={this.handleChange} name="location_id" value={this.state.location_id} data={this.state.locations} />
                             <FormControl.Feedback />
                             <HelpBlock>Validation is based on string length.</HelpBlock>
                         </FormGroup>
@@ -164,13 +168,14 @@ var fieldDay =  React.createClass({
                                 </FormGroup>
                             </div>
                             <div className="col-md-6">
-                                <FormGroup controlId="low_tide">
+                                <FormGroup controlId="low_tide_time">
                                     <ControlLabel>Low Tide Time</ControlLabel>
                                     <DateTimeField
                                         mode="time"
                                         id="low_tide_time"
                                         inputProps={{required:"required", name:"low_tide_time"}}
                                         onChange={this.handleDate}
+                                        dateTime={this.state.low_tide_time}
                                     />
                                     <FormControl.Feedback />
                                     <HelpBlock>Time of low tide</HelpBlock>
@@ -196,6 +201,7 @@ var fieldDay =  React.createClass({
                                     <DateTimeField
                                         mode="time"
                                         id="high_tide_time"
+                                        dateTime={this.state.high_tide_time}
                                         inputProps={{required:"required", name:"high_tide_time"}}
                                         onChange={this.handleDate}
                                     />

@@ -7,6 +7,7 @@ import config from "../config"
 
 export default React.createClass({
     getInitialState: function() {
+        //var auth2 = gapi.auth2.getAuthInstance();
         return {fieldDayCount:0};
     },  
     componentDidMount: function() {
@@ -40,6 +41,7 @@ export default React.createClass({
             <li className={SurveyClass}><Link to="/surveys">Survey Days <span className="badge">{this.state.fieldDayCount}</span></Link></li>
             <li className={AdminClass}><Link to="/admin">Admin</Link></li>
             <li className={ExportClass}><Link to="/export">Export Data</Link></li>
+            {/*<li><a href={config.api.hostname + ":"+config.api.port+"/auth/login/dummy?user_name=njhill&user_handle=Nathan%20Hill"}>{LoginText}</a></li>*/}
             <li><a href={config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"auth/login/google"}>{LoginText}</a></li>
         </ul>
         <div>

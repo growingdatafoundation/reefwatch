@@ -28,13 +28,13 @@ export function loadSpecies() {
     ];
 }
 
-export function loadWindForce() {
+export function loadBeaufordWindScale() {
     return [
-        {value: 1, display: "Light air"},
-        {value: 2, display: "Gentle breeze"},
-        {value: 3, display: "Moderate breeze"},
-        {value: 4, display: "Fresh breeze"},
-        {value: 5, display: "Strong Breeze"}
+        {value: 1, display: "Light air / Calm Sea"},
+        {value: 2, display: "Gentle breeze / Smooth Sea"},
+        {value: 3, display: "Moderate breeze / Slight Sea"},
+        {value: 4, display: "Fresh breeze / Moderate Sea"},
+        {value: 5, display: "Strong Breeze / Rough Sea"}
     ];
 }
 

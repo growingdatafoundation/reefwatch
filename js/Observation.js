@@ -27,7 +27,7 @@ var Observation = React.createClass({
         */
 
 
-
+        initialState.time = moment("1970-01-01 00:00");
         initialState.volunteers = [];
         initialState.volunteers.push({id: 1, volunteer: "Jarkko Oikarinen"});
         initialState.volunteers.push({id: 2, volunteer: "David Wise"});
@@ -38,7 +38,7 @@ var Observation = React.createClass({
         initialState.volunteers.push({id: 7, volunteer: "Ray Tomlinson"});
         initialState.volunteers.push({id: 8, volunteer: "Dennis Ritchie"});
     
-        initialState.windForce = Data.loadWindForce();
+        initialState.beaufordWindScale = Data.loadBeaufordWindScale();
         initialState.seaState = Data.loadSeaState();
         initialState.rainfall = Data.loadRainfall();
         initialState.windDirections = Data.loadWindDirections();
@@ -89,6 +89,7 @@ var Observation = React.createClass({
                 <DateTimeField
                     mode="time"
                     id="time"
+                    dateTime={this.state.time}
                     inputProps={{required:"required", name:"time"}}
                     onChange={this.handleTime}
                 />
@@ -137,15 +138,15 @@ var Observation = React.createClass({
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="seaState">
-                    <ControlLabel controlId="seaState">Sea State</ControlLabel>
-                        <SelectBox id="seaState" onChange={this.handleChange} name="seaState" data={this.state.seaState} />
+                <FormGroup controlId="beaufordWindScale">
+                    <ControlLabel controlId="beaufordWindScale">Beauford Wind Scale (1-5)</ControlLabel>
+                        <SelectBox id="beaufordWindScale" onChange={this.handleChange} name="beaufordWindScale" data={this.state.beaufordWindScale} />
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="windForce">
-                    <ControlLabel controlId="windForce">Wind Force</ControlLabel>
-                        <SelectBox id="windForce" onChange={this.handleChange} name="windForce" data={this.state.windForce} />
+                <FormGroup controlId="seaState">
+                    <ControlLabel controlId="seaState">Sea State</ControlLabel>
+                        <SelectBox id="seaState" onChange={this.handleChange} name="seaState" data={this.state.seaState} />
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>

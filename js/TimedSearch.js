@@ -5,6 +5,8 @@ import CustomGrid from './components/GridControl/Grid'
 import * as Data from "../data/data"
 import Panel from "./components/Panel"
 import SelectBox from "./components/SelectBox"
+import DateTimeField from 'react-bootstrap-datetimepicker';
+import moment from "moment";
 
 
 export default React.createClass({
@@ -29,6 +31,7 @@ export default React.createClass({
         // Load species data from DB
         var species = Data.loadSpecies();        
         return { 
+            time: moment(),
             species: species,
             columnData: [{ fieldName: "species", ReadOnly: true, columnHeaderText: "species", IsKey: true, IsVertical: false, ChangeEvent: this.onChangeSpecies, controlType: "select", data: species, IsRowHeader: true }, 
                             { fieldName: "submerged", ReadOnly: true, columnHeaderText: "submerged (in water)", ChangeEvent: this.onChange, IsVertical: true, controlType: "number"}, 
@@ -67,35 +70,47 @@ export default React.createClass({
                 </Row>
                 <Row>
                     <Col md={12}>
-                        <Panel heading={"Species Found"} type={"primary"}>
                             <Form inline onSubmit={this.addRow}>
-                                <FormGroup controlId="species">
-                                    <ControlLabel>Survey location</ControlLabel>
-                                    <SelectBox ref="species" name="species" data={this.state.species} />
-                                </FormGroup>
-                                <FormGroup controlId="submerged">
-                                    <ControlLabel>Submerged</ControlLabel>
-                                    <FormControl ref="submerged" name="submerged" className="number-field" type="text" />
-                                </FormGroup>
-                                <FormGroup controlId="exposed">
-                                    <ControlLabel>exposed</ControlLabel>
-                                    <FormControl ref="exposed" name="exposed" className="number-field" type="text" />
-                                </FormGroup>
-                                <FormGroup controlId="crevice">
-                                    <ControlLabel>crevice</ControlLabel>
-                                    <FormControl ref="crevice" name="crevice" className="number-field" type="text" />
-                                </FormGroup>
-                                <FormGroup controlId="sandy">
-                                    <ControlLabel>sandy</ControlLabel>
-                                    <FormControl ref="sandy" name="sandy" className="number-field" type="text" />
-                                </FormGroup>
-                                <FormGroup controlId="other">
-                                    <ControlLabel>Other</ControlLabel>
-                                    <FormControl ref="other" name="other" className="number-field" type="text" />
-                                </FormGroup>
-                                <button className="btn btn-primary" style={{"marginLeft": "10px"}}>Add</button>
+                                <Panel heading={"Observation Details"} type={"primary"}>
+                                    <FormGroup controlId="time">
+                                    <ControlLabel controlId="time">Observation Time</ControlLabel>
+                                    <DateTimeField
+                                        mode="time"
+                                        id="time"
+                                        dateTime={this.state.time}
+                                        inputProps={{required:"required", name:"time"}}
+                                        onChange={this.handleTime}
+                                    />
+                                    </FormGroup>
+                                </Panel>
+                                <Panel heading={"Species Found"} type={"primary"}>
+                                    <FormGroup controlId="species">
+                                        <ControlLabel>Survey location</ControlLabel>
+                                        <SelectBox ref="species" name="species" data={this.state.species} />
+                                    </FormGroup>
+                                    <FormGroup controlId="submerged">
+                                        <ControlLabel>Submerged</ControlLabel>
+                                        <FormControl ref="submerged" name="submerged" className="number-field" type="text" />
+                                    </FormGroup>
+                                    <FormGroup controlId="exposed">
+                                        <ControlLabel>exposed</ControlLabel>
+                                        <FormControl ref="exposed" name="exposed" className="number-field" type="text" />
+                                    </FormGroup>
+                                    <FormGroup controlId="crevice">
+                                        <ControlLabel>crevice</ControlLabel>
+                                        <FormControl ref="crevice" name="crevice" className="number-field" type="text" />
+                                    </FormGroup>
+                                    <FormGroup controlId="sandy">
+                                        <ControlLabel>sandy</ControlLabel>
+                                        <FormControl ref="sandy" name="sandy" className="number-field" type="text" />
+                                    </FormGroup>
+                                    <FormGroup controlId="other">
+                                        <ControlLabel>Other</ControlLabel>
+                                        <FormControl ref="other" name="other" className="number-field" type="text" />
+                                    </FormGroup>
+                                    <button className="btn btn-primary" style={{"marginLeft": "10px"}}>Add</button>
+                                </Panel>
                             </Form>
-                        </Panel>
                     </Col>
                 </Row>
                 <Row>
