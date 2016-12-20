@@ -1,8 +1,8 @@
 const config = {
     api: {
-        hostname: 'http://reefwatch.usethesource.ws', 
-        port: '80',
-        prefix: 'api/v1/'
+        hostname: 'http://0.0.0.0', 
+        port: '3001',
+        prefix: 'api'
     },
     auth_url: ''
 }

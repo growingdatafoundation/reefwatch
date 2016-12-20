@@ -12,9 +12,9 @@ export default React.createClass({
     },  
     componentDidMount: function() {
         var that = this;
-        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days?num="+Math.random(), function (result) {
+        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/SurveyDays", function (result) {
             that.setState({
-                fieldDayCount: result.data.length
+                fieldDayCount: result.length
             });
         })
         .done(function() {
@@ -42,7 +42,7 @@ export default React.createClass({
             <li className={AdminClass}><Link to="/admin">Admin</Link></li>
             <li className={ExportClass}><Link to="/export">Export Data</Link></li>
             {/*<li><a href={config.api.hostname + ":"+config.api.port+"/auth/login/dummy?user_name=njhill&user_handle=Nathan%20Hill"}>{LoginText}</a></li>*/}
-            <li><a href={config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"auth/login/google"}>{LoginText}</a></li>
+            <li><a href={config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"auth/callback/google"}>{LoginText}</a></li>
         </ul>
         <div>
           {this.props.children}

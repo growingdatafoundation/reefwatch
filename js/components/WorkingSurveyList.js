@@ -11,11 +11,22 @@ var WorkingSurveyList = React.createClass({
     },
     render() {
         var link = "#/surveymenu/"+this.props.selectedSurvey.id;
+
+        var buttonUpper = "";
+        var buttonMiddle = "";
+        var buttonLower = "";
+        if(this.props.selectedSurvey.upper)
+            buttonUpper = <Button href={link} bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Upper")} bsSize="large">{this.props.selectedSurvey.description} Upper<Glyphicon className="pull-right" glyph="menu-right" /></Button>
+
+        if(this.props.selectedSurvey.middle)
+            buttonMiddle = <Button href={link} bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Middle")} bsSize="large">{this.props.selectedSurvey.description} Middle<Glyphicon className="pull-right" glyph="menu-right" /></Button>
+
+        if(this.props.selectedSurvey.lower)
+            buttonLower = <Button href={link} bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Lower")} bsSize="large">{this.props.selectedSurvey.description} Lower<Glyphicon className="pull-right" glyph="menu-right" /></Button>
+
         return (
                 <div className="well">
-                    <Button href={link} bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Lower")} bsSize="large">{this.props.selectedSurvey.description} Lower<Glyphicon className="pull-right" glyph="menu-right" /></Button>
-                    <Button href={link} bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Middle")} bsSize="large">{this.props.selectedSurvey.description} Middle<Glyphicon className="pull-right" glyph="menu-right" /></Button>
-                    <Button href={link} bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Upper")} bsSize="large">{this.props.selectedSurvey.description} Upper<Glyphicon className="pull-right" glyph="menu-right" /></Button>
+                    {buttonUpper}{buttonMiddle}{buttonLower}
                 </div>
             )
     }

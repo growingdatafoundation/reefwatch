@@ -12,7 +12,7 @@ var SurveyMenu = React.createClass({
     loadSurvey: function () {
         var that = this;
         if(this.props.selectedFieldDayID) {
-            this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days/"+this.props.selectedFieldDayID+"?num="+Math.random(), function (result) {
+            this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"surveyDays/"+this.props.selectedFieldDayID, function (result) {
                 that.setState({
                     survey: result
                 });

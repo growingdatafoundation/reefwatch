@@ -4,6 +4,7 @@ import FieldDay from "./ModalFieldDay"
 import WorkingSurveyList from "./components/WorkingSurveyList"
 import Panel from "./components/Panel"
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import moment from "moment";
 
 /*
 Author: Nathan Hill
@@ -19,7 +20,7 @@ var Table = React.createClass({
   handleComplete: function (row) {
   },
   handleSelect: function (row) {
-    $.publish("selectFieldDay", {location: row.description, date: row.date});
+    $.publish("selectFieldDay", {location: row.location.locationName, date: moment(row.surveyDate).format("DD-MM-YYYY")});
     this.props.onSelect(row);
   },
   BuildButtons: function(cell, row, enumObject){
@@ -28,12 +29,18 @@ var Table = React.createClass({
                 <button onClick={this.handleSelect.bind(this, row)} className="btn btn-info btn-sm">Select</button>                
            </div>
  },
+ SurveyDate: function(cell, row) {
+     return moment(cell).format("DD-MM-YYYY");
+ },
+ LocationName: function(cell, row) {
+     return cell.locationName;
+ },
  render() {
     return (
     <BootstrapTable ref={this.props.myref} data={this.props.surveys} pagination={true} striped={true} >
         <TableHeaderColumn dataField="id" hidden={true} isKey={true} dataAlign="center" dataSort={true}>ID</TableHeaderColumn>
-        <TableHeaderColumn width="100" dataField="date" dataSort={true}>Date</TableHeaderColumn>
-        <TableHeaderColumn dataField="location" dataSort={true}>Location</TableHeaderColumn>
+        <TableHeaderColumn width="100" dataField="surveyDate" dataFormat={this.SurveyDate} dataSort={true}>Date</TableHeaderColumn>
+        <TableHeaderColumn dataField='location' dataFormat={this.LocationName} dataSort={true}>Location</TableHeaderColumn>
         <TableHeaderColumn width="200" dataAlign="center" dataField="id" dataFormat={this.BuildButtons}>Actions</TableHeaderColumn>
     </BootstrapTable>
   )}
@@ -50,8 +57,8 @@ var ActiveSurvey = React.createClass({
     },  
     getLocation: function (locationId) {
         var that = this;
-        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"locations/"+locationId+"?num="+Math.random(), function (result) {
-            var data = result.description;
+        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Locations/"+locationId, function (result) {
+            var data = result.locationName;
             return data;
         })
         .fail(function(jqXHR, textStatus, errorThrown) { 
@@ -59,10 +66,10 @@ var ActiveSurvey = React.createClass({
     },
     componentDidMount: function() {
         var that = this;
-        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"field_days?num="+Math.random(), function (result) {
-            var data = result.data;
+        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/SurveyDays?filter[include]=location", function (result) {
+            var data = result;
             that.setState({
-                surveys: result.data
+                surveys: result
             });
         })
         .done(function() {
