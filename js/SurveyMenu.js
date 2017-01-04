@@ -5,7 +5,7 @@ export default React.createClass({
     render() {                
         return (  
             <div style={{"backgroundColor": "white"}}>
-                <SurveyMenu selectedFieldDayID={this.props.params.fieldDay} />
+                <SurveyMenu survey={this.props.params.survey} />
                 {this.props.children}
             </div>
         )

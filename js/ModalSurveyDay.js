@@ -6,28 +6,32 @@ import SelectBox from './components/SelectBox'
 import config from '../config'
 import validator from 'bootstrap-validator';
 import Typeahead from 'react-bootstrap-typeahead';
+import * as Services from "../data/services";
 
 
 var surveyDay =  React.createClass({
     getInitialState: function() {
         var initialState = {};
-        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/locations", $( "#testform" ).serialize(), function (result) {
-            initialState.locations = []; 
-            result.map(function (item) {
-                initialState.locations.push({value: item.id, display: item.locationName});
-                return initialState;
-            });
-            initialState.locationId = initialState.locations[0].value;
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) { 
-        })
+
+        Services.GetLocations(this.setLocation);
         initialState.surveyDay = { "surveyDate": "","lower": false, "middle": false, "upper": false, "lowTideTime": "",  "highTideTime": "", "locationId" : 0, "projectOfficer": "" };
         initialState.leaders = [];
+        initialState.renderedSites = [];
         initialState.surveyDay.surveyDate = moment().format("YYYY-MM-DD");
         initialState.surveyDay.highTideTime = moment("1970-01-01 00:00");
         initialState.surveyDay.lowTideTime = moment("1970-01-01 00:00");
 
         return initialState;
+    },
+    setLocation: function(result) {
+        this.state.locations = result;
+        this.state.locationsCombo = [];
+        this.state.locationsCombo = result.map(function (item) {
+            return {value: item.id, display: item.locationName};
+        });
+        //set current location id
+        this.state.locationId = this.state.locationsCombo[0].value;
+        this.getSites(this.state.locationId);
     },
     close: function() {
         this.setState({ showModal: false });
@@ -38,19 +42,7 @@ var surveyDay =  React.createClass({
     submit: function (e) {
         e.preventDefault();
         var data = this.state.surveyDay;
-        var that = this;
-        $.ajax({
-            url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/surveyDays",
-            data        : JSON.stringify(data),
-            dataType: "json",
-            contentType: "application/json",
-            type: 'POST'
-        }).done(function(data){
-            that.setState({ showModal: false });
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) { 
-            alert("Failed");
-        });
+        Services.AddSurveyDay(data, () => this.setState({ showModal: false }));
     },
     handleChange: function(e) {
         var newSurveyData = this.state.surveyDay;
@@ -98,6 +90,30 @@ var surveyDay =  React.createClass({
         newSurveyData[e.target.id] = e.target.checked;
         this.setState({surveyDay: newSurveyData});
     },
+    getSites: function (locationId) {
+        var sites = [];
+        Services.GetSitesByLocation(locationId, this.renderSites);
+    },
+    renderSites: function(sites) {
+        this.state.renderedSites =  sites.map(function (item) {
+            var type = "";
+            switch((item.siteCode.substring(2,3))) {
+                case "L":
+                    type = "lower";
+                    break;
+                case "M":
+                    type = "middle";
+                    break;
+                case "U":
+                    type = "upper";
+                    break;
+            }
+            return <Checkbox inline
+                id={type}
+                value={item.id}
+                onChange={this.handleCheckbox}>{item.siteCode}</Checkbox>;
+        },this);
+    },
     render() {
         return (
             <Modal show={this.state.showModal} onHide={this.close} bsSize="large">
@@ -121,7 +137,7 @@ var surveyDay =  React.createClass({
                         </FormGroup>
                         <FormGroup controlId="locationId">
                             <ControlLabel>Survey location</ControlLabel>
-                                <SelectBox id="locationId" onChange={this.handleSelectChange} name="locationId" value={this.state.surveyDay.locationId} data={this.state.locations} />
+                                <SelectBox id="locationId" onChange={this.handleSelectChange} name="locationId" value={this.state.surveyDay.locationId} data={this.state.locationsCombo} />
                             <FormControl.Feedback />
                             <HelpBlock>Validation is based on string length.</HelpBlock>
                         </FormGroup>
@@ -197,15 +213,7 @@ var surveyDay =  React.createClass({
                         </div>
                         <FormGroup controlId="sites">
                             <ControlLabel>Sites surveyed</ControlLabel><br />
-                            <Checkbox inline
-                                id="lower"
-                                onChange={this.handleCheckbox}>Lower</Checkbox>
-                            <Checkbox inline
-                                id="middle"
-                                onChange={this.handleCheckbox}>Middle</Checkbox>
-                            <Checkbox inline
-                                id="upper"
-                                onChange={this.handleCheckbox}>Upper</Checkbox>
+                            <div>{this.state.renderedSites}</div>
                             <FormControl.Feedback />
                         </FormGroup>
                 </Modal.Body>

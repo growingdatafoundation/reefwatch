@@ -2,6 +2,7 @@ import React from 'react'
 import $ from 'jquery'
 import { Button, Navbar, NavItem, Nav, Glyphicon } from 'react-bootstrap'
 import config from "../../config"
+import * as services from "../../data/services"
 
 var SurveyMenu = React.createClass({
     closePanel: function () {
@@ -10,19 +11,8 @@ var SurveyMenu = React.createClass({
         });        
     },
     loadSurvey: function () {
-        var that = this;
-        if(this.props.selectedFieldDayID) {
-            this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"surveyDays/"+this.props.selectedFieldDayID, function (result) {
-                that.setState({
-                    survey: result
-                });
-            })
-            .done(function() {
-            })
-            .fail(function(jqXHR, textStatus, errorThrown) { 
-            })
-            .always(function() {
-            });
+        if(this.props.surveyID) {
+            GetSurveyDay(surveyID, result => this.setState({surveys: result}));
         }
     },
     getInitialState: function() {
@@ -35,7 +25,7 @@ var SurveyMenu = React.createClass({
         this.serverRequest.abort();
     },
     componentDidUpdate: function (prevProps, prevState) {
-        if(prevProps.selectedFieldDayID!=this.props.selectedFieldDayID) {
+        if(prevProps.surveyID!=this.props.surveyID) {
             this.loadSurvey();
         }
     },

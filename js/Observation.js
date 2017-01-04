@@ -44,8 +44,7 @@ var Observation = React.createClass({
         initialState.windDirections = Data.loadWindDirections();
         
         initialState.cloudCover = 0;
-
-        initialState.observation = {};
+        initialState.observation = LoadObservation();
         
         return initialState;
     },

@@ -1,28 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router'
-import DisplaySelectedFieldDay from './components/DisplaySelectedFieldDay'
+import DisplaySelectedSurvey from './components/DisplaySelectedSurvey'
 import PubSub from './helpers/pubsub'
 import config from "../config"
+import * as services from "../data/services"
 
 
 export default React.createClass({
     getInitialState: function() {
         //var auth2 = gapi.auth2.getAuthInstance();
-        return {fieldDayCount:0};
+        return {surveyCount:0};
     },  
     componentDidMount: function() {
-        var that = this;
-        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/SurveyDays", function (result) {
-            that.setState({
-                fieldDayCount: result.length
-            });
-        })
-        .done(function() {
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) { 
-        })
-        .always(function() {
-        });
+        services.GetSurveyDaysWithLocations(result => this.setState({surveyCount: result.length}));
     },
     componentWillUnmount: function() {
         this.serverRequest.abort();
@@ -35,10 +25,10 @@ export default React.createClass({
     var LoginClass = location.pathname.match(/^\/login/) ? "active" : "";
     return (
       <div>
-        <div className="selectedFieldDay"><DisplaySelectedFieldDay /></div>
+        <div className="selectedFieldDay"><DisplaySelectedSurvey /></div>
         <ul className="nav nav-pills">
             <li className={HomeClass}><Link to="/">Home</Link></li>
-            <li className={SurveyClass}><Link to="/surveys">Survey Days <span className="badge">{this.state.fieldDayCount}</span></Link></li>
+            <li className={SurveyClass}><Link to="/surveys">Survey Days <span className="badge">{this.state.surveyCount}</span></Link></li>
             <li className={AdminClass}><Link to="/admin">Admin</Link></li>
             <li className={ExportClass}><Link to="/export">Export Data</Link></li>
             <li className={LoginClass}><Link to="/login">Login</Link></li>

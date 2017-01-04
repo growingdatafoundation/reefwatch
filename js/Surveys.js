@@ -1,10 +1,11 @@
 import React from 'react'
 import config from "../config"
-import FieldDay from "./ModalFieldDay"
+import SurveyDay from "./ModalSurveyDay"
 import WorkingSurveyList from "./components/WorkingSurveyList"
 import Panel from "./components/Panel"
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import moment from "moment";
+import * as services from "../data/services"
 
 /*
 Author: Nathan Hill
@@ -20,7 +21,7 @@ var Table = React.createClass({
   handleComplete: function (row) {
   },
   handleSelect: function (row) {
-    $.publish("selectFieldDay", {location: row.location.locationName, date: moment(row.surveyDate).format("DD-MM-YYYY")});
+    $.publish("selectSurvey", {location: row.location.locationName, date: moment(row.surveyDate).format("DD-MM-YYYY")});
     this.props.onSelect(row);
   },
   BuildButtons: function(cell, row, enumObject){
@@ -50,34 +51,13 @@ var Table = React.createClass({
 */
 var ActiveSurvey = React.createClass({
     handleBtnClick: function(e) {
-        this.refs.fieldDay.open();
+        this.refs.surveyDay.open();
     },
     getInitialState: function() {
         return {"surveys":[]};
-    },  
-    getLocation: function (locationId) {
-        var that = this;
-        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Locations/"+locationId, function (result) {
-            var data = result.locationName;
-            return data;
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) { 
-        });
     },
     componentDidMount: function() {
-        var that = this;
-        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/SurveyDays?filter[include]=location", function (result) {
-            var data = result;
-            that.setState({
-                surveys: result
-            });
-        })
-        .done(function() {
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) { 
-        })
-        .always(function() {
-        });
+        var data = services.GetSurveyDaysWithLocations(result => this.setState({surveys: result}));
     },
     componentWillUnmount: function() {
         this.serverRequest.abort();
@@ -87,7 +67,7 @@ var ActiveSurvey = React.createClass({
             <Panel heading={"Current Survey Days"} type={"primary"}>
                 <button className="btn btn-primary" style={{"marginLeft": "10px"}} onClick={this.handleBtnClick}>Add</button>
                 <Table surveys={this.state.surveys} onSelect={this.props.onSelect} />
-                <FieldDay ref="fieldDay" />
+                <SurveyDay ref="surveyDay" />
             </Panel>
         )
     }

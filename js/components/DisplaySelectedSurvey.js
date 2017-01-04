@@ -1,17 +1,17 @@
 import React from 'react'
 import $ from 'jquery'
 
-var DisplaySelectedFieldDay = React.createClass({
+var DisplaySelectedSurvey = React.createClass({
   getInitialState: function () {
     return {"location":null,"date":null};      
   },
   componentDidMount: function () {
-    $.subscribe("selectFieldDay", this.updateSelectedFieldDay);
+    $.subscribe("selectSurvey", this.updateSelectedSurvey);
   },
   componentWillUnmount: function () {
-    $.unsubscribe("selectFieldDay");     
+    $.unsubscribe("selectSurvey");     
   },
-  updateSelectedFieldDay: function (e, state) {
+  updateSelectedSurvey: function (e, state) {
     this.setState(state);    
   },
   render() {
@@ -21,4 +21,4 @@ var DisplaySelectedFieldDay = React.createClass({
   }
 });
 
-module.exports = DisplaySelectedFieldDay;
+module.exports = DisplaySelectedSurvey;
