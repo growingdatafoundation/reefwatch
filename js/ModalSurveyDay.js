@@ -17,6 +17,7 @@ var surveyDay =  React.createClass({
         initialState.surveyDay = { "surveyDate": "","lower": false, "middle": false, "upper": false, "lowTideTime": "",  "highTideTime": "", "locationId" : 0, "projectOfficer": "" };
         initialState.leaders = [];
         initialState.renderedSites = [];
+        initialState.selectedSitesdata = [];
         initialState.surveyDay.surveyDate = moment().format("YYYY-MM-DD");
         initialState.surveyDay.highTideTime = moment("1970-01-01 00:00");
         initialState.surveyDay.lowTideTime = moment("1970-01-01 00:00");
@@ -42,7 +43,20 @@ var surveyDay =  React.createClass({
     submit: function (e) {
         e.preventDefault();
         var data = this.state.surveyDay;
-        Services.AddSurveyDay(data, () => this.setState({ showModal: false }));
+        Services.AddSurveyDay(data, this.SaveSelectedSites);
+    },
+    SaveSelectedSites: function(result) {
+        var surveyDayId = result.id;        
+        this.state.currentSiteList.forEach(function (item) {
+            if(item.selected!=undefined && item.selected) {
+                //map site to selectedsite model
+                var SelectedSite = {};
+                SelectedSite['siteId'] = item.id;
+                SelectedSite['siteCode'] = item.siteCode;
+                SelectedSite['surveyDayId'] = surveyDayId;
+                Services.AddSelectedSite(SelectedSite, this.close);
+            }
+        },this);
     },
     handleChange: function(e) {
         var newSurveyData = this.state.surveyDay;
@@ -51,6 +65,12 @@ var surveyDay =  React.createClass({
     },
     handleLeader: function (e) {
         
+    },
+    handleLocationChange: function (e) {
+        var newSurveyData = this.state.surveyDay;
+        newSurveyData[e.target.id] = e.target.options[e.target.selectedIndex].value;
+        this.setState({surveyDay: newSurveyData});
+        this.getSites(e.target.options[e.target.selectedIndex].value);
     },
     handleLowTime: function(date) {
         var newSurveyData = this.state.surveyDay;
@@ -85,16 +105,22 @@ var surveyDay =  React.createClass({
         newSurveyData[e.target.id] = e.target.options[e.target.selectedIndex].value;
         this.setState({surveyDay: newSurveyData});
     },
-    handleCheckbox: function (e) {
-        var newSurveyData = this.state.surveyDay;
-        newSurveyData[e.target.id] = e.target.checked;
-        this.setState({surveyDay: newSurveyData});
+    handleSelectedSites: function (e) {
+        //selected sites only
+        var currentSiteList = this.state.currentSiteList;
+        currentSiteList.forEach(function (item) {
+            if(item.id===e.target.value) {
+                item['selected'] = e.target.checked;
+            }
+        });
+        this.setState({currentSiteList: currentSiteList});
     },
     getSites: function (locationId) {
         var sites = [];
         Services.GetSitesByLocation(locationId, this.renderSites);
     },
     renderSites: function(sites) {
+        this.state.currentSiteList = sites;
         this.state.renderedSites =  sites.map(function (item) {
             var type = "";
             switch((item.siteCode.substring(2,3))) {
@@ -111,8 +137,9 @@ var surveyDay =  React.createClass({
             return <Checkbox inline
                 id={type}
                 value={item.id}
-                onChange={this.handleCheckbox}>{item.siteCode}</Checkbox>;
+                onChange={this.handleSelectedSites} value={item.id}>{item.siteCode}</Checkbox>;
         },this);
+        this.forceUpdate();
     },
     render() {
         return (
@@ -137,7 +164,7 @@ var surveyDay =  React.createClass({
                         </FormGroup>
                         <FormGroup controlId="locationId">
                             <ControlLabel>Survey location</ControlLabel>
-                                <SelectBox id="locationId" onChange={this.handleSelectChange} name="locationId" value={this.state.surveyDay.locationId} data={this.state.locationsCombo} />
+                                <SelectBox id="locationId" onChange={this.handleLocationChange} name="locationId" value={this.state.surveyDay.locationId} data={this.state.locationsCombo} />
                             <FormControl.Feedback />
                             <HelpBlock>Validation is based on string length.</HelpBlock>
                         </FormGroup>

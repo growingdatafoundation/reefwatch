@@ -43,7 +43,22 @@ export function AddSurveyDay(data, callback) {
         contentType: "application/json",
         type: 'POST'
     }).done(function(data){
-        callback();
+        callback(data);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+        alert("Failed");
+    });
+};
+
+export function AddSelectedSite(data, callback) {
+    $.ajax({
+        url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/surveyDays/"+data.surveyDayId+"/selectedSites",
+        data        : JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+        type: 'POST'
+    }).done(function(data){
+        callback(data);
     })
     .fail(function(jqXHR, textStatus, errorThrown) { 
         alert("Failed");
