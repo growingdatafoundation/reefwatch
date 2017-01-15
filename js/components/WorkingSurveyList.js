@@ -9,24 +9,19 @@ var WorkingSurveyList = React.createClass({
             left: '0px'
         });       
     },
+    renderButtons: function (selectSurvey) {
+        if(selectSurvey!=null && selectSurvey.selectedSites != null) {
+            var link = "#/surveymenu/"+this.props.selectedSurvey.id;
+            var result = selectSurvey.selectedSites.map(function (item) {
+                return <Button key={item.siteCode} href={link} bsStyle="primary" block onClick={() => this.handleClick(item, selectSurvey)} bsSize="large">{item.siteCode}<Glyphicon className="pull-right" glyph="menu-right" /></Button>
+            }, this);
+            return result;
+        }
+    },
     render() {
-        var link = "#/surveymenu/"+this.props.selectedSurvey.id;
-
-        var buttonUpper = "";
-        var buttonMiddle = "";
-        var buttonLower = "";
-        if(this.props.selectedSurvey.upper)
-            buttonUpper = <Button href={link} bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Upper")} bsSize="large">{this.props.selectedSurvey.description} Upper<Glyphicon className="pull-right" glyph="menu-right" /></Button>
-
-        if(this.props.selectedSurvey.middle)
-            buttonMiddle = <Button href={link} bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Middle")} bsSize="large">{this.props.selectedSurvey.description} Middle<Glyphicon className="pull-right" glyph="menu-right" /></Button>
-
-        if(this.props.selectedSurvey.lower)
-            buttonLower = <Button href={link} bsStyle="primary" block onClick={() => this.handleClick([this.props.selectedSurvey],"Lower")} bsSize="large">{this.props.selectedSurvey.description} Lower<Glyphicon className="pull-right" glyph="menu-right" /></Button>
-
         return (
                 <div className="well">
-                    {buttonUpper}{buttonMiddle}{buttonLower}
+                    {this.renderButtons(this.props.selectedSurvey)}
                 </div>
             )
     }

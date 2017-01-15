@@ -11,8 +11,8 @@ var SurveyMenu = React.createClass({
         });        
     },
     loadSurvey: function () {
-        if(this.props.surveyID) {
-            GetSurveyDay(surveyID, result => this.setState({surveys: result}));
+        if(this.props.survey) {
+            services.GetObservation(this.props.survey, result => this.setState({surveys: result}));
         }
     },
     getInitialState: function() {
@@ -25,7 +25,7 @@ var SurveyMenu = React.createClass({
         this.serverRequest.abort();
     },
     componentDidUpdate: function (prevProps, prevState) {
-        if(prevProps.surveyID!=this.props.surveyID) {
+        if(prevProps.survey!=this.props.survey) {
             this.loadSurvey();
         }
     },

@@ -1,7 +1,7 @@
 import config from "../config"
 
 export function GetSurveyDaysWithLocations(callback) {
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/SurveyDays?filter[include]=location", function (result) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/SurveyDays?filter[include]=selectedSites&filter[include]=location", function (result) {
         callback(result);
     })
     .fail(function(jqXHR, textStatus, errorThrown) { 
@@ -27,8 +27,8 @@ export function GetSurveyDay(SurveyDayID, callback) {
 };
 
 
-export function GetObservation(SurveyDayID, Location, callback) { 
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"surveyDays/"+SurveyDayID+"?filter[include]=location", function (result) {
+export function GetObservation(SurveyDayID, callback) { 
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"surveyDays/"+SurveyDayID+"?filter[include]=selectedSites&filter[include]=location&filter[include]=observations", function (result) {
         callback(result);
     })
     .fail(function(jqXHR, textStatus, errorThrown) { 

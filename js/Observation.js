@@ -8,25 +8,11 @@ import Typeahead from 'react-bootstrap-typeahead';
 import CloudCover from './components/CloudCover';
 import SelectBox from './components/SelectBox';
 import * as Data from "../data/data"
+import * as Services from "../data/services";
 
 var Observation = React.createClass({
     getInitialState: function() {
         var initialState = {};
-
-        /*
-        this.serverRequest = $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"users?num="+Math.random(), $( "#testform" ).serialize(), function (result) {
-            initialState.volunteers = []; 
-            result.data.map(function (item) {
-                initialState.volunteers.push({value: item.id, display: item.description});
-                return initialState;
-            });
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) { 
-            alert("Fatal Error");
-        });
-        */
-
-
         initialState.time = moment("1970-01-01 00:00");
         initialState.volunteers = [];
         initialState.volunteers.push({id: 1, volunteer: "Jarkko Oikarinen"});
@@ -44,7 +30,8 @@ var Observation = React.createClass({
         initialState.windDirections = Data.loadWindDirections();
         
         initialState.cloudCover = 0;
-        initialState.observation = LoadObservation();
+        //var observations = Services.getObservation(surveyId, siteCode);
+        initialState.observation = {}; 
         
         return initialState;
     },
