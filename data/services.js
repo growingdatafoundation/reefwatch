@@ -26,6 +26,25 @@ export function GetSurveyDay(SurveyDayID, callback) {
     });
 };
 
+//GET /SurveyDays/{id}/selectedSites
+export function GetSurveyDaySelectedSites(SurveyDayID, callback) { 
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/surveyDays/"+SurveyDayID+"/selectedSites", function (result) {
+        callback(result);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+    });
+};
+
+
+///SurveyDays/{id}/observations
+export function GetSurveyDayObservations(SurveyDayID, callback) { 
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/surveyDays/"+SurveyDayID+"/observations", function (result) {
+        callback(result);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+    });
+};
+
 
 export function GetObservation(SurveyDayID, callback) { 
     $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"surveyDays/"+SurveyDayID+"?filter[include]=selectedSites&filter[include]=location&filter[include]=observations", function (result) {
@@ -38,6 +57,21 @@ export function GetObservation(SurveyDayID, callback) {
 export function AddSurveyDay(data, callback) {
     $.ajax({
         url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/surveyDays",
+        data        : JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+        type: 'POST'
+    }).done(function(data){
+        callback(data);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+        alert("Failed");
+    });
+};
+
+export function AddObservation(data, callback) {
+    $.ajax({
+        url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Observations",
         data        : JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
@@ -80,5 +114,7 @@ export function GetSitesByLocation(locationId, callback) {
     .fail(function(jqXHR, textStatus, errorThrown) { 
     })
 }
+
+
 
 

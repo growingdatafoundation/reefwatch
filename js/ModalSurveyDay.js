@@ -14,7 +14,7 @@ var surveyDay =  React.createClass({
         var initialState = {};
 
         Services.GetLocations(this.setLocation);
-        initialState.surveyDay = { "surveyDate": "","lower": false, "middle": false, "upper": false, "lowTideTime": "",  "highTideTime": "", "locationId" : 0, "projectOfficer": "" };
+        initialState.surveyDay = { "surveyDate": "", "lowTide": "",  "highTide": "", "locationId" : 0, "projectOfficer": "" };
         initialState.leaders = [];
         initialState.renderedSites = [];
         initialState.selectedSitesdata = [];
@@ -38,15 +38,22 @@ var surveyDay =  React.createClass({
     },
     close: function() {
         this.setState({ showModal: false });
+        window.location.reload();
     },
     open: function () {
         this.setState({ showModal: true });
     },
     submit: function (e) {
-
         e.preventDefault();
-        var data = this.state.surveyDay;
-        Services.AddSurveyDay(data, this.SaveSelectedSites);
+        if(this.formValid()) {
+            var data = this.state.surveyDay;
+            Services.AddSurveyDay(data, this.SaveSelectedSites);
+        }
+    },
+    setSurveyState: function(state, field) {
+        var validationState = this.state.validationState;
+        validationState[field] = state;
+        this.setState({validationState: validationState});
     },
     SaveSelectedSites: function(result) {
         var surveyDayId = result.id;        
@@ -78,20 +85,64 @@ var surveyDay =  React.createClass({
     handleLowTime: function(date) {
         var newSurveyData = this.state.surveyDay;
         var d = new Date(parseInt(date));
-        newSurveyData.lowTideTime = moment(d).format("YYYY-MM-DD HH:mm");
-        this.setState({surveyDay: newSurveyData});
+        var lowTimeTime = moment(d);
+
+        if (lowTimeTime.isValid()) {
+            newSurveyData.lowTideTime = lowTimeTime.format("YYYY-MM-DD HH:mm");
+            this.setSurveyState(null, 'lowTideTimeState');
+            this.setState({surveyDay: newSurveyData});
+        } else {
+            this.setSurveyState('error', 'lowTideTimeState');
+        }
     },
     handleHighTime: function(date) {
         var newSurveyData = this.state.surveyDay;
         var d = new Date(parseInt(date));
-        newSurveyData.highTideTime = moment(d).format("YYYY-MM-DD HH:mm");
-        this.setState({surveyDay: newSurveyData});
+        var highTideTime = moment(d);
+        if(highTideTime.isValid()) {
+            newSurveyData.highTideTime =  highTideTime.format("YYYY-MM-DD HH:mm")
+            this.setState({surveyDay: newSurveyData}); 
+            this.setSurveyState(null, 'highTideTimeState');
+        }else {
+            this.setSurveyState('error', 'highTideTimeState');
+        }
+    },
+    formValid: function() {
+        var validationState = this.state.validationState;
+        var siteSelected = false;
+        this.state.currentSiteList.forEach(function (item) {
+            if(item['selected']) {
+                siteSelected = true;
+            }
+        });
+
+        if(validationState.locationIdState===null&&
+            validationState.lowTideState===null&&
+            validationState.lowTideTimeState===null&&
+            validationState.highTideState===null&&
+            validationState.highTideTimeState===null&&
+            validationState.surveyDateState===null&&
+            validationState.projectOfficerState===null&&siteSelected) {
+            return true;          
+        }
+        if(!siteSelected) {
+            alert("Please select a site");
+        } else {
+            alert("Please fix form validation errors");
+        }
+        return false;
     },
     handleDate: function(date) {
         var newSurveyData = this.state.surveyDay;
         var d = new Date(parseInt(date));
-        newSurveyData.surveyDate = moment(d).format("YYYY-MM-DD");
-        this.setState({surveyDay: newSurveyData});
+        var surveyDate = moment(d);
+        if(surveyDate.isValid()) {
+            newSurveyData.surveyDate = surveyDate.format("YYYY-MM-DD");
+            this.setState({surveyDay: newSurveyData});
+            this.setSurveyState(null, 'surveyDateState');
+        } else {
+            this.setSurveyState('error', 'surveyDateState');
+        }
     },
     handleTideInput: function (e) {
         var value = $(e.target).val().replace(/[^0-9\.]/g,''); // eslint-disable-line newline-per-chained-call
@@ -186,7 +237,7 @@ var surveyDay =  React.createClass({
                                 </FormGroup>
                             </div>
                             <div className="col-md-6">
-                                <FormGroup controlId="lowTideTime" validationState={this.state.validationState['lowTideTimeState']}>
+                                <FormGroup controlId="lowTideTime" validationState={this.state.validationState.lowTideTimeState}>
                                     <ControlLabel>Low Tide Time</ControlLabel>
                                     <DateTimeField
                                         mode="time"
