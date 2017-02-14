@@ -54,6 +54,14 @@ export function GetObservation(SurveyDayID, callback) {
     });
 };
 
+export function GetObservationBySiteId(SurveyDayID, SiteId, callback) { 
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"surveyDays/"+SurveyDayID+"?filter[where][SiteId]="+SiteId+"filter[include]=selectedSites&filter[include]=location&filter[include]=observations", function (result) {
+        callback(result);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+    });
+};
+
 export function AddSurveyDay(data, callback) {
     $.ajax({
         url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/surveyDays",
@@ -86,7 +94,7 @@ export function AddObservation(data, callback) {
 
 export function AddSelectedSite(data, callback) {
     $.ajax({
-        url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/surveyDays/"+data.surveyDayId+"/selectedSites",
+        url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/SelectedSites/SaveSelectedSites",
         data        : JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
@@ -115,6 +123,27 @@ export function GetSitesByLocation(locationId, callback) {
     })
 }
 
+export function GetVolunteers(callback) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/volunteers", function (result) {
+        callback(result);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+    })
+}
 
+export function AddVolunteer(data, callback) {
+    $.ajax({
+        url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/volunteer",
+        data        : JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+        type: 'POST'
+    }).done(function(data){
+        callback(data);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+        alert("Failed");
+    });
+};
 
 

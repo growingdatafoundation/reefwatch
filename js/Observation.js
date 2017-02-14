@@ -14,15 +14,8 @@ var Observation = React.createClass({
     getInitialState: function() {
         var initialState = {};
         initialState.time = moment("1970-01-01 00:00");
-        initialState.volunteers = [];
-        initialState.volunteers.push({id: 1, volunteer: "Jarkko Oikarinen"});
-        initialState.volunteers.push({id: 2, volunteer: "David Wise"});
-        initialState.volunteers.push({id: 3, volunteer: "Alan Turing"});
-        initialState.volunteers.push({id: 4, volunteer: "Bob Kahn"});
-        initialState.volunteers.push({id: 5, volunteer: "Vint Cerf"});
-        initialState.volunteers.push({id: 6, volunteer: "Ralph Baer"});
-        initialState.volunteers.push({id: 7, volunteer: "Ray Tomlinson"});
-        initialState.volunteers.push({id: 8, volunteer: "Dennis Ritchie"});
+        initialState.volunteers = Services.GetVolunteers();
+
     
         initialState.beaufordWindScale = Data.loadBeaufordWindScale();
         initialState.seaState = Data.loadSeaState();
@@ -30,7 +23,7 @@ var Observation = React.createClass({
         initialState.windDirections = Data.loadWindDirections();
         
         initialState.cloudCover = 0;
-        //var observations = Services.getObservation(surveyId, siteCode);
+        var observations = Services.GetObservationBySiteId(surveyId, siteCode);
         initialState.observation = {}; 
         
         return initialState;
