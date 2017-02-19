@@ -14,16 +14,30 @@ var Observation = React.createClass({
     getInitialState: function() {
         var initialState = {};
         initialState.time = moment("1970-01-01 00:00");
-        initialState.volunteers = Services.GetVolunteers();
-
+        
+        initialState.volunteers = [];
+        Services.GetVolunteers((result) => {
+           this.setState({volunteers: result});
+        });
     
         initialState.beaufordWindScale = Data.loadBeaufordWindScale();
         initialState.seaState = Data.loadSeaState();
         initialState.rainfall = Data.loadRainfall();
         initialState.windDirections = Data.loadWindDirections();
+        initialState.validationState =   {
+            "observationTimeState": null,
+            "otherLocationState": null,
+            "weatherCommentState": null,
+            "recentExceptionalWeatherState": null,
+            "rainfallIdState": null,
+            "volunteersState": null,
+            "beaufordWindScaleIdState": null,
+            "cloudCoverIdState": null,
+            "exceptionalWeatherConditionsState": null
+        };
         
         initialState.cloudCover = 0;
-        var observations = Services.GetObservationBySiteId(surveyId, siteCode);
+        //var observations = Services.GetObservationBySiteId(surveyId, siteCode);
         initialState.observation = {}; 
         
         return initialState;
@@ -63,19 +77,19 @@ var Observation = React.createClass({
         <div className="container">
             <h2>Observation</h2>
             <form id="formObservation" data-toggle="validator" onSubmit={this.submit} role="form">
-                <FormGroup controlId="time">
+                <FormGroup controlId="time" validationState={this.state.validationState['observationTimeState']}>
                 <ControlLabel controlId="time">Observation Time</ControlLabel>
                 <DateTimeField
                     mode="time"
                     id="time"
-                    dateTime={this.state.time}
+                    date={this.state.time}
                     inputProps={{required:"required", name:"time"}}
                     onChange={this.handleTime}
                 />
                 <FormControl.Feedback />
                 <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="otherLocation">
+                <FormGroup controlId="otherLocation" validationState={this.state.validationState['otherLocationState']}>
                     <ControlLabel controlId="otherLocation">Other Location</ControlLabel>
                     <FormControl
                         required
@@ -89,21 +103,20 @@ var Observation = React.createClass({
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="volunteers">
+                <FormGroup controlId="volunteers" validationState={this.state.validationState['volunteersState']}>
                     <ControlLabel controlId="volunteers">Volunteers</ControlLabel>
                     <Typeahead
-                    required
-                    labelKey="volunteer"
-                    onChange={this.handleChange}
-                    options={this.state.volunteers}
-                    id="volunteers"
-                    allowNew={true}
-                    multiple={true}
+                        labelKey="name"
+                        onChange={this.handleChange}
+                        options={this.state.volunteers}
+                        id="volunteers"
+                        allowNew={true}
+                        multiple={true}
                     />
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="weatherComment">
+                <FormGroup controlId="weatherComment" validationState={this.state.validationState['weatherCommentState']}>
                     <ControlLabel controlId="weatherComment">Weather Comment </ControlLabel>
                     <FormControl
                         required
@@ -117,31 +130,19 @@ var Observation = React.createClass({
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="beaufordWindScale">
+                <FormGroup controlId="beaufordWindScale" validationState={this.state.validationState['beaufordWindScaleIdState']}>
                     <ControlLabel controlId="beaufordWindScale">Beauford Wind Scale (1-5)</ControlLabel>
                         <SelectBox id="beaufordWindScale" onChange={this.handleChange} name="beaufordWindScale" data={this.state.beaufordWindScale} />
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="seaState">
-                    <ControlLabel controlId="seaState">Sea State</ControlLabel>
-                        <SelectBox id="seaState" onChange={this.handleChange} name="seaState" data={this.state.seaState} />
-                    <FormControl.Feedback />
-                    <HelpBlock></HelpBlock>
-                </FormGroup>
-                <FormGroup controlId="windDirection">
-                    <ControlLabel controlId="windDirection">Wind Direction</ControlLabel>
-                        <SelectBox id="windDirection" onChange={this.handleChange} name="windDirection" data={this.state.windDirections} />
-                    <FormControl.Feedback />
-                    <HelpBlock></HelpBlock>
-                </FormGroup>
-                <FormGroup controlId="rainfall">
+                <FormGroup controlId="rainfall" validationState={this.state.validationState['windDirectionState']}>
                     <ControlLabel controlId="rainfall">Rainfall</ControlLabel>
                         <SelectBox id="rainfall" onChange={this.handleChange} name="rainfall" data={this.state.rainfall} />
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="cloudCover">
+                <FormGroup controlId="cloudCoverId" validationState={this.state.validationState['cloudCoverIdState']}>
                     <ControlLabel controlId="cloudCover">Cloud Cover</ControlLabel>
                     <CloudCover
                     id="cloudCover"
@@ -151,7 +152,7 @@ var Observation = React.createClass({
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="">
+                <FormGroup controlId="" validationState={this.state.validationState['exceptionalWeatherConditionsState']}>
                     <ControlLabel controlId="exceptionalWeatherConditions">Recent Exceptional Weather Conditions</ControlLabel>
                         <FormControl componentClass="textarea" placeholder="textarea" value={this.state.exceptionalWeatherConditions}
                         placeholder="Any recent tidal, weather, or other unusual events (e.g. hevy rain shortly before survey, storm, heatwave, wind held tide higher than expected)"

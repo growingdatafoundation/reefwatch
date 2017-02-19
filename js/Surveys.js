@@ -59,9 +59,6 @@ var ActiveSurvey = React.createClass({
     componentDidMount: function() {
         var data = services.GetSurveyDaysWithLocations(result => this.setState({surveys: result}));
     },
-    componentWillUnmount: function() {
-        this.serverRequest.abort();
-    },
     render() {
         return ( 
             <Panel heading={"Current Survey Days"} type={"primary"}>
