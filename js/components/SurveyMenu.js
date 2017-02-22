@@ -11,12 +11,13 @@ var SurveyMenu = React.createClass({
         });        
     },
     loadSurvey: function () {
-        if(this.props.survey) {
-            services.GetObservation(this.props.survey, result => this.setState({surveys: result}));
+        if(this.props.observationId) {
+            alert(this.props.observationId)
+            services.GetObservation(this.props.observationId, result => this.setState({"observation": result}));
         }
     },
     getInitialState: function() {
-        return {"survey":{}};
+        return {"observation":{}};
     },  
     componentDidMount: function() {
         this.loadSurvey();
@@ -25,7 +26,7 @@ var SurveyMenu = React.createClass({
         this.serverRequest.abort();
     },
     componentDidUpdate: function (prevProps, prevState) {
-        if(prevProps.survey!=this.props.survey) {
+        if(prevProps.observationId!=this.props.observationId) {
             this.loadSurvey();
         }
     },
@@ -45,7 +46,7 @@ var SurveyMenu = React.createClass({
                     <NavItem eventKey={5} href="#/photoUpload">Add Photo's</NavItem>
                 </Nav>
                 <Nav pullRight>
-                    <NavItem eventKey={6} href="#">{this.state.survey.description}</NavItem>
+                    <NavItem eventKey={6} href="#">{this.state.observation.id}</NavItem>
                 </Nav>
             </Navbar>
           )

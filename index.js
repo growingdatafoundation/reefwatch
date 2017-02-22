@@ -23,7 +23,7 @@ render((
       <IndexRoute component={Home}></IndexRoute>
       <Route path="/home" component={Home}></Route>
       <Route path="/surveys" component={Surveys}>
-        <Route path="/surveymenu/:surveyID" component={SurveyMenu}>
+        <Route path="/surveymenu/:observationId" component={SurveyMenu}>
           <IndexRoute component={Observation} />
           <Route path="/observation" component={Observation}></Route>
           <Route path="/timed" component={TimedSearch}></Route>

@@ -5,7 +5,7 @@ export default React.createClass({
     render() {                
         return (  
             <div style={{"backgroundColor": "white"}}>
-                <SurveyMenu survey={this.props.params.surveyID} />
+                <SurveyMenu observationId={this.props.params.observationId} />
                 {this.props.children}
             </div>
         )

@@ -46,8 +46,8 @@ export function GetSurveyDayObservations(SurveyDayID, callback) {
 };
 
 
-export function GetObservation(SurveyDayID, callback) { 
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"surveyDays/"+SurveyDayID+"?filter[include]=selectedSites&filter[include]=location&filter[include]=observations", function (result) {
+export function GetObservation(observationId, callback) { 
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Observations/"+observationId, function (result) {
         callback(result);
     })
     .fail(function(jqXHR, textStatus, errorThrown) { 
@@ -145,5 +145,6 @@ export function AddVolunteer(data, callback) {
         alert("Failed");
     });
 };
+
 
 
