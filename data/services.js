@@ -47,7 +47,7 @@ export function GetSurveyDayObservations(SurveyDayID, callback) {
 
 
 export function GetObservation(observationId, callback) { 
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Observations/"+observationId, function (result) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Observations/"+observationId+"?filter[include]=volunteers", function (result) {
         callback(result);
     })
     .fail(function(jqXHR, textStatus, errorThrown) { 
@@ -123,8 +123,8 @@ export function GetSitesByLocation(locationId, callback) {
     })
 }
 
-export function GetVolunteers(callback) {
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/volunteers", function (result) {
+export function GetVolunteers(observationId, callback) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/volunteers?filter[where][observationId]="+observationId, function (result) {
         callback(result);
     })
     .fail(function(jqXHR, textStatus, errorThrown) { 
@@ -133,7 +133,7 @@ export function GetVolunteers(callback) {
 
 export function AddVolunteer(data, callback) {
     $.ajax({
-        url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/volunteer",
+        url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/volunteers",
         data        : JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
@@ -146,5 +146,41 @@ export function AddVolunteer(data, callback) {
     });
 };
 
+export function GetReefWatchVolunteers(callback) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/reefWatchVolunteers", function (result) {
+        callback(result);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+    })
+}
 
+export function AddReefWatchVolunteer(data, callback) {
+    $.ajax({
+        url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/reefWatchVolunteers",
+        data        : JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+        type: 'POST'
+    }).done(function(data){
+        callback(data);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+        alert("Failed");
+    });
+};
+
+export function SaveObservation(observationId, data, callback) {
+    $.ajax({
+        url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Observations/"+observationId,
+        data        : JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+        type: 'PUT'
+    }).done(function(data){
+        callback(data);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+        alert("Failed");
+    });
+};
 

@@ -25,11 +25,11 @@ render((
       <Route path="/surveys" component={Surveys}>
         <Route path="/surveymenu/:observationId" component={SurveyMenu}>
           <IndexRoute component={Observation} />
-          <Route path="/observation" component={Observation}></Route>
-          <Route path="/timed" component={TimedSearch}></Route>
-          <Route path="/quadrat" component={Quadrat}></Route>
-          <Route path="/intercept" component={PointIntercept}></Route>
-          <Route path="/photoupload" component={PhotoUpload}></Route>
+          <Route path="/observation/:observationId" component={Observation}></Route>
+          <Route path="/timed/:observationId" component={TimedSearch}></Route>
+          <Route path="/quadrat/:observationId" component={Quadrat}></Route>
+          <Route path="/intercept/:observationId" component={PointIntercept}></Route>
+          <Route path="/photoupload/:observationId" component={PhotoUpload}></Route>
         </Route>
       </Route>
       <Route path="/admin" component={Admin}></Route>

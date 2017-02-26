@@ -12,11 +12,20 @@ import * as Services from "../data/services";
 
 var Observation = React.createClass({
     getInitialState: function() {
+        if(this.props.params.observationId) {
+            //need to redirect to error page
+        }
         var initialState = {};
         initialState.time = moment("1970-01-01 00:00");
+
+        initialState.observation = {};
+        alert(this.props.params.observationId)
+        if(this.props.params.observationId) {
+            Services.GetObservation(this.props.params.observationId, result => this.setState({"observation": result}));
+        }
         
         initialState.volunteers = [];
-        Services.GetVolunteers((result) => {
+        Services.GetReefWatchVolunteers((result) => {
            this.setState({volunteers: result});
         });
     
@@ -37,9 +46,6 @@ var Observation = React.createClass({
         };
         
         initialState.cloudCover = 0;
-        //var observations = Services.GetObservationBySiteId(surveyId, siteCode);
-        initialState.observation = {}; 
-        
         return initialState;
     },
     handleTime: function (timeValue) {
@@ -52,25 +58,19 @@ var Observation = React.createClass({
         observation[e.target.name] = e.target.value;
         this.setState(observation);
     },
+    handleVolunteersChange: function(selectedItems, e) {
+        Services.GetVolunteers(this.state.observation.id, function (result) {
+            if (result) {
+                result.foreach(function (item) {
+                }, this);
+            }
+        })
+    },
     submit: function (e) {
         e.preventDefault();
-        var state = this.state;
-        var formData = new FormData();
-        for ( var key in state.observation ) {
-            formData.append(key, state.observation[key]);
-        }
-        var that = this;
-        $.ajax({
-            url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"observation",
-            data        : formData,
-            processData : false,
-            contentType: false,
-            type: 'POST'
-        }).done(function(data){
-        })
-            .fail(function(jqXHR, textStatus, errorThrown) { 
-            alert("Failed");
-        });
+        Services.SaveObservation(this.state.observation.id, this.state.observation, function(result) {
+            alert(result);
+        }); 
     },
     render() {
     return (
@@ -82,7 +82,7 @@ var Observation = React.createClass({
                 <DateTimeField
                     mode="time"
                     id="time"
-                    date={this.state.time}
+                    date={this.state.observation.observationTime}
                     inputProps={{required:"required", name:"time"}}
                     onChange={this.handleTime}
                 />
@@ -94,7 +94,7 @@ var Observation = React.createClass({
                     <FormControl
                         required
                         type="text"
-                        value={this.state.otherLocation}
+                        value={this.state.observation.otherLocation}
                         placeholder=""
                         onChange={this.handleChange}
                         id="otherLocation"
@@ -106,12 +106,14 @@ var Observation = React.createClass({
                 <FormGroup controlId="volunteers" validationState={this.state.validationState['volunteersState']}>
                     <ControlLabel controlId="volunteers">Volunteers</ControlLabel>
                     <Typeahead
+                        ref="volunteerType"
                         labelKey="name"
-                        onChange={this.handleChange}
+                        onChange={this.handleVolunteersChange}
                         options={this.state.volunteers}
                         id="volunteers"
                         allowNew={true}
                         multiple={true}
+                        selected={this.state.observation.volunteers}
                     />
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
@@ -121,7 +123,7 @@ var Observation = React.createClass({
                     <FormControl
                         required
                         type="text"
-                        value={this.state.weatherComment}
+                        value={this.state.observation.weatherComment}
                         placeholder="weatherComment"
                         onChange={this.handleChange}
                         id="weatherComment"
@@ -154,7 +156,7 @@ var Observation = React.createClass({
                 </FormGroup>
                 <FormGroup controlId="" validationState={this.state.validationState['exceptionalWeatherConditionsState']}>
                     <ControlLabel controlId="exceptionalWeatherConditions">Recent Exceptional Weather Conditions</ControlLabel>
-                        <FormControl componentClass="textarea" placeholder="textarea" value={this.state.exceptionalWeatherConditions}
+                        <FormControl componentClass="textarea" placeholder="textarea" value={this.state.observation.exceptionalWeatherConditions}
                         placeholder="Any recent tidal, weather, or other unusual events (e.g. hevy rain shortly before survey, storm, heatwave, wind held tide higher than expected)"
                         onChange={this.handleChange} name="exceptionalWeatherConditions" />
                     <FormControl.Feedback />

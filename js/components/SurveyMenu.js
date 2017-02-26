@@ -12,7 +12,6 @@ var SurveyMenu = React.createClass({
     },
     loadSurvey: function () {
         if(this.props.observationId) {
-            alert(this.props.observationId)
             services.GetObservation(this.props.observationId, result => this.setState({"observation": result}));
         }
     },
@@ -39,11 +38,11 @@ var SurveyMenu = React.createClass({
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
-                    <NavItem eventKey={1} href="#/observation">Observation</NavItem>
-                    <NavItem eventKey={2} href="#/timed">Timed Search</NavItem>
-                    <NavItem eventKey={3} href="#/intercept">Point Intercept</NavItem>
-                    <NavItem eventKey={4} href="#/quadrat">Species Quadrat Survey</NavItem>
-                    <NavItem eventKey={5} href="#/photoUpload">Add Photo's</NavItem>
+                    <NavItem eventKey={1} href={"#/observation/"+this.props.observationId}>Observation</NavItem>
+                    <NavItem eventKey={2} href={"#/timed/"+this.props.observationId}>Timed Search</NavItem>
+                    <NavItem eventKey={3} href={"#/intercept/"+this.props.observationId}>Point Intercept</NavItem>
+                    <NavItem eventKey={4} href={"#/quadrat/"+this.props.observationId}>Species Quadrat Survey</NavItem>
+                    <NavItem eventKey={5} href={"#/photoUpload/"+this.props.observationId}>Add Photo's</NavItem>
                 </Nav>
                 <Nav pullRight>
                     <NavItem eventKey={6} href="#">{this.state.observation.id}</NavItem>
