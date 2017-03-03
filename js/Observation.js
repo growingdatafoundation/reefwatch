@@ -19,7 +19,6 @@ var Observation = React.createClass({
         initialState.time = moment("1970-01-01 00:00");
 
         initialState.observation = {};
-        alert(this.props.params.observationId)
         if(this.props.params.observationId) {
             Services.GetObservation(this.props.params.observationId, result => this.setState({"observation": result}));
         }
@@ -69,7 +68,6 @@ var Observation = React.createClass({
     submit: function (e) {
         e.preventDefault();
         Services.SaveObservation(this.state.observation.id, this.state.observation, function(result) {
-            alert(result);
         }); 
     },
     render() {
