@@ -5,8 +5,6 @@ import { Link } from 'react-router'
 
 var WorkingSurveyList = React.createClass({
     handleClick: function (location, survey) {
-        alert("hello");
-        alert(location);      
         $("div.contentPage").animate({
             left: '0px'
         }); 

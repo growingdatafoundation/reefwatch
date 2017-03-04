@@ -37,7 +37,7 @@ var GridHeaderCell = React.createClass({
     render() {
         var roateColumnText = (this.props.data.IsVertical) ? 'rotate': '';
             return (
-            <th ref="tableHeaderCell" className={roateColumnText} key={this.props.key}>
+            <th ref="tableHeaderCell" style={{display: this.props.data.isHidden}}  className={roateColumnText} key={this.props.key}>
                 <div>
                     <span>{this.props.data.columnHeaderText}</span>
                 </div>

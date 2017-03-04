@@ -71,18 +71,6 @@ export default React.createClass({
                 <Row>
                     <Col md={12}>
                             <Form inline onSubmit={this.addRow}>
-                                <Panel heading={"Observation Details"} type={"primary"}>
-                                    <FormGroup controlId="time">
-                                    <ControlLabel controlId="time">Observation Time</ControlLabel>
-                                    <DateTimeField
-                                        mode="time"
-                                        id="time"
-                                        dateTime={this.state.time}
-                                        inputProps={{required:"required", name:"time"}}
-                                        onChange={this.handleTime}
-                                    />
-                                    </FormGroup>
-                                </Panel>
                                 <Panel heading={"Species Found"} type={"primary"}>
                                     <FormGroup controlId="species">
                                         <ControlLabel>Survey location</ControlLabel>

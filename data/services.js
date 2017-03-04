@@ -184,3 +184,51 @@ export function SaveObservation(observationId, data, callback) {
     });
 };
 
+export function GetPointInterceptObservation(observationId, callback) {
+    var rndNumber = Math.floor((Math.random() * 1000)).toString();
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Observations/"+observationId+"/PointIntercepts?forceRefresh="+rndNumber, function (result) {
+        callback(result);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+    })
+}
+
+export function GetPointIntercepts(callback) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/PointIntercepts", function (result) {
+        callback(result);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+    })
+}
+
+export function AddPointIntercept(data, callback) {
+    $.ajax({
+        url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/PointIntercepts",
+        data        : JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+        type: 'POST'
+    }).done(function(data){
+        callback(data);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+        alert("Failed");
+    });
+};
+
+
+export function SavePointIntercept(data, callback) {
+    $.ajax({
+        url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/PointIntercepts",
+        data        : JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+        type: 'PUT'
+    }).done(function(data){
+        callback(data);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+        alert("Failed");
+    });
+};
+

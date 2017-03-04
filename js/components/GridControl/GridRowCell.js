@@ -7,6 +7,9 @@ var gridRowCell = React.createClass({
     buildControl: function(controlType) {
         var result = "";
         switch(controlType) {
+            case "hidden":
+                result = "";
+                break;
             case "text":
                 result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
                             type="text"
@@ -42,11 +45,11 @@ var gridRowCell = React.createClass({
     render() {
         return (
             ("IsRowHeader" in this.props.columnData)  ?
-                <th className='row-header' key={this.props.key}>
+                <th className='row-header' style={{display: this.props.columnData.isHidden}}  key={this.props.key}>
                     {this.props.data}
                 </th>
                 :
-                <td key={this.props.key}>
+                <td key={this.props.key} style={{display: this.props.columnData.isHidden}}>
                     {this.buildControl(this.props.columnData.controlType)}
                 </td>
         )
