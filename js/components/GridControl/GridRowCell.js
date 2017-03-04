@@ -11,20 +11,39 @@ var gridRowCell = React.createClass({
                 result = "";
                 break;
             case "text":
-                result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
-                            type="text"
-                            onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
-                            value={this.props.data} />;
+                if(this.props.columnData.ChangeEvent && this.props.columnData.BlurEvent) {
+                    result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
+                                type="text"
+                                onBlur={this.props.columnData.BlurEvent.bind(null, this.props.fieldKey, this.props.row)}
+                                onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
+                                value={this.props.data} />;
+
+                } else if(this.props.columnData.ChangeEvent) {
+                    result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
+                                type="text"
+                                onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
+                                value={this.props.data} />;
+                }
                 break;
             case "display":
                 result = this.props.data;
                 break;
             case "number":
-                result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
-                            className="number-field"
-                            type="text"
-                            onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
-                            value={this.props.data} />;
+                if(this.props.columnData.ChangeEvent && this.props.columnData.BlurEvent) {
+                    result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
+                                className="number-field"
+                                type="text"
+                                onBlur={this.props.columnData.BlurEvent.bind(null, this.props.fieldKey, this.props.row)}
+                                onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
+                                value={this.props.data} />;
+
+                } else if(this.props.columnData.ChangeEvent) {
+                    result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
+                                className="number-field"
+                                type="text"
+                                onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
+                                value={this.props.data} />;
+                }
                 break;
             case "check":
                 var checkedValue = (this.props.data) ? "checked" : "";

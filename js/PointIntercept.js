@@ -9,7 +9,7 @@ export default React.createClass({
             columnData: [{ fieldName: "depthlabel", readonly: true, ChangeEvent: this.onChange, IsKey: true, columnHeaderText: "", IsVertical: false, controlType: "display"}, 
                             { fieldName: "id", isHidden: "none", controlType: "hidden"}, 
                             { fieldName: "observationId", isHidden: "none", controlType: "hidden"}, 
-                            { fieldName: "sedimentdepth", ChangeEvent: this.onChange,  columnHeaderText: "Sediment depth (mm)", IsVertical: true, controlType: "number"}, 
+                            { fieldName: "sedimentdepth", BlurEvent: this.onBlurSediment, ChangeEvent: this.onChangeSediment, columnHeaderText: "Sediment depth (mm)", IsVertical: true, controlType: "number"}, 
                             { fieldName: "rock", ChangeEvent: this.onChange,  columnHeaderText: "Rock", IsVertical: true, controlType: "check"}, 
                             { fieldName: "turf",  ChangeEvent: this.onChange, columnHeaderText: "Turf", IsVertical: true, controlType: "check"}, 
                             { fieldName: "encrusting",  ChangeEvent: this.onChange, columnHeaderText: "Encrusting algae", IsVertical: true, controlType: "check"}, 
@@ -19,7 +19,7 @@ export default React.createClass({
                             { fieldName: "seagrass",  ChangeEvent: this.onChange, columnHeaderText: "Seagrass", IsVertical: true, controlType: "check"}, 
                             { fieldName: "tubeworms", ChangeEvent: this.onChange, columnHeaderText: "Tube worms", IsVertical: true, controlType: "check"}, 
                             { fieldName: "mussels",  ChangeEvent: this.onChange, columnHeaderText: "Mussels", IsVertical: true, controlType: "check"},
-                            { fieldName: "other", ChangeEvent: this.onChange,  columnHeaderText: "Other", IsVertical: true, controlType: "text"} 
+                            { fieldName: "other", ChangeEvent: this.onChangeOther, BlurEvent: this.onBlurOther,  columnHeaderText: "Other", IsVertical: true, controlType: "text"} 
                           ],
             rows: []
         };
@@ -58,6 +58,52 @@ export default React.createClass({
             return 'Please only enter numbers.'
         }
         return true;
+    },
+    onBlurOther: function(key, changedRow, e) {
+        var rows = this.state.rows;
+        var value = e.target.value;
+        //remove id so it will not add row with blank ID
+        if(changedRow["id"]=="") {
+            delete changedRow["id"];
+        }
+        changedRow["observationId"] = this.props.params.observationId;
+        Services.SavePointIntercept(changedRow, function (result) {
+            rows.forEach(function (item, index) {
+                if(item.depthlabel == result.depthlabel) {
+                    rows[index] = result;
+                }
+            });
+            this.setState({rows: rows});
+        }.bind(this));
+    },
+    onChangeOther: function(key, changedRow, e) {
+        var rows = this.state.rows;
+        var value = e.target.value;
+        var row = changedRow[key] = value;
+        this.setState({rows: rows});
+    },
+    onBlurSediment: function(key, changedRow, e) {
+        var rows = this.state.rows;
+        var value = e.target.value;
+        //remove id so it will not add row with blank ID
+        if(changedRow["id"]=="") {
+            delete changedRow["id"];
+        }
+        changedRow["observationId"] = this.props.params.observationId;
+        Services.SavePointIntercept(changedRow, function (result) {
+            rows.forEach(function (item, index) {
+                if(item.depthlabel == result.depthlabel) {
+                    rows[index] = result;
+                }
+            });
+            this.setState({rows: rows});
+        }.bind(this));
+    },
+    onChangeSediment: function(key, changedRow, e) {
+        var rows = this.state.rows;
+        var value = e.target.value;
+        var row = changedRow[key] = value;
+        this.setState({rows: rows});
     },
     onChange: function(key, changedRow, e) {
         var rows = this.state.rows;
