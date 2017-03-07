@@ -18,11 +18,11 @@ export default React.createClass({
         this.serverRequest.abort();
     },
   render() {
-    var HomeClass = location.pathname === "/" ? "active" : "";
-    var SurveyClass = location.pathname.match(/^\/surveys/) ? "active" : "";
-    var AdminClass = location.pathname.match(/^\/admin/) ? "active" : "";
-    var ExportClass = location.pathname.match(/^\/export/) ? "active" : "";
-    var LoginClass = location.pathname.match(/^\/login/) ? "active" : "";
+    var HomeClass = this.props.location.pathname === "/" ? "active" : "";
+    var SurveyClass = this.props.location.pathname.includes("surveys") ? "active" : "";
+    var AdminClass = this.props.location.pathname.includes("admin") ? "active" : "";
+    var ExportClass = this.props.location.pathname.includes("export") ? "active" : "";
+    var LoginClass = this.props.location.pathname.includes("login") ? "active" : "";
     return (
       <div>
         <div className="selectedFieldDay"><DisplaySelectedSurvey /></div>
