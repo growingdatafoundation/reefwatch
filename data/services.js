@@ -184,6 +184,14 @@ export function SaveObservation(observationId, data, callback) {
     });
 };
 
+export function GetSpecies(callback) {
+    return $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/species", function (result) {
+        callback(result);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) { 
+    })
+}
+
 export function GetPointInterceptObservation(observationId, callback) {
     var rndNumber = Math.floor((Math.random() * 1000)).toString();
     $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Observations/"+observationId+"/PointIntercepts?forceRefresh="+rndNumber, function (result) {
@@ -215,7 +223,6 @@ export function AddPointIntercept(data, callback) {
         alert("Failed");
     });
 };
-
 
 export function SavePointIntercept(data, callback) {
     $.ajax({
