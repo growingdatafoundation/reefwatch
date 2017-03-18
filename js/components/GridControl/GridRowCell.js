@@ -10,6 +10,12 @@ var gridRowCell = React.createClass({
             case "hidden":
                 result = "";
                 break;
+            case "command":
+                console.log("Build Command Button")
+                result = <Button bsStyle="primary" 
+                            onClick={this.props.columnData.action.bind(null, this.props.fieldKey, this.props.row)}>
+                                {this.props.columnData.controlName}
+                        </Button>;
             case "text":
                 if(this.props.columnData.ChangeEvent && this.props.columnData.BlurEvent) {
                     result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
