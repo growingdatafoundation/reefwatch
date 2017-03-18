@@ -20,13 +20,14 @@ export default class TimedSearch extends React.Component {
             species: [], // [{ id: String(Guid), commonName: String, ScientificName: String }]
             selectableSpecies: [],
             columnData: [
-                { fieldName: "speciesId", isHidden: "none", controlType: "hidden"},
+                { fieldName: "speciesId", isHidden: "none", controlType: "hidden", IsKey: true },
                 { fieldName: "speciesName", ReadOnly: true, columnHeaderText: "species", IsVertical: true, ChangeEvent: this.onChangeSpecies, controlType: "select", data: this.getData(), IsRowHeader: true }, 
                 { fieldName: "submerged", ReadOnly: false, columnHeaderText: "submerged (in water)", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e),  controlType: "number"}, 
                 { fieldName: "exposed", ReadOnly: false, columnHeaderText: "exposed", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "number"}, 
                 { fieldName: "crevice", ReadOnly: false, columnHeaderText: "In a crevice", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "number"}, 
                 { fieldName: "sandy", ReadOnly: false, columnHeaderText: "On a sandy patch", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "number"}, 
-                { fieldName: "other", ReadOnly: false, columnHeaderText: "other?", IsVertical: false, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "text"},
+                { fieldName: "other", ReadOnly: false, columnHeaderText: "other?", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "text"},
+                { fieldName: "command", columnHeaderText: "Command", controlName: "Delete", IsVertical: true, controlType: "command", action: (key, row, e) => this.onDelete(key, row, e) }
             ],
             rows: []
         };
@@ -48,6 +49,22 @@ export default class TimedSearch extends React.Component {
         var species = e.target.value;
         row[key] = species;
         this.setState(row);
+    }
+
+    onDelete(key, row, e) {
+        e.preventDefault();
+
+        console.log("Key",key)
+        console.log("Row",row)
+
+        const rowData = this.state.rows;
+        const rows = rowData.filter((currentRow) => currentRow.speciesId !== row.speciesId);
+
+        const selectableSpecies = this.filterSelectableSpecies(rows);
+        this.setState({
+            rows, 
+            selectableSpecies,
+        });
     }
 
     onChangeSpecies(key, row, e) {
@@ -85,28 +102,29 @@ export default class TimedSearch extends React.Component {
         const row = {
             speciesId: selectedSpecies.id,
             speciesName: selectedSpecies.commonName,
-            submerged: e.target[1].value, 
-            exposed: e.target[2].value,
-            crevice: e.target[3].value,
-            sandy: e.target[4].value, 
-            other: e.target[5].value
+            submerged: "", 
+            exposed: "",
+            crevice: "",
+            sandy: "", 
+            other: "",
+            command: ""
         };
 
         rowData.push(row);
-        this.setState({rows: rowData});
 
-        const selectableSpecies = this.filterSelectableSpecies();
-        this.setState({ selectableSpecies });
+        const selectableSpecies = this.filterSelectableSpecies(rowData);
+        this.setState({
+            rows: rowData,
+            selectableSpecies,
+        });
     }
 
-    filterSelectableSpecies() {
-
-        const rowData = this.state.rows;
+    filterSelectableSpecies(rows) {
         
         return this.species.filter(
             (s) => {
                 
-                for (const row of rowData) {
+                for (const row of rows) {
                     if (row.speciesId === s.id) {
                         return false;
                     }
@@ -131,26 +149,6 @@ export default class TimedSearch extends React.Component {
                                     <FormGroup controlId="species">
                                         <ControlLabel>Species </ControlLabel>
                                         <SelectBox ref="species" name="species" fields={["id", "commonName"]} data={this.state.selectableSpecies} />
-                                    </FormGroup>
-                                    <FormGroup controlId="submerged">
-                                        <ControlLabel>Submerged</ControlLabel>
-                                        <FormControl ref="submerged" name="submerged" className="number-field" type="text" />
-                                    </FormGroup>
-                                    <FormGroup controlId="exposed">
-                                        <ControlLabel>exposed</ControlLabel>
-                                        <FormControl ref="exposed" name="exposed" className="number-field" type="text" />
-                                    </FormGroup>
-                                    <FormGroup controlId="crevice">
-                                        <ControlLabel>crevice</ControlLabel>
-                                        <FormControl ref="crevice" name="crevice" className="number-field" type="text" />
-                                    </FormGroup>
-                                    <FormGroup controlId="sandy">
-                                        <ControlLabel>sandy</ControlLabel>
-                                        <FormControl ref="sandy" name="sandy" className="number-field" type="text" />
-                                    </FormGroup>
-                                    <FormGroup controlId="other">
-                                        <ControlLabel>Other</ControlLabel>
-                                        <FormControl ref="other" name="other" className="number-field" type="text" />
                                     </FormGroup>
                                     <button className="btn btn-primary" style={{"marginLeft": "10px"}}>Add</button>
                                 </Panel>
