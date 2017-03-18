@@ -11,7 +11,6 @@ var gridRowCell = React.createClass({
                 result = "";
                 break;
             case "command":
-                console.log("Build Command Button")
                 result = <Button bsStyle="primary" 
                             onClick={this.props.columnData.action.bind(null, this.props.fieldKey, this.props.row)}>
                                 {this.props.columnData.controlName}

@@ -15,6 +15,9 @@ export default class TimedSearch extends React.Component {
 
     constructor(props) {
         super(props);
+        const observationId = this.props.params.observationId;
+        //need to check if observaton id exists and redirect if missing
+        this.observationId = observationId;
         this.state = { 
             time: moment(),
             species: [], // [{ id: String(Guid), commonName: String, ScientificName: String }]
@@ -53,9 +56,6 @@ export default class TimedSearch extends React.Component {
 
     onDelete(key, row, e) {
         e.preventDefault();
-
-        console.log("Key",key)
-        console.log("Row",row)
 
         const rowData = this.state.rows;
         const rows = rowData.filter((currentRow) => currentRow.speciesId !== row.speciesId);
@@ -112,11 +112,22 @@ export default class TimedSearch extends React.Component {
 
         rowData.push(row);
 
-        const selectableSpecies = this.filterSelectableSpecies(rowData);
-        this.setState({
-            rows: rowData,
-            selectableSpecies,
-        });
+        //service.upsertTimeSearch(() => {
+
+            const selectableSpecies = this.filterSelectableSpecies(rowData);
+            this.setState({
+                rows: rowData,
+                selectableSpecies,
+            });
+
+
+        //});
+
+
+    }
+
+    saveRow() {
+
     }
 
     filterSelectableSpecies(rows) {
