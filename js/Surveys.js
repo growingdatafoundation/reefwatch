@@ -27,7 +27,7 @@ var Table = React.createClass({
   BuildButtons: function(cell, row, enumObject){
     return <div className="btn-toolbar">
                 <button onClick={this.handleComplete.bind(this, row)} className="btn btn-success btn-sm">Completed</button>
-                <button onClick={this.handleSelect.bind(this, row)} className="btn btn-info btn-sm">Select</button>                
+                <button onClick={this.handleSelect.bind(this, row)} className="btn btn-info btn-sm">Select</button>
            </div>
  },
  SurveyDate: function(cell, row) {
@@ -57,10 +57,14 @@ var ActiveSurvey = React.createClass({
         return {"surveys":[]};
     },
     componentDidMount: function() {
-        var data = services.GetSurveyDaysWithLocations(result => this.setState({surveys: result}));
+
+        services.getSurveyDaysWithLocations((surveys) => this.setState({
+          surveys
+        }));
     },
     render() {
-        return ( 
+
+        return (
             <Panel heading={"Current Survey Days"} type={"primary"}>
                 <button className="btn btn-primary" style={{marginBottom: "10px"}} onClick={this.handleBtnClick}>Add</button>
                 <Table surveys={this.state.surveys} onSelect={this.props.onSelect} />
@@ -75,14 +79,14 @@ var ActiveSurvey = React.createClass({
 export default React.createClass({
     getInitialState: function() {
         return {selectedSurvey:""};
-    },  
+    },
     onSurveySelected: function(survey) {
         this.setState({selectedSurvey:survey});
     },
     render() {
         var path = this.props.location.pathname;
         var segment = path.split('/')[1] || 'root';
-        
+
         return (
             <div>
                 {this.state.selectedSurvey ? (
@@ -97,13 +101,13 @@ export default React.createClass({
                             {this.props.children}
                         </div>
                     </div>
-                    ): // eslint-disable-line  operator-linebreak 
+                    ): // eslint-disable-line  operator-linebreak
                     <div>
                         <div>
                             <ActiveSurvey onSelect={this.onSurveySelected} />
                         </div>
                         <h3>Please select a survey day to to work on.</h3>
-                    </div>    
+                    </div>
                 }
             </div>
         )

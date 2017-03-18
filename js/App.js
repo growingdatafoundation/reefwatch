@@ -12,7 +12,7 @@ export default React.createClass({
         return {surveyCount:0};
     },  
     componentDidMount: function() {
-        services.GetSurveyDaysWithLocations(result => this.setState({surveyCount: result.length}));
+        services.getSurveyDaysWithLocations(result => this.setState({surveyCount: result.length}));
     },
     componentWillUnmount: function() {
         this.serverRequest.abort();
