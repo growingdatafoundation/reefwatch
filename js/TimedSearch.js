@@ -22,11 +22,11 @@ export default class TimedSearch extends React.Component {
             columnData: [
                 { fieldName: "speciesId", isHidden: "none", controlType: "hidden"},
                 { fieldName: "speciesName", ReadOnly: true, columnHeaderText: "species", IsVertical: true, ChangeEvent: this.onChangeSpecies, controlType: "select", data: this.getData(), IsRowHeader: true }, 
-                { fieldName: "submerged", ReadOnly: false, columnHeaderText: "submerged (in water)", IsVertical: true, ChangeEvent: this.onChange,  controlType: "number"}, 
-                { fieldName: "exposed", ReadOnly: false, columnHeaderText: "exposed", IsVertical: true, ChangeEvent: this.onChange, controlType: "number"}, 
-                { fieldName: "crevice", ReadOnly: false, columnHeaderText: "In a crevice", IsVertical: true, ChangeEvent: this.onChange, controlType: "number"}, 
-                { fieldName: "sandy", ReadOnly: false, columnHeaderText: "On a sandy patch", IsVertical: true, ChangeEvent: this.onChange, controlType: "number"}, 
-                { fieldName: "other", ReadOnly: false, columnHeaderText: "other?", IsVertical: false, ChangeEvent: this.onChange, controlType: "text"}
+                { fieldName: "submerged", ReadOnly: false, columnHeaderText: "submerged (in water)", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e),  controlType: "number"}, 
+                { fieldName: "exposed", ReadOnly: false, columnHeaderText: "exposed", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "number"}, 
+                { fieldName: "crevice", ReadOnly: false, columnHeaderText: "In a crevice", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "number"}, 
+                { fieldName: "sandy", ReadOnly: false, columnHeaderText: "On a sandy patch", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "number"}, 
+                { fieldName: "other", ReadOnly: false, columnHeaderText: "other?", IsVertical: false, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "text"},
             ],
             rows: []
         };
