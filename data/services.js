@@ -1,8 +1,21 @@
-import config from "../config"
+import config from '../config';
+// import qs from 'qs';
+
+const internals = {};
+
+internals.baseUrl = config.api.hostname + ":" + config.api.port + "/" + config.api.prefix;
+
 
 function failedRequest(jqXHR, textStatus, errorThrown) {
     console.error('Service request failed', jqXHR, textStatus, errorThrown);
 }
+
+// function getUrl(method, query) {
+
+//     let url = config.api.hostname + ":" + config.api.port + "/" + config.api.prefix;
+
+//     url += method + query
+// }
 
 export function getSurveyDaysWithLocations(callback) {
 
@@ -201,3 +214,19 @@ export function SavePointIntercept(data, callback) {
     .fail(failedRequest);
 }
 
+export function getTimeSearchesForObservation(observationId, callback) {
+
+    const url = `${internals.baseUrl}/Observations/${observationId}/timedSearches`
+    $.get(url, callback)
+        .fail(failedRequest)
+}
+
+export function upsertTimeSearch(data, callback) {
+
+    throw new Error('Not implemented Error');
+}
+
+export function deleteTimeSearch(id, callback) {
+
+    throw new Error('Not implemented Error');
+}
