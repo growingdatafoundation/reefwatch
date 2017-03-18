@@ -223,10 +223,25 @@ export function getTimeSearchesForObservation(observationId, callback) {
 
 export function upsertTimeSearch(data, callback) {
 
-    throw new Error('Not implemented Error');
+    $.ajax({
+        url: `${internals.baseUrl}/TimedSearches/`,
+        data: JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+        type: 'PUT'
+    })
+    .done(callback)
+    .fail(failedRequest);
 }
 
 export function deleteTimeSearch(id, callback) {
 
-    throw new Error('Not implemented Error');
+    $.ajax({
+        url: `${internals.baseUrl}/TimedSearches/${id}`,
+        dataType: "json",
+        contentType: "application/json",
+        type: 'DELETE'
+    })
+    .done(callback)
+    .fail(failedRequest);
 }
