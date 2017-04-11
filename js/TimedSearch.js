@@ -36,11 +36,40 @@ export default class TimedSearch extends React.Component {
         };
     }
 
-    getData() {
+    componentDidMount() {
+        console.log(this.observationId);
+        this.loadRows(this.observationId);
+    }
 
+    loadRows(observationId) {
+        return services.getTimeSearchesForObservation(observationId, (timedSearchRows) => {
+            console.log(timedSearchRows);
+            const selectableSpecies = this.filterSelectableSpecies(timedSearchRows);
+            this.setState({ rows: timedSearchRows, selectableSpecies });
+        })
+    }
+
+    saveRow(row) {
+        row['observationId'] = this.observationId;
+        services.upsertTimeSearch(row, (result) => {
+            var rows = this.state.rows;
+            rows.forEach(function(item, i) { if (item['speciesId'] == result['speciesId']) rows[i]=result;  });
+            this.setState({rows: rows});
+        });
+    }
+
+    deleteRow(row) {
+        if(row['id']!=undefined) {
+            services.deleteTimeSearch(row['id'], (result) => {
+                console.log("DELETE")
+                console.log(result)
+            });
+        }
+    }
+
+    getData() {
         // Load species data from DB
         return services.GetSpecies((species) => {
-
             this.species = species;
             this.setState({ selectableSpecies: species });
         })
@@ -51,7 +80,7 @@ export default class TimedSearch extends React.Component {
     onChange(key, row, e) {
         var species = e.target.value;
         row[key] = species;
-        this.setState(row);
+        this.saveRow(row);
     }
 
     onDelete(key, row, e) {
@@ -65,6 +94,8 @@ export default class TimedSearch extends React.Component {
             rows, 
             selectableSpecies,
         });
+
+        this.deleteRow(row);
     }
 
     onChangeSpecies(key, row, e) {
@@ -112,21 +143,11 @@ export default class TimedSearch extends React.Component {
 
         rowData.push(row);
 
-        //service.upsertTimeSearch(() => {
-
-            const selectableSpecies = this.filterSelectableSpecies(rowData);
-            this.setState({
-                rows: rowData,
-                selectableSpecies,
-            });
-
-
-        //});
-
-
-    }
-
-    saveRow() {
+        const selectableSpecies = this.filterSelectableSpecies(rowData);
+        this.setState({
+            rows: rowData,
+            selectableSpecies,
+        });
 
     }
 
