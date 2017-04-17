@@ -3,6 +3,7 @@ import $ from 'jquery'
 import { Button, Navbar, NavItem, Nav, Glyphicon } from 'react-bootstrap'
 import config from "../../config"
 import * as services from "../../data/services"
+import {browserHistory} from "react-router";
 
 var SurveyMenu = React.createClass({
     closePanel: function () {
@@ -12,11 +13,14 @@ var SurveyMenu = React.createClass({
     },
     loadSurvey: function () {
         if(this.props.observationId) {
-            services.GetObservation(this.props.observationId, result => this.setState({"observation": result}));
+            console.log("Loading Observation");
+            this.setState({activeKey:1});
+            //load observation friendly display in menu needs to be done
+            //services.GetObservation(this.props.observationId, result => this.setState({observation: result}));
         }
     },
     getInitialState: function() {
-        return {"observation":{}};
+        return {"observation":{},activeKey:1};
     },  
     componentDidMount: function() {
         this.loadSurvey();
@@ -29,6 +33,10 @@ var SurveyMenu = React.createClass({
             this.loadSurvey();
         }
     },
+    handleSelect(selectedKey, e) {
+        this.setState({activeKey:selectedKey});
+         window.location.hash = e.target.hash;
+    },
     render() {
         return (
             <Navbar inverse>
@@ -37,7 +45,7 @@ var SurveyMenu = React.createClass({
                         <Button className="pull-right" onClick={this.closePanel}>Back</Button>
                     </Navbar.Brand>
                 </Navbar.Header>
-                <Nav>
+                <Nav activeKey={this.state.activeKey} onSelect={this.handleSelect}>
                     <NavItem eventKey={1} href={"#/observation/"+this.props.observationId}>Observation</NavItem>
                     <NavItem eventKey={2} href={"#/timed/"+this.props.observationId}>Timed Search</NavItem>
                     <NavItem eventKey={3} href={"#/intercept/"+this.props.observationId}>Point Intercept</NavItem>
@@ -45,7 +53,7 @@ var SurveyMenu = React.createClass({
                     <NavItem eventKey={5} href={"#/photoUpload/"+this.props.observationId}>Add Photo's</NavItem>
                 </Nav>
                 <Nav pullRight>
-                    <NavItem eventKey={6} href="#">{this.state.observation.id}</NavItem>
+                    <NavItem eventKey={6} href="#">{this.props.observationId}</NavItem>
                 </Nav>
             </Navbar>
           )

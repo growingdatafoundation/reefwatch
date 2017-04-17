@@ -245,3 +245,20 @@ export function deleteTimeSearch(id, callback) {
     .done(callback)
     .fail(failedRequest);
 }
+
+
+//lookup data
+export function GetBeaufortScale(callback) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/BeaufortScales", callback)
+    .fail(failedRequest)
+}
+
+export function GetCloudCover(callback) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/CloudCovers", callback)
+    .fail(failedRequest)
+}
+
+export function GetRainfall(callback) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Rainfalls", callback)
+    .fail(failedRequest)
+}

@@ -12,25 +12,41 @@ import * as Services from "../data/services";
 
 var Observation = React.createClass({
     getInitialState: function() {
-        if(this.props.params.observationId) {
+        const observationId = this.props.params.observationId;
+        if(observationId) {
             //need to redirect to error page
         }
+        console.log("observationId");
+        console.log(observationId);
         var initialState = {};
-        initialState.time = moment("1970-01-01 00:00");
-
         initialState.observation = {};
-        if(this.props.params.observationId) {
-            Services.GetObservation(this.props.params.observationId, result => this.setState({"observation": result}));
-        }
+        initialState.observation.time = moment("1970-01-01 00:00");
+        initialState.observationId = observationId;
+
+        Services.GetObservation(observationId, (result) => {
+            console.log("Observation")
+            console.log(result)
+            this.setState({observation: result})
+        });
         
         initialState.volunteers = [];
         Services.GetReefWatchVolunteers((result) => {
            this.setState({volunteers: result});
         });
     
-        initialState.beaufordWindScale = Data.loadBeaufordWindScale();
-        initialState.seaState = Data.loadSeaState();
-        initialState.rainfall = Data.loadRainfall();
+        initialState.beaufordWindScale = [];
+        Services.GetBeaufortScale((result) => {
+            this.setState({beaufordWindScale: result});
+        });
+        initialState.cloudCover = [];
+        Services.GetCloudCover((result) => {
+            this.setState({cloudCover: result});
+        });
+        initialState.rainfall = [];
+        Services.GetRainfall((result) => {
+            this.setState({rainfall: result});
+        });
+
         initialState.windDirections = Data.loadWindDirections();
         initialState.validationState =   {
             "observationTimeState": null,
@@ -50,12 +66,17 @@ var Observation = React.createClass({
     handleTime: function (timeValue) {
         var observation = this.state.observation;
         observation.time = moment(parseInt(timeValue)).format('HH:mm'); // eslint-disable-line radix
-        this.setState(observation);
+        this.setState({observation: observation});
+        Services.SaveObservation(this.state.observation.id, this.state.observation, function(result) {
+            console.log("SaveTime")
+            console.log(result)
+        }); 
+
     },
     handleChange: function(e) {
         var observation = this.state.observation;
         observation[e.target.name] = e.target.value;
-        this.setState(observation);
+        this.setState({observation: observation});
     },
     handleVolunteersChange: function(selectedItems, e) {
         Services.GetVolunteers(this.state.observation.id, function (result) {
@@ -65,23 +86,18 @@ var Observation = React.createClass({
             }
         })
     },
-    submit: function (e) {
-        e.preventDefault();
-        Services.SaveObservation(this.state.observation.id, this.state.observation, function(result) {
-        }); 
-    },
     render() {
     return (
         <div className="container">
             <h2>Observation</h2>
             <form id="formObservation" data-toggle="validator" onSubmit={this.submit} role="form">
-                <FormGroup controlId="time" validationState={this.state.validationState['observationTimeState']}>
-                <ControlLabel controlId="time">Observation Time</ControlLabel>
+                <FormGroup controlId="observationTime" validationState={this.state.validationState['observationTimeState']}>
+                <ControlLabel controlId="observationTime">Observation Time</ControlLabel>
                 <DateTimeField
                     mode="time"
-                    id="time"
+                    id="observationTime"
                     date={this.state.observation.observationTime}
-                    inputProps={{required:"required", name:"time"}}
+                    inputProps={{required:"required", name:"observationTime"}}
                     onChange={this.handleTime}
                 />
                 <FormControl.Feedback />
@@ -132,13 +148,13 @@ var Observation = React.createClass({
                 </FormGroup>
                 <FormGroup controlId="beaufordWindScale" validationState={this.state.validationState['beaufordWindScaleIdState']}>
                     <ControlLabel controlId="beaufordWindScale">Beauford Wind Scale (1-5)</ControlLabel>
-                        <SelectBox id="beaufordWindScale" onChange={this.handleChange} name="beaufordWindScale" data={this.state.beaufordWindScale} />
+                        <SelectBox id="beaufordWindScale" fields={["id", "scaleDescription"]} onChange={this.handleChange} name="beaufordWindScale" data={this.state.beaufordWindScale} />
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
                 <FormGroup controlId="rainfall" validationState={this.state.validationState['windDirectionState']}>
                     <ControlLabel controlId="rainfall">Rainfall</ControlLabel>
-                        <SelectBox id="rainfall" onChange={this.handleChange} name="rainfall" data={this.state.rainfall} />
+                        <SelectBox id="rainfall" fields={["id", "type"]} onChange={this.handleChange} name="rainfall" data={this.state.rainfall} />
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
@@ -146,7 +162,7 @@ var Observation = React.createClass({
                     <ControlLabel controlId="cloudCover">Cloud Cover</ControlLabel>
                     <CloudCover
                     id="cloudCover"
-                    cloudCoverValue={this.state.cloudCover}
+                    cloudCoverValue={this.state.cloudCoverId}
                     required
                     />
                     <FormControl.Feedback />
@@ -160,7 +176,6 @@ var Observation = React.createClass({
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <Button bsStyle="success" type="submit">Save</Button>
             </form>
         </div>
     );
