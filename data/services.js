@@ -262,3 +262,13 @@ export function GetRainfall(callback) {
     $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Rainfalls", callback)
     .fail(failedRequest)
 }
+
+export function GetQuadratRange(callback) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/QuadratRanges", callback)
+    .fail(failedRequest)
+}
+
+export function GetQuadratSpecies(callback) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/QuadratSpecies", callback)
+    .fail(failedRequest)
+}
