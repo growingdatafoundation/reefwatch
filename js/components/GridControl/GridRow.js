@@ -6,6 +6,8 @@ import GridRowCell from './GridRowCell'
 var gridRow = React.createClass({
     CreateCell: function(row) {
         var rowCells = [];
+        console.log("ColumnData->"+this.props.columnData)
+        console.log("Rows->"+this.props.data)
         Object.keys(row).map(function (key) {
             var field = row[key];
             if(this.props.columnData[key]!=undefined)

@@ -247,6 +247,24 @@ export function deleteTimeSearch(id, callback) {
 }
 
 
+export function upsertQuadrat(data, callback) {
+    $.ajax({
+        url: `${internals.baseUrl}/Quadrats`,
+        data: JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+        type: 'PUT'
+    })
+    .done(callback)
+    .fail(failedRequest);
+}
+
+
+export function GetQuadrats(observationId,callback) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Quadrats?filter[where][observationId]="+observationId, callback)
+    .fail(failedRequest)
+}
+
 //lookup data
 export function GetBeaufortScale(callback) {
     $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/BeaufortScales", callback)

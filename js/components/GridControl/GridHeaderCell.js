@@ -21,6 +21,7 @@ var GridHeaderCell = React.createClass({
         window.removeEventListener('resize', this.renderLabels);
     },
     renderLabels: function () {
+        console.log("GridHeader Data->"+this.props.data);
         if(this.props.data.IsVertical) {
             var cell = this.refs.tableHeaderCell;
             var x = cell.offsetWidth -17;
