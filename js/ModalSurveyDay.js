@@ -179,6 +179,7 @@ var surveyDay =  React.createClass({
             var type = "";
             return <Checkbox inline
                 id={type}
+                key={item.id}
                 value={item.id}
                 onChange={this.handleSelectedSites} value={item.id}>{item.siteCode}</Checkbox>;
         },this);

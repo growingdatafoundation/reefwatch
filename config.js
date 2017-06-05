@@ -1,7 +1,7 @@
 const config = {
     api: {
-        hostname: 'http://0.0.0.0', 
-        port: '3001',
+        hostname: 'http://reefwatch.growingdatafoundation.org.au', 
+        port: '80',
         prefix: 'api'
     },
     auth_url: ''

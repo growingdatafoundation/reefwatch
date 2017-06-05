@@ -15,6 +15,7 @@ var Observation = React.createClass({
         const observationId = this.props.params.observationId;
         if(observationId) {
             //need to redirect to error page
+            console.log("Error no observation found")
         }
         console.log("observationId");
         console.log(observationId);
@@ -23,31 +24,47 @@ var Observation = React.createClass({
         initialState.observation.time = moment("1970-01-01 00:00");
         initialState.observationId = observationId;
 
+        console.log("GetObservation Call");
         Services.GetObservation(observationId, (result) => {
-            console.log("Observation")
-            console.log(result)
+            console.log("Return Observation");
+            console.log(result);
             this.setState({observation: result})
         });
         
         initialState.volunteers = [];
+        console.log("GetReefWatchVolunteers Call");
         Services.GetReefWatchVolunteers((result) => {
+            console.log("Return Volunteers");
+            console.log(result);
            this.setState({volunteers: result});
         });
     
         initialState.beaufordWindScale = [];
+        console.log("GetBeaufortScale Call");
         Services.GetBeaufortScale((result) => {
+            console.log("Return BeaufortScale");
+            console.log(result);
             this.setState({beaufordWindScale: result});
         });
         initialState.cloudCover = [];
+        console.log("GetCloudCover Call");
         Services.GetCloudCover((result) => {
+            console.log("Return CloudCover");
+            console.log(result);
             this.setState({cloudCover: result});
         });
         initialState.rainfall = [];
+        console.log("GetRainfall Call");
         Services.GetRainfall((result) => {
+            console.log("Return rainfall");
+            console.log(result);
             this.setState({rainfall: result});
         });
 
+        console.log("windDirections Call");
         initialState.windDirections = Data.loadWindDirections();
+        console.log("Return windDirections");
+        console.log(initialState.windDirections);
         initialState.validationState =   {
             "observationTimeState": null,
             "otherLocationState": null,

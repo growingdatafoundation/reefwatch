@@ -16,7 +16,9 @@ var SurveyMenu = React.createClass({
             console.log("Loading Observation");
             this.setState({activeKey:1});
             //load observation friendly display in menu needs to be done
-            //services.GetObservation(this.props.observationId, result => this.setState({observation: result}));
+            services.GetObservation(this.props.observationId, result => 
+                this.setState({observation: result})
+            );
         }
     },
     getInitialState: function() {

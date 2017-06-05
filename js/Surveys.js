@@ -106,7 +106,6 @@ export default React.createClass({
                         <div>
                             <ActiveSurvey onSelect={this.onSurveySelected} />
                         </div>
-                        <h3>Please select a survey day to to work on.</h3>
                     </div>
                 }
             </div>
