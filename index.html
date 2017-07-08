@@ -1,0 +1,121 @@
+<!doctype html public "storage">
+<html>
+<head>
+    <meta charset=utf-8/>
+    <title>Reef Watch</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!--meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"-->
+    <link rel="stylesheet" type="text/css" href="./node_modules/react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="./node_modules/react-bootstrap-typeahead/css/Typeahead.css">
+    <link rel="stylesheet" type="text/css" href="./css/custom.css">
+    <style>
+        .contentPage {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left:100%;
+            top: 0px;
+            background-color: white;
+            z-index: 1000;
+        }
+        
+        
+        /* START001: Needed for vertical text in tables */
+
+        th.rotate {
+            /* Something you can count on */
+            height: 100px;
+            white-space: nowrap;
+        }
+
+        th.rotate > div {
+            transform: 
+                /* 45 is really 360 - 45 */
+                rotate(315deg);
+                width: 50px;
+        }
+        th.rotate > div > span {
+            border-bottom: 1px solid #ccc;
+            padding: 5px 10px;
+        }
+
+        .table-header-rotated {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .csstransforms .table-header-rotated td {
+            width: 50px;
+        }
+        .no-csstransforms .table-header-rotated th {
+            padding: 5px 10px;
+        }
+        .table-header-rotated td {
+            text-align: center;
+            padding: 10px 5px;
+            border: 1px solid #ccc;
+        }
+        .csstransforms .table-header-rotated th.rotate {
+            height: 140px;
+            white-space: nowrap;
+        }
+        .csstransforms .table-header-rotated th.rotate > div {
+            -webkit-transform: rotate(315deg);
+                    transform: rotate(315deg);
+            width: 30px;
+        }
+        .csstransforms .table-header-rotated th.rotate > div > span {
+            border-bottom: 1px solid #ccc;
+            padding: 5px 10px;
+        }
+        .table-header-rotated th.row-header {
+            padding: 0 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        /* END001 */
+        
+        .number-field { max-width: 50px; }
+        
+    </style>
+</head>
+<body>
+<div id=app></div>
+<script src="bundle.js"></script>
+
+<script>
+  $(".nav.nav-pills li").on("click",function(){
+      $(".nav.nav-pills li").removeClass("active");
+      $(this).addClass("active");
+  });
+</script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="./node_modules/react-bootstrap-table/dist/react-bootstrap-table.min.js"></script>
+<script>
+    function GetVendorPrefix(arrayOfPrefixes) {
+
+    var tmp = document.createElement("div");
+    var result = "";
+
+    for (var i = 0; i < arrayOfPrefixes.length; ++i) {
+
+    if (typeof tmp.style[arrayOfPrefixes[i]] != 'undefined'){
+        result = arrayOfPrefixes[i];
+        break;
+    }
+    else {
+        result = null;
+    }
+    
+    }
+
+    return result;
+    }
+    
+    var transformPrefix = GetVendorPrefix(["transform", "msTransform", "MozTransform", "WebkitTransform", "OTransform"]);
+
+</script>
+</body>
+</html>
+

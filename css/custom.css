@@ -1,0 +1,16 @@
+/*
+  body {
+    padding-top: 100px;
+  }
+ */
+.selectedFieldDay {
+    margin-top:12px;
+    width:350px;
+    height: 35px;
+    float: right;
+    vertical-align: middle;
+}
+
+.form-control {
+  padding: 2px 2px;
+}

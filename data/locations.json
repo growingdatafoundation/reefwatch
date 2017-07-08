@@ -1,0 +1,38 @@
+[
+    {
+      "location_code": "AN",
+      "description": "Aldinga North"
+    },
+    {
+      "location_code": "AS",
+      "description": "Aldinga South"
+    },
+    {
+      "location_code": "LBN",
+      "description": "Lady Bay North"
+    },
+    {
+      "location_code": "LBS",
+      "description": "Lady Bay South"
+    },
+    {
+      "location_code": "HC",
+      "description": "Hallett Cove"
+    },
+    {
+      "location_code": "YB",
+      "description": "Victor Harbor"
+    },
+    {
+      "location_code": "B",
+      "description": "Beachport"
+    },
+    {
+      "location_code": "R",
+      "description": "Robe"
+    },
+    {
+      "location_code": "PM",
+      "description": "Port Macdonnell"
+    }
+]
