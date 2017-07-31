@@ -1,0 +1,29 @@
+{
+  "name": "Location",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "locationName": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "sites": {
+      "type": "hasMany",
+      "model": "Site",
+      "foreignKey": ""
+    },
+    "surveyDays": {
+      "type": "hasMany",
+      "model": "SurveyDay",
+      "foreignKey": "locationId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

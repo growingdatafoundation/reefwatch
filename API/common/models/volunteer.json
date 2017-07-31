@@ -1,0 +1,24 @@
+{
+  "name": "Volunteer",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "observation": {
+      "type": "belongsTo",
+      "model": "Observation",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

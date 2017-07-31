@@ -1,0 +1,40 @@
+{
+  "name": "SelectedSite",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "siteId": {
+      "type": "string",
+      "required": true
+    },
+    "observationId": {
+      "type": "string",
+      "required": false
+    },
+    "siteCode": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "surveyDay": {
+      "type": "belongsTo",
+      "model": "SurveyDay",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {
+    "CreateObservations": {
+      "isStatic": false,
+      "accepts": [],
+      "returns": [],
+      "description": "",
+      "http": []
+    }
+  }
+}

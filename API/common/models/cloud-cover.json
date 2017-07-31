@@ -1,0 +1,28 @@
+{
+  "name": "CloudCover",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "category": {
+      "type": "number",
+      "required": true
+    },
+    "type": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "observations": {
+      "type": "hasOne",
+      "model": "Observation",
+      "foreignKey": "cloudCoverId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

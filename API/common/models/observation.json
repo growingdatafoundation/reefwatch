@@ -1,0 +1,53 @@
+{
+  "name": "Observation",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "observationTime": {
+      "type": "date",
+      "required": true
+    },
+    "otherLocation": {
+      "type": "string"
+    },
+    "weatherComment": {
+      "type": "string"
+    },
+    "recentExceptionalWeather": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "sites": {
+      "type": "hasMany",
+      "model": "Site",
+      "foreignKey": ""
+    },
+    "volunteers": {
+      "type": "hasMany",
+      "model": "Volunteer",
+      "foreignKey": ""
+    },
+    "surveyDay": {
+      "type": "belongsTo",
+      "model": "SurveyDay",
+      "foreignKey": "surveyDayId"
+    },
+    "pointIntercepts": {
+      "type": "hasMany",
+      "model": "PointIntercept",
+      "foreignKey": ""
+    },
+    "timedSearches": {
+      "type": "hasMany",
+      "model": "TimedSearch",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

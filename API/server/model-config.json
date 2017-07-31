@@ -1,0 +1,99 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "db"
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Location": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "Site": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "SurveyDay": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "Rainfall": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "BeaufortScale": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "CloudCover": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "Observation": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "Volunteer": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "SelectedSite": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "reefWatchVolunteer": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "PointIntercept": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "TimedSearch": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "Species": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "QuadratRange": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "QuadratSpecies": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  },
+  "Quadrat": {
+    "dataSource": "mongoRWDS",
+    "public": true
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "BeaufortScale",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "scale": {
+      "type": "number",
+      "required": true
+    },
+    "scaleDescription": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "observations": {
+      "type": "hasOne",
+      "model": "Observation",
+      "foreignKey": "beaufortScaleId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

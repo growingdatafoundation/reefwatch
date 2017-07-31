@@ -1,0 +1,59 @@
+{
+  "name": "PointIntercept",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "depthlabel": {
+      "type": "string",
+      "required": true
+    },
+    "sedimentdepth": {
+      "type": "number",
+      "required": true
+    },
+    "rock": {
+      "type": "boolean"
+    },
+    "turf": {
+      "type": "boolean"
+    },
+    "encrusting": {
+      "type": "boolean"
+    },
+    "foliaceous": {
+      "type": "boolean",
+      "required": true
+    },
+    "neptunes": {
+      "type": "boolean"
+    },
+    "sealettuce": {
+      "type": "boolean"
+    },
+    "seagrass": {
+      "type": "boolean"
+    },
+    "tubeworms": {
+      "type": "boolean"
+    },
+    "mussels": {
+      "type": "boolean"
+    },
+    "other": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "observation": {
+      "type": "belongsTo",
+      "model": "Observation",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

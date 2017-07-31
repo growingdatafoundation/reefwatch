@@ -1,0 +1,29 @@
+{
+  "name": "Site",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "siteCode": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "location": {
+      "type": "belongsTo",
+      "model": "Location",
+      "foreignKey": "locationId"
+    },
+    "selectedSites": {
+      "type": "hasMany",
+      "model": "SelectedSites",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

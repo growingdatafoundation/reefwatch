@@ -1,0 +1,36 @@
+{
+  "name": "Quadrat",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "count": {
+      "type": "string"
+    },
+    "comment": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "observation": {
+      "type": "belongsTo",
+      "model": "Observation",
+      "foreignKey": ""
+    },
+    "quadratSpecies": {
+      "type": "belongsTo",
+      "model": "QuadratSpecies",
+      "foreignKey": ""
+    },
+    "quadratRange": {
+      "type": "belongsTo",
+      "model": "QuadratRange",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
