@@ -4,7 +4,7 @@ import { Modal, Button, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Ch
 import DateTimeField from 'react-bootstrap-datetimepicker';
 import moment from "moment";
 import config from '../config'
-import Typeahead from 'react-bootstrap-typeahead';
+import {Typeahead} from 'react-bootstrap-typeahead';
 import CloudCover from './components/CloudCover';
 import SelectBox from './components/SelectBox';
 import * as Data from "../data/data"
@@ -98,6 +98,8 @@ var Observation = React.createClass({
     handleVolunteersChange: function(selectedItems, e) {
         Services.GetVolunteers(this.state.observation.id, function (result) {
             if (result) {
+                console.log("GetVolunteers Result")
+                console.log(result)
                 result.foreach(function (item) {
                 }, this);
             }
@@ -137,13 +139,15 @@ var Observation = React.createClass({
                 <FormGroup controlId="volunteers" validationState={this.state.validationState['volunteersState']}>
                     <ControlLabel controlId="volunteers">Volunteers</ControlLabel>
                     <Typeahead
+                        id="volunteers"
                         ref="volunteerType"
+                        clearButton
+                        multiple
+                        allowNew
                         labelKey="name"
+                        placeholder="Please enter volunteer names..."
                         onChange={this.handleVolunteersChange}
                         options={this.state.volunteers}
-                        id="volunteers"
-                        allowNew={true}
-                        multiple={true}
                         selected={this.state.observation.volunteers}
                     />
                     <FormControl.Feedback />
