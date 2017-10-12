@@ -290,3 +290,23 @@ export function GetQuadratSpecies(callback) {
     $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/QuadratSpecies", callback)
     .fail(failedRequest)
 }
+
+
+/*S# attachments */
+export function GetAttachments(callback) {
+    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Attachments/gdf-reefwatch-images/files", callback)
+    .fail(failedRequest)
+}
+
+export function AddAttachment(data, callback) {
+    $.ajax({
+        url: config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Attachments/gdf-reefwatch-images/upload",
+        data: data,
+        type: 'POST',
+        cache: false,
+        contentType: false,
+        processData: false
+     })
+    .done(callback)
+    .fail(failedRequest);
+}
