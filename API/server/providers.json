@@ -1,0 +1,15 @@
+{
+"google-link": {
+   "provider": "google",
+   "module": "passport-google-oauth",
+   "strategy": "OAuth2Strategy",
+   "clientID": "63974457278-ncfcnl75a5uucq7ve47t9trtqflmpt9p.apps.googleusercontent.com",
+   "clientSecret": "TT6hrL-Gn-gP-umqOyjFOt4P",
+   "callbackURL": "http://localhost:3000/link/google/callback",
+   "authPath": "/link/google",
+   "callbackPath": "/link/google/callback",
+   "successRedirect": "/link/account",
+   "scope": ["email", "profile"],
+   "link": true
+ }
+}

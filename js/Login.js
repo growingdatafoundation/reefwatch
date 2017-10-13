@@ -36,10 +36,18 @@ export default React.createClass({
     render() {                
         return (
             <div>
-                <div>
-                    <h2>Login</h2>
+                <div className="row">
+                    <div className="col-md-3">
+                    </div>
+                    <div className="col-md-6">
+                        <h2>Login</h2>
+                    </div>
+                    <div className="col-md-3">
+                    </div>
                 </div>
                 <div className="row">
+                    <div className="col-md-3">
+                    </div>
                     <div className="col-md-6">
                         <FormGroup controlId="email">
                             <ControlLabel>Email</ControlLabel>
@@ -53,6 +61,12 @@ export default React.createClass({
                             />
                             <FormControl.Feedback />
                         </FormGroup>
+                    </div>
+                    <div className="col-md-3">
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-3">
                     </div>
                     <div className="col-md-6">
                         <FormGroup controlId="password">
@@ -68,6 +82,8 @@ export default React.createClass({
                             <FormControl.Feedback />
                         </FormGroup>
                         <Button bsStyle="success" onClick={this.login}>Login</Button>
+                    </div>
+                    <div className="col-md-3">
                     </div>
                 </div>
             </div>
