@@ -16,6 +16,8 @@ import PhotoUpload from './js/PhotoUpload'
 import SurveyMenu from './js/SurveyMenu'
 import ExportData from './js/ExportData'
 import PointIntercept from './js/PointIntercept'
+import changePassword from './js/PasswordChange'
+import welcome from './js/Welcome'
 
 render((
   <Router history={hashHistory}>
@@ -34,7 +36,8 @@ render((
       </Route>
       <Route path="/admin" component={Admin}></Route>
       <Route path="/export" component={ExportData}></Route>
-      <Route path="/login" component={Login}></Route>
-    </Route>
+      <Route path="/login" component={Login}> </Route> 
+      <Route path="/changepassword" component={changePassword}> </Route> 
+     </Route>
   </Router>
 ), document.getElementById('app'))

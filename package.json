@@ -1,9 +1,11 @@
 {
-  "name": "reef-watch-intertidal-survey-system",
+  "name": "build.js",
   "version": "1.0.0",
-  "description": "",
+  "description": "Reefwatch Marine Species Survey",
   "main": "index.js",
   "dependencies": {
+    "amazon-cognito-identity-js": "^2.0.3",
+    "aws-sdk": "^2.238.1",
     "bootstrap": "^3.3.6",
     "bootstrap-validator": "^0.10.2",
     "history": "^1.17.0",
@@ -21,6 +23,7 @@
     "react-dom": "^0.14.7",
     "react-dropzone": "^3.4.0",
     "react-router": "^2.4.0",
+    "react-router-dom": "^4.2.2",
     "react-select": "^1.0.0-beta11"
   },
   "scripts": {
@@ -28,10 +31,10 @@
     "clean": "rm -R ./node_modules/",
     "clean-fg": "rm -R ./node_modules/form-generator-react/ && npm install",
     "eslint": "eslint **/*.js",
-    "webpack": "./node_modules/.bin/webpack",
-    "webpack-check": "./node_modules/.bin/webpack | webpack-bundle-size-analyzer",
-    "test": "./node_modules/.bin/jest",
-    "test-changes": "./node_modules/.bin/jest --changedonly"
+    "webpack": "webpack",
+    "webpack-check": "webpack | webpack-bundle-size-analyzer",
+    "test": "jest",
+    "test-changes": "jest --changedonly"
   },
   "devDependencies": {
     "babel-core": "^6.5.1",
@@ -51,7 +54,8 @@
     "http-server": "^0.8.5",
     "install": "^0.6.1",
     "jest-cli": "^12.0.2",
-    "node-sass": "^3.7.0",
+    "json-loader": "^0.5.7",
+    "node-sass": "^4.8.3",
     "npm": "^3.8.8",
     "path": "^0.12.7",
     "react-addons-test-utils": "^0.14.8",
@@ -59,7 +63,7 @@
     "style-loader": "^0.13.1",
     "underscore": "^1.8.3",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.0",
+    "webpack": "^1.15.0",
     "webpack-dev-server": "^1.14.1"
   },
   "jest": {
@@ -70,5 +74,13 @@
     ]
   },
   "author": "",
-  "license": "CC0-1.0"
+  "license": "CC0-1.0",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/growingdatafoundation/reefwatch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/growingdatafoundation/reefwatch/issues"
+  },
+  "homepage": "https://github.com/growingdatafoundation/reefwatch#readme"
 }

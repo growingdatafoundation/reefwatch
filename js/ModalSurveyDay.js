@@ -10,6 +10,10 @@ import * as Services from "../data/services";
 
 
 var surveyDay =  React.createClass({
+   isLoggedIn: function(){
+    console.log("IsLoggedIn:::: " + this.state.showModal)
+    return true
+   },
     getInitialState: function() {
         var initialState = {};
 
