@@ -95,5 +95,9 @@
   "Quadrat": {
     "dataSource": "mongoRWDS",
     "public": true
+  },
+  "Attachment": {
+    "dataSource": "storage",
+    "public": true
   }
 }
