@@ -8,6 +8,7 @@
     <!--meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"-->
     <link rel="stylesheet" type="text/css" href="./node_modules/react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="./node_modules/react-bootstrap-typeahead/css/Typeahead.css">
+    <link rel="stylesheet" type="text/css" href="./node_modules/react-bootstrap-table/css/react-bootstrap-table.css">
     <link rel="stylesheet" type="text/css" href="./node_modules/react-image-gallery/styles/css/image-gallery.css">
     <link rel="stylesheet" type="text/css" href="./css/custom.css">
     <style>
@@ -20,8 +21,8 @@
             background-color: white;
             z-index: 1000;
         }
-        
-        
+
+
         /* START001: Needed for vertical text in tables */
 
         th.rotate {
@@ -31,7 +32,7 @@
         }
 
         th.rotate > div {
-            transform: 
+            transform:
                 /* 45 is really 360 - 45 */
                 rotate(315deg);
                 width: 50px;
@@ -74,9 +75,9 @@
             border-bottom: 1px solid #ccc;
         }
         /* END001 */
-        
+
         .number-field { max-width: 50px; }
-        
+
     </style>
 </head>
 <body>
@@ -108,15 +109,14 @@
     else {
         result = null;
     }
-    
+
     }
 
     return result;
     }
-    
+
     var transformPrefix = GetVendorPrefix(["transform", "msTransform", "MozTransform", "WebkitTransform", "OTransform"]);
 
 </script>
 </body>
 </html>
-
