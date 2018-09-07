@@ -36,8 +36,8 @@ render((
       </Route>
       <Route path="/admin" component={Admin}></Route>
       <Route path="/export" component={ExportData}></Route>
-      <Route path="/login" component={Login}> </Route> 
-      <Route path="/changepassword" component={changePassword}> </Route> 
+      <Route path="/login" component={Login}> </Route>
+      <Route path="/changepassword" component={changePassword}> </Route>
      </Route>
   </Router>
 ), document.getElementById('app'))

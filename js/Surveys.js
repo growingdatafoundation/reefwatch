@@ -1,5 +1,4 @@
 import React from 'react'
-import config from "../config"
 import SurveyDay from "./ModalSurveyDay"
 import WorkingSurveyList from "./components/WorkingSurveyList"
 import Panel from "./components/Panel"
@@ -70,7 +69,7 @@ var ActiveSurvey = React.createClass({
                 </div>
             )
         }
-        else{ 
+        else{
         return (
             <Panel heading={"Current Survey Days"} type={"primary"}>
                 <button className="btn btn-primary" style={{marginBottom: "10px"}} onClick={this.handleBtnClick}>Add</button>

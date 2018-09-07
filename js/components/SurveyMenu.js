@@ -1,7 +1,6 @@
 import React from 'react'
 import $ from 'jquery'
 import { Button, Navbar, NavItem, Nav, Glyphicon } from 'react-bootstrap'
-import config from "../../config"
 import * as services from "../../data/services"
 import {browserHistory} from "react-router";
 
@@ -9,21 +8,21 @@ var SurveyMenu = React.createClass({
     closePanel: function () {
         $("div.contentPage").animate({
             left: '100%'
-        });        
+        });
     },
     loadSurvey: function () {
         if(this.props.observationId) {
             console.log("Loading Observation");
             this.setState({activeKey:1});
             //load observation friendly display in menu needs to be done
-            services.GetObservation(this.props.observationId, result => 
+            services.GetObservation(this.props.observationId, result =>
                 this.setState({observation: result})
             );
         }
     },
     getInitialState: function() {
         return {"observation":{},activeKey:1};
-    },  
+    },
     componentDidMount: function() {
         this.loadSurvey();
     },

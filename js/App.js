@@ -2,9 +2,7 @@ import React from 'react'
 import  {Link}  from 'react-router'
 import DisplaySelectedSurvey from './components/DisplaySelectedSurvey'
 import PubSub from './helpers/pubsub'
-import config from "../config"
 import * as services from "../data/services"
-
 
 export default React.createClass({
   isLoggedIn:function(){
@@ -14,8 +12,8 @@ export default React.createClass({
         //var auth2 = gapi.auth2.getAuthInstance();
      //   this.setState({ showModal: true })
         return {surveyCount:0};
-        
-    },  
+
+    },
     componentDidMount: function() {
         services.getSurveyDaysWithLocations(result => this.setState({surveyCount: result.length}));
     },

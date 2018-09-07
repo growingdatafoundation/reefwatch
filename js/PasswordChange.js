@@ -3,14 +3,15 @@ import { Modal, Button, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Ch
 import DateTimeField from 'react-bootstrap-datetimepicker'
 import moment from "moment";
 import SelectBox from './components/SelectBox'
-import config from '../config'
 import validator from 'bootstrap-validator';
 import Typeahead from 'react-bootstrap-typeahead';
 import {CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails} from 'amazon-cognito-identity-js';
-import { env } from './environments/environment';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
+
+import CONFIG from '../config';
+
 export default React.createClass({
-  
+
     getInitialState: function() {
         return {"login" : { "email": "", "password": "" }};
     },
@@ -24,7 +25,7 @@ export default React.createClass({
         var data = this.state.login;
         var that = this;
        /*$.ajax({
-            url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Users/Login",
+            url         : CONFIG.api.hostname + ":"+CONFIG.api.port+"/"+CONFIG.api.prefix+"/Users/Login",
             data        : JSON.stringify(data),
             dataType: "json",
             contentType: "application/json",
@@ -32,7 +33,7 @@ export default React.createClass({
         }).done(function(data){
             that.setState({ showModal: false });
         })
-        .fail(function(jqXHR, textStatus, errorThrown) { 
+        .fail(function(jqXHR, textStatus, errorThrown) {
             alert("Username or password incorrect!!!" + data.email );
         });*/
         //Cognito Auth
@@ -42,15 +43,15 @@ export default React.createClass({
         };
         var authenticationDetails = new AuthenticationDetails(authData);
         var poolData = {
-            UserPoolId: env.userPoolId,
-            ClientId: env.clientId
+            UserPoolId: CONFIG.aws.userPoolId,
+            ClientId: CONFIG.aws.clientId
         }
         var userPool = new CognitoUserPool(poolData);
         var userData = {
             Username:data.email,
             Pool: userPool
         };
-        console.log("Authenticating the user in Login service" + env.userPoolId);
+        console.log("Authenticating the user in Login service" + CONFIG.aws.userPoolId);
         console.log("New Password:"+data.newPassword +", Temporary Password: "+data.password + ", Email: " +data.email)
         let cognitoUser = new CognitoUser(userData);
         console.log("Comes here");
@@ -71,25 +72,25 @@ export default React.createClass({
                 })
             },
             onSuccess:function (result){
-                console.log("User is authenticated, access token is: " + result.getAccessToken().getJwtToken());  
+                console.log("User is authenticated, access token is: " + result.getAccessToken().getJwtToken());
                 var url ='cognito-idp.' + CognitoUtil.REGION.toLowerCase() + '.amazonaws.com/' + CognitoUtil.USER_POOL_ID;
-                 AWS.config.region =  CognitoUtil.REGION;
-                 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                 AWS.CONFIG.region =  CognitoUtil.REGION;
+                 AWS.CONFIG.credentials = new AWS.CognitoIdentityCredentials({
                      IdentityPoolId: CognitoUtil.IDENTITY_POOL_ID,
                      Logins : {
-                        url : result.getIdToken().getJwtToken() 
+                        url : result.getIdToken().getJwtToken()
                      }
-                 });        
+                 });
             },
             onFailure: function(err){
                 console.log("Error occured: " + err.message);
                 cognitoCallBack.callBack(err.message, null);
             }
         });
-    
+
         //Ends here
     },
-    render() {                
+    render() {
         return (
             <div>
                 <div>
@@ -138,12 +139,11 @@ export default React.createClass({
                         <FormControl.Feedback />
                     </FormGroup>
                     <Button bsStyle="success" onClick={this.login}>Change Password & Login</Button>
-                    
-                 
+
+
                 </div>
             </div>
             </div>
         )
     }
-})    
-
+})

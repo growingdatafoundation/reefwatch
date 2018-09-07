@@ -3,11 +3,9 @@ import { Modal, Button, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Ch
 import DateTimeField from 'react-bootstrap-datetimepicker'
 import moment from "moment";
 import SelectBox from './components/SelectBox'
-import config from '../config'
 import validator from 'bootstrap-validator';
 import Typeahead from 'react-bootstrap-typeahead';
 import * as Services from "../data/services";
-
 
 var surveyDay =  React.createClass({
    isLoggedIn: function(){
@@ -60,7 +58,7 @@ var surveyDay =  React.createClass({
         this.setState({validationState: validationState});
     },
     SaveSelectedSites: function(result) {
-        var surveyDayId = result.id;        
+        var surveyDayId = result.id;
         this.state.currentSiteList.forEach(function (item) {
             if(item.selected!=undefined && item.selected) {
                 //map site to selectedsite model
@@ -78,7 +76,7 @@ var surveyDay =  React.createClass({
         this.setState({surveyDay: newSurveyData});
     },
     handleLeader: function (e) {
-        
+
     },
     handleLocationChange: function (e) {
         var newSurveyData = this.state.surveyDay;
@@ -105,7 +103,7 @@ var surveyDay =  React.createClass({
         var highTideTime = moment(d);
         if(highTideTime.isValid()) {
             newSurveyData.highTideTime =  highTideTime.format("YYYY-MM-DD HH:mm")
-            this.setState({surveyDay: newSurveyData}); 
+            this.setState({surveyDay: newSurveyData});
             this.setSurveyState(null, 'highTideTimeState');
         }else {
             this.setSurveyState('error', 'highTideTimeState');
@@ -127,7 +125,7 @@ var surveyDay =  React.createClass({
             validationState.highTideTimeState===null&&
             validationState.surveyDateState===null&&
             validationState.projectOfficerState===null&&siteSelected) {
-            return true;          
+            return true;
         }
         if(!siteSelected) {
             alert("Please select a site");

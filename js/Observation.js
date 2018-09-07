@@ -3,7 +3,6 @@ import validator from 'bootstrap-validator';
 import { Modal, Button, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Checkbox } from 'react-bootstrap';
 import DateTimeField from 'react-bootstrap-datetimepicker';
 import moment from "moment";
-import config from '../config'
 import {Typeahead} from 'react-bootstrap-typeahead';
 import CloudCover from './components/CloudCover';
 import SelectBox from './components/SelectBox';
@@ -30,7 +29,7 @@ var Observation = React.createClass({
             console.log(result);
             this.setState({observation: result})
         });
-        
+
         initialState.volunteers = [];
         console.log("GetReefWatchVolunteers Call");
         Services.GetReefWatchVolunteers((result) => {
@@ -38,7 +37,7 @@ var Observation = React.createClass({
             console.log(result);
            this.setState({volunteers: result});
         });
-    
+
         initialState.beaufordWindScale = [];
         console.log("GetBeaufortScale Call");
         Services.GetBeaufortScale((result) => {
@@ -76,7 +75,7 @@ var Observation = React.createClass({
             "cloudCoverIdState": null,
             "exceptionalWeatherConditionsState": null
         };
-        
+
         initialState.cloudCover = 0;
         return initialState;
     },
@@ -87,7 +86,7 @@ var Observation = React.createClass({
         Services.SaveObservation(this.state.observation.id, this.state.observation, function(result) {
             console.log("SaveTime")
             console.log(result)
-        }); 
+        });
 
     },
     handleChange: function(e) {
