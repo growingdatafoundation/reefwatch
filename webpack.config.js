@@ -19,6 +19,7 @@ module.exports = {
             { test: /jquery\.js$/, loader: 'expose?jQuery' },
             { test: /jquery\.js$/, loader: 'expose?$' },
             { test: /jquery\..*\.js/, loader: "imports?$=jquery,jQuery=jquery,this=>window" },
+            { test: /\.js/, exclude: /node_modules/, loader: "eslint-loader" },
             { test: /\.png$/, loader: "url-loader?mimetype=image/png" }
         ]
     }
