@@ -34,3 +34,10 @@ node_modules
 .node_repl_history
 
 .DS_Store
+
+#jb, eslint log
+eslint.errors
+
+#jb, config files, js and json
+config/*.js
+config/*.json

@@ -1,0 +1,30 @@
+/////
+// Usage: Copy file to `index.js` and edit values below
+// @TODO: replace with dotenv?
+////
+
+/**
+ * AWS Cognito
+ */
+const aws = {
+    region: 'ap-southeast-2', // Region
+    userPoolId: '<COGNITO USERPOOL ID>', // User Pool Id
+    clientId: '<COGNITO APP CLIENT ID>', // App Client Id
+};
+
+/**
+ * Middleware: /api endpoint
+ */
+const api = {
+    hostname: 'http://127.0.0.1',
+    port: '3001',
+    prefix: 'api',
+};
+
+const auth_url = '';
+
+export default {
+    aws: aws,
+    api: api,
+    auth_url: auth_url,
+};
