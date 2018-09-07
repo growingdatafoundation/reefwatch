@@ -34,7 +34,9 @@
     "webpack": "webpack",
     "webpack-check": "webpack | webpack-bundle-size-analyzer",
     "test": "jest",
-    "test-changes": "jest --changedonly"
+    "test-changes": "jest --changedonly",
+    "postinstall": "cd API && npm install && cd ../",
+    "postupdate": "cd API && npm update && cd ../"
   },
   "devDependencies": {
     "babel-core": "^6.5.1",
