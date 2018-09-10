@@ -37,7 +37,8 @@
     "test": "jest",
     "test-changes": "jest --changedonly",
     "postinstall": "cd API && npm install && cd ../",
-    "postupdate": "cd API && npm update && cd ../"
+    "postupdate": "cd API && npm update && cd ../",
+    "today": "git log --pretty=\"%h %s\" --since=midnight"
   },
   "devDependencies": {
     "babel-core": "^6.5.1",
