@@ -35,6 +35,9 @@ node_modules
 
 .DS_Store
 
+#jb, private files
+.private
+
 #jb, eslint log
 eslint.errors
 

@@ -1,0 +1,7 @@
+node_modules
+
+#jb, eslint log
+eslint.errors
+
+#jb, config files, js and json
+server/datasources.json
