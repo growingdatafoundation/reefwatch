@@ -28,19 +28,19 @@ var GridHeaderCell = React.createClass({
 
         if (this.props.data.IsVertical) {
             cell = this.refs.tableHeaderCell;
-            x = cell.offsetWidth -17;
+            x = cell.offsetWidth - 17;
             y = 24;
-            cell.style.transform = "translate("+x+"px, "+y+"px)";
+            cell.style.transform = "translate(" + x + "px, " + y + "px)";
         }  else {
             cell = this.refs.tableHeaderCell;
-            x = (cell.offsetWidth/2) - (this.getTextWidth(this.props.data.columnHeaderText, "bold 12pt arial")/2);
+            x = (cell.offsetWidth / 2) - (this.getTextWidth(this.props.data.columnHeaderText, "bold 12pt arial") / 2);
             y = 0;
-            cell.style.transform = "translate("+x+"px, "+y+"px)";
+            cell.style.transform = "translate(" + x + "px, " + y + "px)";
             cell.style.verticalAlign = "bottom";
         }
     },
     render() {
-        var roateColumnText = (this.props.data.IsVertical) ? 'rotate': '';
+        var roateColumnText = (this.props.data.IsVertical) ? 'rotate' : '';
             return (
             <th ref="tableHeaderCell" style={{display: this.props.data.isHidden}}  className={roateColumnText} key={this.props.key}>
                 <div>

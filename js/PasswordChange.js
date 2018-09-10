@@ -73,7 +73,7 @@ export default React.createClass({
             },
 
             onSuccess:function (result){
-                var url ='cognito-idp.' + CONFIG.aws.region + '.amazonaws.com/' + CONFIG.aws.userPoolId;
+                var url = 'cognito-idp.' + CONFIG.aws.region + '.amazonaws.com/' + CONFIG.aws.userPoolId;
                  AWS.config.region =  CONFIG.aws.region; //TODO use updateConfig
                  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
                      // IdentityPoolId: CognitoUtil.IDENTITY_POOL_ID, //jb TODO, no identity pool set up currently

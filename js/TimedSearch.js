@@ -53,7 +53,7 @@ export default class TimedSearch extends React.Component {
             var rows = this.state.rows;
             rows.forEach(function(item, i) {
                 if (item.speciesId === result.speciesId) {
-                    rows[i]=result;
+                    rows[i] = result;
                 }
             });
             this.setState({rows: rows});
@@ -109,7 +109,7 @@ export default class TimedSearch extends React.Component {
 
     speciesIsValid(species) {
         // Does data already contain row
-        return (!this.state.selectedSpecies.indexOf(species)!==-1);
+        return (!this.state.selectedSpecies.indexOf(species) !== -1);
     }
 
     beforeSave(row, cellName, cellValue) {

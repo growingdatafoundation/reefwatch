@@ -75,7 +75,7 @@ export default React.createClass({
                  alert("Please Change Password using Change Password button!!");
             },
             onSuccess:function (result){
-                var url ='cognito-idp.' + CONFIG.aws.region.toLowerCase() + '.amazonaws.com/' + CONFIG.aws.userPoolId;
+                var url = 'cognito-idp.' + CONFIG.aws.region.toLowerCase() + '.amazonaws.com/' + CONFIG.aws.userPoolId;
                 localStorage.setItem('id_token', result.getAccessToken().getJwtToken());
                 window.location.reload()
                 AWS.config.region =  CONFIG.aws.region;

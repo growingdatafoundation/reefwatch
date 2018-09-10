@@ -39,7 +39,7 @@ export default React.createClass({
             <li className={AdminClass}><Link to="/admin">Admin</Link></li>
             <li className={ExportClass}><Link to="/export">Export Data</Link></li>
             <li className={LoginClass}><Link to="/login">Login</Link></li>
-            <li>{(localStorage.getItem('id_token')!==null) ? (<button className="btn btn-danger log" onClick={this.logout}>Log out </button>) :(<div className={LoginClass}></div>)}</li>
+            <li>{(localStorage.getItem('id_token') !== null) ? (<button className="btn btn-danger log" onClick={this.logout}>Log out </button>) : (<div className={LoginClass}></div>)}</li>
         </ul>
         <div>
           {this.props.children}

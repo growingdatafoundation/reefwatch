@@ -19,8 +19,8 @@ export default React.createClass({
             $.each(result, function(key, value)
             {
                 images.push({
-                    "original": "http://gdf-reefwatch-images.s3.amazonaws.com/"+value.name,
-                    "thumbnail": "http://gdf-reefwatch-images.s3.amazonaws.com/"+value.name,
+                    "original": "http://gdf-reefwatch-images.s3.amazonaws.com/" + value.name,
+                    "thumbnail": "http://gdf-reefwatch-images.s3.amazonaws.com/" + value.name,
                 })
             });
             this.setState({"images": images});

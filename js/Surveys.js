@@ -62,7 +62,7 @@ var ActiveSurvey = React.createClass({
         }));
     },
     render() {
-        if (localStorage.getItem('id_token')===null) {
+        if (!localStorage.getItem('id_token')) {
             return (
                 <div>
                 <h2>You must log in to view the page!!</h2>
@@ -107,7 +107,7 @@ export default React.createClass({
                             {this.props.children}
                         </div>
                     </div>
-                    ): // eslint-disable-line  operator-linebreak
+                    ) : // eslint-disable-line  operator-linebreak
                     <div>
                         <div>
                             <ActiveSurvey onSelect={this.onSurveySelected} />

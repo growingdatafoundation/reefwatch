@@ -119,13 +119,14 @@ var surveyDay =  React.createClass({
             }
         });
 
-        if (validationState.locationIdState===null&&
-            validationState.lowTideState===null&&
-            validationState.lowTideTimeState===null&&
-            validationState.highTideState===null&&
-            validationState.highTideTimeState===null&&
-            validationState.surveyDateState===null&&
-            validationState.projectOfficerState===null&&siteSelected) {
+        // TODO refactor
+        if (validationState.locationIdState === null &&
+            validationState.lowTideState === null &&
+            validationState.lowTideTimeState === null &&
+            validationState.highTideState === null &&
+            validationState.highTideTimeState === null &&
+            validationState.surveyDateState === null &&
+            validationState.projectOfficerState === null && siteSelected) {
             return true;
         }
         if (!siteSelected) {
@@ -166,7 +167,7 @@ var surveyDay =  React.createClass({
         //selected sites only
         var currentSiteList = this.state.currentSiteList;
         currentSiteList.forEach(function (item) {
-            if (item.id===e.target.value) {
+            if (item.id === e.target.value) {
                 item.selected = e.target.checked;
             }
         });

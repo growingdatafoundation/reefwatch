@@ -19,7 +19,7 @@ var gridRow = React.createClass({
                 <tbody>
                 {
                     this.props.data.map(function(row, index) {
-                        return (<tr key={"RowID"+index}>
+                        return (<tr key={"RowID" + index}>
                             { this.createCell(row)}
                         </tr>);
                     }, this)

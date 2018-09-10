@@ -2,7 +2,7 @@ import React from 'react'
 
 export default React.createClass({
     render() {
-        if (localStorage.getItem('id_token')===null) {
+        if (!localStorage.getItem('id_token')) {
             return (
                 <div>
                 <h2>You must log in to view the page!!</h2>
