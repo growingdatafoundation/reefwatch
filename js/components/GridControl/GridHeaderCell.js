@@ -16,27 +16,31 @@ var GridHeaderCell = React.createClass({
     componentDidMount: function() {
         this.renderLabels();
         window.addEventListener('resize', this.renderLabels);
-    },          
+    },
     componentWillUnmount: function() {
         window.removeEventListener('resize', this.renderLabels);
     },
     renderLabels: function () {
-        console.log("GridHeader Data->"+this.props.data);
-        if(this.props.data.IsVertical) {
-            var cell = this.refs.tableHeaderCell;
-            var x = cell.offsetWidth -17;
-            var y = 24;
-            cell.style[transformPrefix] = "translate("+x+"px, "+y+"px)";
+
+        let cell = null;
+        let x = 0;
+        let y = 0;
+
+        if (this.props.data.IsVertical) {
+            cell = this.refs.tableHeaderCell;
+            x = cell.offsetWidth - 17;
+            y = 24;
+            cell.style.transform = "translate(" + x + "px, " + y + "px)";
         }  else {
-            var cell = this.refs.tableHeaderCell;
-            var x = (cell.offsetWidth/2) - (this.getTextWidth(this.props.data.columnHeaderText, "bold 12pt arial")/2);
-            var y = 0;
-            cell.style[transformPrefix] = "translate("+x+"px, "+y+"px)";
+            cell = this.refs.tableHeaderCell;
+            x = (cell.offsetWidth / 2) - (this.getTextWidth(this.props.data.columnHeaderText, "bold 12pt arial") / 2);
+            y = 0;
+            cell.style.transform = "translate(" + x + "px, " + y + "px)";
             cell.style.verticalAlign = "bottom";
         }
     },
     render() {
-        var roateColumnText = (this.props.data.IsVertical) ? 'rotate': '';
+        var roateColumnText = (this.props.data.IsVertical) ? 'rotate' : '';
             return (
             <th ref="tableHeaderCell" style={{display: this.props.data.isHidden}}  className={roateColumnText} key={this.props.key}>
                 <div>
@@ -44,7 +48,7 @@ var GridHeaderCell = React.createClass({
                 </div>
             </th>
             )
-    }
+    },
 });
-   
+
 module.exports = GridHeaderCell;

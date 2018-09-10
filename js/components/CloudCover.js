@@ -1,6 +1,8 @@
 import React from 'react'
 import SelectBox from './SelectBox';
 
+/* eslint-disable global-require */
+
 var CloudCover = React.createClass({
   getInitialState: function () {
     var initialState = {};
@@ -15,12 +17,12 @@ var CloudCover = React.createClass({
     initialState.cloudCover.push({value: 7, display: "Seven eights"});
     initialState.cloudCover.push({value: 8, display: "Full cover"});
     initialState.imageSource = require("./images/Clear_1.png");
-    
-    return initialState;      
+
+    return initialState;
   },
   handleCloudCoverChange: function (e) {
     var imageSource = require("./images/Clear_1.png");
-    switch(parseInt(e.target.value)) {
+    switch (parseInt(e.target.value, 10)) {
         case 0:
             imageSource = require("./images/Clear_1.png");
             break;
@@ -60,7 +62,7 @@ var CloudCover = React.createClass({
                 <div><img className="img-thumbnail" src={this.state.imageSource} /></div>
             </div>
         )
-  }
+  },
 });
 
 module.exports = CloudCover;

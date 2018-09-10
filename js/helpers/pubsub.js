@@ -1,4 +1,7 @@
-{/* This is a simple pubsub global event modal using jquery */}
+/* This is a simple pubsub global event modal using jquery */
+
+/* eslint-disable prefer-spread, prefer-rest-params */
+
 (function($) {
 
   var o = $({});

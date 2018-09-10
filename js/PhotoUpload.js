@@ -3,23 +3,24 @@ import Dropzone from 'react-dropzone';
 import * as Services from "../data/services";
 import ImageGallery from 'react-image-gallery';
 
+/* eslint-disable new-cap */
+
 export default React.createClass({
     getInitialState: function() {
         var state = {};
-        state['images'] = [];
+
+        state.images = [];
         this.loadAttachments();
         return state;
     },
     loadAttachments: function() {
         Services.GetAttachments(function (result) {
-            console.log("Attachments");
-            console.log(result);
             var images = [];
             $.each(result, function(key, value)
             {
                 images.push({
-                    "original": "http://gdf-reefwatch-images.s3.amazonaws.com/"+value.name,
-                    "thumbnail": "http://gdf-reefwatch-images.s3.amazonaws.com/"+value.name, 
+                    "original": "http://gdf-reefwatch-images.s3.amazonaws.com/" + value.name,
+                    "thumbnail": "http://gdf-reefwatch-images.s3.amazonaws.com/" + value.name,
                 })
             });
             this.setState({"images": images});
@@ -40,17 +41,15 @@ export default React.createClass({
         // START A LOADING SPINNER HERE
         // Create a formdata object and add the files
         var data = new FormData();
-        console.log(files);
+
         $.each(files, function(key, value)
         {
             data.append(key, value);
         });
 
-        console.log("Save file");
         Services.AddAttachment(data, function (result) {
-            console.log("result");
-            console.log(result);
-        }.bind(this));
+            // TODO
+        });// bind here?
 
     },
     render () {
@@ -65,5 +64,5 @@ export default React.createClass({
                     onImageLoad={this.handleImageLoad}/>
             </span>
         )
-    }
+    },
 });

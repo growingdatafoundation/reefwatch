@@ -4,18 +4,16 @@ import { FormControl } from 'react-bootstrap'
 
 var SelectBox = React.createClass({
     renderOption: function (selectValue, value, desc) {
-        var option;
-        option = <option key={value} value={value}>{desc}</option>;
-        return option;
+        return ( <option key={value} value={value}>{desc}</option> );
     },
     render() {
         var fields = ["value", "display"];
-        if (this.props.fields!=null) {
+        if (this.props.fields) {
             this.props.fields.forEach(function (value, i) {
                 fields[i] = value;
             });
-            if(this.props.fields.length == 1) {
-                fields[1] = fields[0];                
+            if (this.props.fields.length === 1) {
+                fields[1] = fields[0];
             }
         }
         return (
@@ -28,7 +26,7 @@ var SelectBox = React.createClass({
                     }
                 </FormControl>
             )
-    }
+    },
 });
 
 module.exports = SelectBox;

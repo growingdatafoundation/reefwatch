@@ -3,68 +3,53 @@ import validator from 'bootstrap-validator';
 import { Modal, Button, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Checkbox } from 'react-bootstrap';
 import DateTimeField from 'react-bootstrap-datetimepicker';
 import moment from "moment";
-import config from '../config'
 import {Typeahead} from 'react-bootstrap-typeahead';
 import CloudCover from './components/CloudCover';
 import SelectBox from './components/SelectBox';
 import * as Data from "../data/data"
 import * as Services from "../data/services";
 
+/* eslint-disable new-cap */
+
 var Observation = React.createClass({
     getInitialState: function() {
         const observationId = this.props.params.observationId;
-        if(observationId) {
+        if (observationId) {
             //need to redirect to error page
-            console.log("Error no observation found")
+            // TODO, wrong condition?
         }
-        console.log("observationId");
-        console.log(observationId);
+
         var initialState = {};
         initialState.observation = {};
         initialState.observation.time = moment("1970-01-01 00:00");
         initialState.observationId = observationId;
 
-        console.log("GetObservation Call");
-        Services.GetObservation(observationId, (result) => {
-            console.log("Return Observation");
-            console.log(result);
+        Services.GetObservation(observationId, result => {
             this.setState({observation: result})
         });
-        
+
         initialState.volunteers = [];
-        console.log("GetReefWatchVolunteers Call");
-        Services.GetReefWatchVolunteers((result) => {
-            console.log("Return Volunteers");
-            console.log(result);
+        Services.GetReefWatchVolunteers(result => {
            this.setState({volunteers: result});
         });
-    
+
         initialState.beaufordWindScale = [];
-        console.log("GetBeaufortScale Call");
-        Services.GetBeaufortScale((result) => {
-            console.log("Return BeaufortScale");
-            console.log(result);
+        Services.GetBeaufortScale(result => {
             this.setState({beaufordWindScale: result});
         });
+
         initialState.cloudCover = [];
-        console.log("GetCloudCover Call");
-        Services.GetCloudCover((result) => {
-            console.log("Return CloudCover");
-            console.log(result);
+        Services.GetCloudCover(result => {
             this.setState({cloudCover: result});
         });
+
         initialState.rainfall = [];
-        console.log("GetRainfall Call");
-        Services.GetRainfall((result) => {
-            console.log("Return rainfall");
-            console.log(result);
+        Services.GetRainfall(result => {
             this.setState({rainfall: result});
         });
 
-        console.log("windDirections Call");
         initialState.windDirections = Data.loadWindDirections();
-        console.log("Return windDirections");
-        console.log(initialState.windDirections);
+
         initialState.validationState =   {
             "observationTimeState": null,
             "otherLocationState": null,
@@ -74,43 +59,44 @@ var Observation = React.createClass({
             "volunteersState": null,
             "beaufordWindScaleIdState": null,
             "cloudCoverIdState": null,
-            "exceptionalWeatherConditionsState": null
+            "exceptionalWeatherConditionsState": null,
         };
-        
+
         initialState.cloudCover = 0;
         return initialState;
     },
+
     handleTime: function (timeValue) {
         var observation = this.state.observation;
         observation.time = moment(parseInt(timeValue)).format('HH:mm'); // eslint-disable-line radix
         this.setState({observation: observation});
         Services.SaveObservation(this.state.observation.id, this.state.observation, function(result) {
-            console.log("SaveTime")
-            console.log(result)
-        }); 
+            //jb: TODO success log
+        });
 
     },
+
     handleChange: function(e) {
         var observation = this.state.observation;
         observation[e.target.name] = e.target.value;
         this.setState({observation: observation});
     },
+
     handleVolunteersChange: function(selectedItems, e) {
         Services.GetVolunteers(this.state.observation.id, function (result) {
             if (result) {
-                console.log("GetVolunteers Result")
-                console.log(result)
                 result.foreach(function (item) {
                 }, this);
             }
         })
     },
+
     render() {
     return (
         <div className="container">
             <h2>Observation</h2>
             <form id="formObservation" data-toggle="validator" onSubmit={this.submit} role="form">
-                <FormGroup controlId="observationTime" validationState={this.state.validationState['observationTimeState']}>
+                <FormGroup controlId="observationTime" validationState={this.state.validationState.observationTimeState}>
                 <ControlLabel controlId="observationTime">Observation Time</ControlLabel>
                 <DateTimeField
                     mode="time"
@@ -122,7 +108,7 @@ var Observation = React.createClass({
                 <FormControl.Feedback />
                 <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="otherLocation" validationState={this.state.validationState['otherLocationState']}>
+                <FormGroup controlId="otherLocation" validationState={this.state.validationState.otherLocationState}>
                     <ControlLabel controlId="otherLocation">Other Location</ControlLabel>
                     <FormControl
                         required
@@ -136,7 +122,7 @@ var Observation = React.createClass({
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="volunteers" validationState={this.state.validationState['volunteersState']}>
+                <FormGroup controlId="volunteers" validationState={this.state.validationState.volunteersState}>
                     <ControlLabel controlId="volunteers">Volunteers</ControlLabel>
                     <Typeahead
                         id="volunteers"
@@ -153,7 +139,7 @@ var Observation = React.createClass({
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="weatherComment" validationState={this.state.validationState['weatherCommentState']}>
+                <FormGroup controlId="weatherComment" validationState={this.state.validationState.weatherCommentState}>
                     <ControlLabel controlId="weatherComment">Weather Comment </ControlLabel>
                     <FormControl
                         required
@@ -167,19 +153,19 @@ var Observation = React.createClass({
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="beaufordWindScale" validationState={this.state.validationState['beaufordWindScaleIdState']}>
+                <FormGroup controlId="beaufordWindScale" validationState={this.state.validationState.beaufordWindScaleIdState}>
                     <ControlLabel controlId="beaufordWindScale">Beauford Wind Scale (1-5)</ControlLabel>
                         <SelectBox id="beaufordWindScale" fields={["id", "scaleDescription"]} onChange={this.handleChange} name="beaufordWindScale" data={this.state.beaufordWindScale} />
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="rainfall" validationState={this.state.validationState['windDirectionState']}>
+                <FormGroup controlId="rainfall" validationState={this.state.validationState.windDirectionState}>
                     <ControlLabel controlId="rainfall">Rainfall</ControlLabel>
                         <SelectBox id="rainfall" fields={["id", "type"]} onChange={this.handleChange} name="rainfall" data={this.state.rainfall} />
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="cloudCoverId" validationState={this.state.validationState['cloudCoverIdState']}>
+                <FormGroup controlId="cloudCoverId" validationState={this.state.validationState.cloudCoverIdState}>
                     <ControlLabel controlId="cloudCover">Cloud Cover</ControlLabel>
                     <CloudCover
                     id="cloudCover"
@@ -189,7 +175,7 @@ var Observation = React.createClass({
                     <FormControl.Feedback />
                     <HelpBlock></HelpBlock>
                 </FormGroup>
-                <FormGroup controlId="" validationState={this.state.validationState['exceptionalWeatherConditionsState']}>
+                <FormGroup controlId="" validationState={this.state.validationState.exceptionalWeatherConditionsState}>
                     <ControlLabel controlId="exceptionalWeatherConditions">Recent Exceptional Weather Conditions</ControlLabel>
                         <FormControl componentClass="textarea" placeholder="textarea" value={this.state.observation.exceptionalWeatherConditions}
                         placeholder="Any recent tidal, weather, or other unusual events (e.g. hevy rain shortly before survey, storm, heatwave, wind held tide higher than expected)"
@@ -200,7 +186,7 @@ var Observation = React.createClass({
             </form>
         </div>
     );
-  }
+  },
 })
 
 export default Observation;

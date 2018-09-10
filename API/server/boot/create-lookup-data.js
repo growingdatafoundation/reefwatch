@@ -16,7 +16,7 @@ module.exports = function(app) {
   }, function(err, results) {
     if (err) throw err;
     createSites(results.locations, function(err) {
-      console.log('> models created sucessfully');
+      console.log(__filename + '> models created sucessfully');
     });
   });
   //create reviewers

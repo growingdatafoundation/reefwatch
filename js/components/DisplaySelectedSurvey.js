@@ -16,9 +16,9 @@ var DisplaySelectedSurvey = React.createClass({
   },
   render() {
     return (
-        <div>{(this.state.location)? this.state.location + " (" + this.state.date+")":""}</div>
+        <div>{(this.state.location) ? this.state.location + " (" + this.state.date + ")" : ""}</div>
         )
-  }
+  },
 });
 
 module.exports = DisplaySelectedSurvey;
