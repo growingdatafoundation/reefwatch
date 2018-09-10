@@ -3,14 +3,14 @@
         "browser": true,
         "es6": true,
         "node": true,
-				"jquery" : true
+                "jquery" : true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
         "ecmaFeatures": {
             "experimentalObjectRestSpread": true,
             "jsx": true,
-						"modules": true
+                        "modules": true
         },
         "sourceType": "module"
     },
@@ -25,7 +25,7 @@
         ],
         "array-callback-return": "error",
         "arrow-body-style": "error",
-        "arrow-parens": "error",
+        // "arrow-parens": "error",
         "arrow-spacing": "error",
         "block-scoped-var": "off",
         "block-spacing": "off",
@@ -209,10 +209,10 @@
         "space-in-parens": "off",
         "space-infix-ops": "off",
         "space-unary-ops": "error",
-        "spaced-comment": [
-            "error",
-            "always"
-        ],
+        // "spaced-comment": [
+        //     "error",
+        //     "always"
+        // ],
         "strict": "error",
         "template-curly-spacing": "error",
         "valid-jsdoc": "error",
@@ -222,6 +222,14 @@
         "yoda": [
             "error",
             "never"
-        ]
+        ],
+        // jb:
+        "comma-dangle": [ "error", "never" ],
+        "arrow-parens": [ "error", "as-needed" ],
+        "comma-dangle": [ "error", "always-multiline" ], //relaxed rule
+        "no-warning-comments": "off",
+        "prefer-reflect": "off",
+        "no-extra-bind": "error",
+        "space-infix-ops": "error"
     }
 }
