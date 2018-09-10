@@ -5,10 +5,9 @@ import GridRow from './GridRow'
 
 var grid = React.createClass({
     render() {
-        var fieldArray = new Array();
+        var fieldArray = [];
         /* Remap column to make fieldnmae the key for each array */
-        console.log(this.props.data)
-        if(this.props.data!=undefined && this.props.data.columnData!=undefined) {
+        if (typeof this.props.data !== 'undefined' && typeof this.props.data.columnData !== 'undefined') {
             this.props.data.columnData.forEach(column => {
                 fieldArray[column.fieldName] = column;
             });
@@ -19,7 +18,7 @@ var grid = React.createClass({
                     {(this.props.data.rows.length>0) ? <GridRow data={this.props.data.rows} columnData={fieldArray} /> : <tbody></tbody>}
                 </table>
             )
-    }
+    },
 });
 
 module.exports = grid;

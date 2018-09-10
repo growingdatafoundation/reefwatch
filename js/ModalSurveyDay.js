@@ -7,11 +7,12 @@ import validator from 'bootstrap-validator';
 import Typeahead from 'react-bootstrap-typeahead';
 import * as Services from "../data/services";
 
+/* eslint-disable new-cap */
+
 var surveyDay =  React.createClass({
-   isLoggedIn: function(){
-    console.log("IsLoggedIn:::: " + this.state.showModal)
-    return true
-   },
+    isLoggedIn: function(){
+            return true;
+    },
     getInitialState: function() {
         var initialState = {};
 
@@ -47,7 +48,7 @@ var surveyDay =  React.createClass({
     },
     submit: function (e) {
         e.preventDefault();
-        if(this.formValid()) {
+        if (this.formValid()) {
             var data = this.state.surveyDay;
             Services.AddSurveyDay(data, this.SaveSelectedSites);
         }
@@ -60,12 +61,12 @@ var surveyDay =  React.createClass({
     SaveSelectedSites: function(result) {
         var surveyDayId = result.id;
         this.state.currentSiteList.forEach(function (item) {
-            if(item.selected!=undefined && item.selected) {
+            if (typeof item.selected !== 'undefined' && item.selected) {
                 //map site to selectedsite model
                 var SelectedSite = {};
-                SelectedSite['siteId'] = item.id;
-                SelectedSite['siteCode'] = item.siteCode;
-                SelectedSite['surveyDayId'] = surveyDayId;
+                SelectedSite.siteId = item.id;
+                SelectedSite.siteCode = item.siteCode;
+                SelectedSite.surveyDayId = surveyDayId;
                 Services.AddSelectedSite(SelectedSite, this.close);
             }
         },this);
@@ -86,7 +87,7 @@ var surveyDay =  React.createClass({
     },
     handleLowTime: function(date) {
         var newSurveyData = this.state.surveyDay;
-        var d = new Date(parseInt(date));
+        var d = new Date(parseInt(date, 10)); //?
         var lowTimeTime = moment(d);
 
         if (lowTimeTime.isValid()) {
@@ -99,13 +100,13 @@ var surveyDay =  React.createClass({
     },
     handleHighTime: function(date) {
         var newSurveyData = this.state.surveyDay;
-        var d = new Date(parseInt(date));
+        var d = new Date(parseInt(date, 10)); //?
         var highTideTime = moment(d);
-        if(highTideTime.isValid()) {
+        if (highTideTime.isValid()) {
             newSurveyData.highTideTime =  highTideTime.format("YYYY-MM-DD HH:mm")
             this.setState({surveyDay: newSurveyData});
             this.setSurveyState(null, 'highTideTimeState');
-        }else {
+        } else {
             this.setSurveyState('error', 'highTideTimeState');
         }
     },
@@ -113,12 +114,12 @@ var surveyDay =  React.createClass({
         var validationState = this.state.validationState;
         var siteSelected = false;
         this.state.currentSiteList.forEach(function (item) {
-            if(item['selected']) {
+            if (item.selected) {
                 siteSelected = true;
             }
         });
 
-        if(validationState.locationIdState===null&&
+        if (validationState.locationIdState===null&&
             validationState.lowTideState===null&&
             validationState.lowTideTimeState===null&&
             validationState.highTideState===null&&
@@ -127,7 +128,7 @@ var surveyDay =  React.createClass({
             validationState.projectOfficerState===null&&siteSelected) {
             return true;
         }
-        if(!siteSelected) {
+        if (!siteSelected) {
             alert("Please select a site");
         } else {
             alert("Please fix form validation errors");
@@ -136,9 +137,9 @@ var surveyDay =  React.createClass({
     },
     handleDate: function(date) {
         var newSurveyData = this.state.surveyDay;
-        var d = new Date(parseInt(date));
-        var surveyDate = moment(d);
-        if(surveyDate.isValid()) {
+        var d = new Date(parseInt(date, 10)); // ?
+        var surveyDate = moment(d); //? ^
+        if (surveyDate.isValid()) {
             newSurveyData.surveyDate = surveyDate.format("YYYY-MM-DD");
             this.setState({surveyDay: newSurveyData});
             this.setSurveyState(null, 'surveyDateState');
@@ -165,8 +166,8 @@ var surveyDay =  React.createClass({
         //selected sites only
         var currentSiteList = this.state.currentSiteList;
         currentSiteList.forEach(function (item) {
-            if(item.id===e.target.value) {
-                item['selected'] = e.target.checked;
+            if (item.id===e.target.value) {
+                item.selected = e.target.checked;
             }
         });
         this.setState({currentSiteList: currentSiteList});
@@ -195,7 +196,7 @@ var surveyDay =  React.createClass({
                 </Modal.Header>
                 <form id="formSurvey" data-toggle="validator" onSubmit={this.submit} role="form">
                 <Modal.Body>
-                        <FormGroup controlId="surveyDate" validationState={this.state.validationState['surveyDateState']}>
+                        <FormGroup controlId="surveyDate" validationState={this.state.validationState.surveyDateState}>
                             <ControlLabel controlId="surveyDate">Survey date</ControlLabel>
                             <DateTimeField
                                 date={this.state.surveyDate}
@@ -208,13 +209,13 @@ var surveyDay =  React.createClass({
                             <FormControl.Feedback />
                             <HelpBlock>This should be the date the survey was completed. Its important to remember that surveys must be completed on the same day for a single location.</HelpBlock>
                         </FormGroup>
-                        <FormGroup controlId="locationId" validationState={this.state.validationState['locationIdState']}>
+                        <FormGroup controlId="locationId" validationState={this.state.validationState.locationIdState}>
                             <ControlLabel>Survey location</ControlLabel>
                                 <SelectBox id="locationId" onChange={this.handleLocationChange} name="locationId" value={this.state.surveyDay.locationId} data={this.state.locationsCombo} />
                             <FormControl.Feedback />
                             <HelpBlock>Validation is based on string length.</HelpBlock>
                         </FormGroup>
-                        <FormGroup controlId="projectOfficer"  validationState={this.state.validationState['projectOfficerState']}>
+                        <FormGroup controlId="projectOfficer"  validationState={this.state.validationState.projectOfficerState}>
                             <ControlLabel controlId="projectOfficer">Project Officer</ControlLabel>
                                 {/*
                                 <SelectBox id="projectOfficer" fields={["id", "projectOfficer"]} onChange={this.handleChange} name="leader" data={this.state.leaders} required />
@@ -224,7 +225,7 @@ var surveyDay =  React.createClass({
                         </FormGroup>
                         <div className="row">
                             <div className="col-md-6">
-                                <FormGroup controlId="lowTide" validationState={this.state.validationState['lowTideState']}>
+                                <FormGroup controlId="lowTide" validationState={this.state.validationState.lowTideState}>
                                     <ControlLabel>Low Tide</ControlLabel>
                                     <FormControl
                                         type="text"
@@ -254,7 +255,7 @@ var surveyDay =  React.createClass({
                                 </FormGroup>
                             </div>
                             <div className="col-md-6">
-                                <FormGroup controlId="highTide" validationState={this.state.validationState['highTideState']}>
+                                <FormGroup controlId="highTide" validationState={this.state.validationState.highTideState}>
                                     <ControlLabel>High Tide</ControlLabel>
                                     <FormControl
                                         type="text"
@@ -270,7 +271,7 @@ var surveyDay =  React.createClass({
                                 </FormGroup>
                             </div>
                             <div className="col-md-6">
-                                <FormGroup controlId="highTideTime" validationState={this.state.validationState['highTideTimeState']}>
+                                <FormGroup controlId="highTideTime" validationState={this.state.validationState.highTideTimeState}>
                                     <ControlLabel>High Tide Time</ControlLabel>
                                     <DateTimeField
                                         mode="time"
@@ -297,7 +298,7 @@ var surveyDay =  React.createClass({
                 </form>
             </Modal>
         )
-    }
+    },
 })
 
 export default  surveyDay;

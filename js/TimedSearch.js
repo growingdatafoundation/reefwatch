@@ -9,7 +9,7 @@ import DateTimeField from 'react-bootstrap-datetimepicker';
 import moment from "moment";
 import * as services from "../data/services"
 
-// export default React.createClass({
+/* eslint-disable new-cap */
 
 export default class TimedSearch extends React.Component {
 
@@ -18,62 +18,63 @@ export default class TimedSearch extends React.Component {
         const observationId = this.props.params.observationId;
         //need to check if observaton id exists and redirect if missing
         this.observationId = observationId;
-        this.state = { 
+        this.state = {
             time: moment(),
             species: [], // [{ id: String(Guid), commonName: String, ScientificName: String }]
             selectableSpecies: [],
             columnData: [
                 { fieldName: "speciesId", isHidden: "none", controlType: "hidden", IsKey: true },
-                { fieldName: "speciesName", ReadOnly: true, columnHeaderText: "species", IsVertical: true, ChangeEvent: this.onChangeSpecies, controlType: "select", data: this.getData(), IsRowHeader: true }, 
-                { fieldName: "submerged", ReadOnly: false, columnHeaderText: "submerged (in water)", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e),  controlType: "number"}, 
-                { fieldName: "exposed", ReadOnly: false, columnHeaderText: "exposed", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "number"}, 
-                { fieldName: "crevice", ReadOnly: false, columnHeaderText: "In a crevice", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "number"}, 
-                { fieldName: "sandy", ReadOnly: false, columnHeaderText: "On a sandy patch", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "number"}, 
+                { fieldName: "speciesName", ReadOnly: true, columnHeaderText: "species", IsVertical: true, ChangeEvent: this.onChangeSpecies, controlType: "select", data: this.getData(), IsRowHeader: true },
+                { fieldName: "submerged", ReadOnly: false, columnHeaderText: "submerged (in water)", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e),  controlType: "number"},
+                { fieldName: "exposed", ReadOnly: false, columnHeaderText: "exposed", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "number"},
+                { fieldName: "crevice", ReadOnly: false, columnHeaderText: "In a crevice", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "number"},
+                { fieldName: "sandy", ReadOnly: false, columnHeaderText: "On a sandy patch", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "number"},
                 { fieldName: "other", ReadOnly: false, columnHeaderText: "other?", IsVertical: true, ChangeEvent: (key, row, e) => this.onChange(key, row, e), controlType: "text"},
-                { fieldName: "command", columnHeaderText: "Command", controlName: "Delete", IsVertical: true, controlType: "command", action: (key, row, e) => this.onDelete(key, row, e) }
+                { fieldName: "command", columnHeaderText: "Command", controlName: "Delete", IsVertical: true, controlType: "command", action: (key, row, e) => this.onDelete(key, row, e) },
             ],
-            rows: []
+            rows: [],
         };
     }
 
     componentDidMount() {
-        console.log(this.observationId);
         this.loadRows(this.observationId);
     }
 
     loadRows(observationId) {
-        return services.getTimeSearchesForObservation(observationId, (timedSearchRows) => {
-            console.log(timedSearchRows);
+        return services.getTimeSearchesForObservation(observationId, timedSearchRows => {
             const selectableSpecies = this.filterSelectableSpecies(timedSearchRows);
             this.setState({ rows: timedSearchRows, selectableSpecies });
         })
     }
 
     saveRow(row) {
-        row['observationId'] = this.observationId;
-        services.upsertTimeSearch(row, (result) => {
+        row.observationId = this.observationId;
+        services.upsertTimeSearch(row, result => {
             var rows = this.state.rows;
-            rows.forEach(function(item, i) { if (item['speciesId'] == result['speciesId']) rows[i]=result;  });
+            rows.forEach(function(item, i) {
+                if (item.speciesId === result.speciesId) {
+                    rows[i]=result;
+                }
+            });
             this.setState({rows: rows});
         });
     }
 
     deleteRow(row) {
-        if(row['id']!=undefined) {
-            services.deleteTimeSearch(row['id'], (result) => {
-                console.log("DELETE")
-                console.log(result)
+        if (typeof row.id !== 'undefined') {
+            services.deleteTimeSearch(row.id, result => {
+                //TODO
             });
         }
     }
 
     getData() {
         // Load species data from DB
-        return services.GetSpecies((species) => {
+        return services.GetSpecies(species => {
             this.species = species;
             this.setState({ selectableSpecies: species });
         })
-        .fail((err) => console.error('Error occured getting data in TimedSearch', err))
+        .fail(err => err); // TODO
     }
 
 
@@ -87,11 +88,11 @@ export default class TimedSearch extends React.Component {
         e.preventDefault();
 
         const rowData = this.state.rows;
-        const rows = rowData.filter((currentRow) => currentRow.speciesId !== row.speciesId);
+        const rows = rowData.filter(currentRow => currentRow.speciesId !== row.speciesId);
 
         const selectableSpecies = this.filterSelectableSpecies(rows);
         this.setState({
-            rows, 
+            rows,
             selectableSpecies,
         });
 
@@ -112,7 +113,7 @@ export default class TimedSearch extends React.Component {
     }
 
     beforeSave(row, cellName, cellValue) {
-      
+
     }
 
     validateNumber(value) {
@@ -133,12 +134,12 @@ export default class TimedSearch extends React.Component {
         const row = {
             speciesId: selectedSpecies.id,
             speciesName: selectedSpecies.commonName,
-            submerged: "", 
+            submerged: "",
             exposed: "",
             crevice: "",
-            sandy: "", 
+            sandy: "",
             other: "",
-            command: ""
+            command: "",
         };
 
         rowData.push(row);
@@ -152,10 +153,10 @@ export default class TimedSearch extends React.Component {
     }
 
     filterSelectableSpecies(rows) {
-        
+
         return this.species.filter(
-            (s) => {
-                
+            s => {
+
                 for (const row of rows) {
                     if (row.speciesId === s.id) {
                         return false;
@@ -166,8 +167,8 @@ export default class TimedSearch extends React.Component {
             });
     }
 
-    render() {                
-        return (  
+    render() {
+        return (
             <Grid>
                 <Row>
                     <Col md={12}>
@@ -176,7 +177,7 @@ export default class TimedSearch extends React.Component {
                 </Row>
                 <Row>
                     <Col md={12}>
-                            <Form inline onSubmit={(e) => this.addRow(e)}>
+                            <Form inline onSubmit={e => this.addRow(e)}>
                                 <Panel heading={"Species Found"} type={"primary"}>
                                     <FormGroup controlId="species">
                                         <ControlLabel>Species </ControlLabel>

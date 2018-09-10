@@ -5,9 +5,10 @@ import moment from "moment";
 import SelectBox from './components/SelectBox'
 import validator from 'bootstrap-validator';
 import Typeahead from 'react-bootstrap-typeahead';
-import {CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails} from 'amazon-cognito-identity-js';
+import {CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { Link } from 'react-router';
 
+import AWS from 'aws-sdk';
 import CONFIG from '../config';
 
 export default React.createClass({
@@ -39,57 +40,59 @@ export default React.createClass({
         //Cognito Auth
         var authData = {
             Username: data.email,
-            Password: data.password
+            Password: data.password,
         };
         var authenticationDetails = new AuthenticationDetails(authData);
         var poolData = {
             UserPoolId: CONFIG.aws.userPoolId,
-            ClientId: CONFIG.aws.clientId
+            ClientId: CONFIG.aws.clientId,
         }
         var userPool = new CognitoUserPool(poolData);
         var userData = {
             Username:data.email,
-            Pool: userPool
+            Pool: userPool,
         };
-        console.log("Authenticating the user in Login service" + CONFIG.aws.userPoolId);
-        console.log("New Password:"+data.newPassword +", Temporary Password: "+data.password + ", Email: " +data.email)
-        let cognitoUser = new CognitoUser(userData);
-        console.log("Comes here");
+
+
+        const cognitoUser = new CognitoUser(userData);
+
         cognitoUser.authenticateUser(authenticationDetails, {
             newPasswordRequired:function(userAttributes, requiredAttributes){
                 delete userAttributes.email_verified;
-                console.log("Does it come here")
                 cognitoUser.completeNewPasswordChallenge(data.newPassword, requiredAttributes,{
                     onSuccess:function(result){
-                        console.log("Password Changed succesfully.");
                         alert("Password Changed successfully")
                        //cognitoCallBack.successCallBack("Password Changed Successfully.", null);
                     },
                     onFailure:function(err){
-                        console.log("Error occurred: " +err.message)
                         //cognitoCallBack.callBack(err.message, null);
-                    }
+                        //jb TODO
+                        return err;
+                    },
                 })
             },
+
             onSuccess:function (result){
-                console.log("User is authenticated, access token is: " + result.getAccessToken().getJwtToken());
-                var url ='cognito-idp.' + CognitoUtil.REGION.toLowerCase() + '.amazonaws.com/' + CognitoUtil.USER_POOL_ID;
-                 AWS.CONFIG.region =  CognitoUtil.REGION;
-                 AWS.CONFIG.credentials = new AWS.CognitoIdentityCredentials({
-                     IdentityPoolId: CognitoUtil.IDENTITY_POOL_ID,
+                var url ='cognito-idp.' + CONFIG.aws.region + '.amazonaws.com/' + CONFIG.aws.userPoolId;
+                 AWS.config.region =  CONFIG.aws.region; //TODO use updateConfig
+                 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                     // IdentityPoolId: CognitoUtil.IDENTITY_POOL_ID, //jb TODO, no identity pool set up currently
                      Logins : {
-                        url : result.getIdToken().getJwtToken()
-                     }
+                        url : result.getIdToken().getJwtToken(),
+                     },
                  });
             },
+
             onFailure: function(err){
-                console.log("Error occured: " + err.message);
-                cognitoCallBack.callBack(err.message, null);
-            }
+                //TODO
+                // cognitoCallBack.callBack(err.message, null);
+                return err;
+            },
         });
 
         //Ends here
     },
+
     render() {
         return (
             <div>
@@ -145,5 +148,5 @@ export default React.createClass({
             </div>
             </div>
         )
-    }
+    },
 })

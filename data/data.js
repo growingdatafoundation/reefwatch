@@ -24,7 +24,7 @@ export function loadSpecies() {
         {value: 22, display: "Feral marine species"},
         {value: 23, display: "Marine debris - plastic"},
         {value: 24, display: "Marine debris - non-plastic"},
-        {value: 25, display: "Other"}
+        {value: 25, display: "Other"},
     ];
 }
 
@@ -34,7 +34,7 @@ export function loadBeaufordWindScale() {
         {value: 2, display: "Gentle breeze / Smooth Sea"},
         {value: 3, display: "Moderate breeze / Slight Sea"},
         {value: 4, display: "Fresh breeze / Moderate Sea"},
-        {value: 5, display: "Strong Breeze / Rough Sea"}
+        {value: 5, display: "Strong Breeze / Rough Sea"},
     ];
 }
 
@@ -44,7 +44,7 @@ export function loadSeaState() {
         {value: 2, display: "Smooth"},
         {value: 3, display: "Slight"},
         {value: 4, display: "Moderate"},
-        {value: 5, display: "Rough"}
+        {value: 5, display: "Rough"},
     ];
 }
 
@@ -53,7 +53,7 @@ export function loadRainfall() {
         {value: 1, display: "Nil"},
         {value: 2, display: "Light"},
         {value: 3, display: "Moderate"},
-        {value: 4, display: "Heavy"}
+        {value: 4, display: "Heavy"},
     ];
 }
 
@@ -66,6 +66,6 @@ export function loadWindDirections() {
         {value: 5, display: "North West"},
         {value: 6, display: "North East"},
         {value: 7, display: "South West"},
-        {value: 8, display: "South East"}
+        {value: 8, display: "South East"},
     ];
 }

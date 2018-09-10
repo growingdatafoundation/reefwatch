@@ -43,7 +43,7 @@ var Table = React.createClass({
         <TableHeaderColumn dataField='location' dataFormat={this.LocationName} dataSort={true}>Location</TableHeaderColumn>
         <TableHeaderColumn width="200" dataAlign="center" dataField="id" dataFormat={this.BuildButtons}>Actions</TableHeaderColumn>
     </BootstrapTable>
-  )}
+  )},
 });
 
 /*
@@ -57,19 +57,19 @@ var ActiveSurvey = React.createClass({
     },
     componentDidMount: function() {
 
-        services.getSurveyDaysWithLocations((surveys) => this.setState({
-          surveys
+        services.getSurveyDaysWithLocations(surveys => this.setState({
+          surveys,
         }));
     },
     render() {
-        if(localStorage.getItem('id_token')===null){
-            return(
+        if (localStorage.getItem('id_token')===null) {
+            return (
                 <div>
                 <h2>You must log in to view the page!!</h2>
                 </div>
             )
         }
-        else{
+        else {
         return (
             <Panel heading={"Current Survey Days"} type={"primary"}>
                 <button className="btn btn-primary" style={{marginBottom: "10px"}} onClick={this.handleBtnClick}>Add</button>
@@ -77,7 +77,7 @@ var ActiveSurvey = React.createClass({
                 <SurveyDay ref="surveyDay" />
             </Panel>
         )
-    }}
+    }},
 })
 
 /*
@@ -116,5 +116,5 @@ export default React.createClass({
                 }
             </div>
         )
-    }
+    },
 })

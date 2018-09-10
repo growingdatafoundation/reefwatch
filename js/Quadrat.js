@@ -3,6 +3,8 @@ import { Grid, Col, Row } from 'react-bootstrap'
 import CustomGrid from './components/GridControl/Grid'
 import * as services from "../data/services"
 
+/* eslint-disable new-cap */
+
 export default class Quadrat extends React.Component {
 
     constructor(props) {
@@ -11,35 +13,29 @@ export default class Quadrat extends React.Component {
             observationId: this.props.params.observationId,
             columnData: [],
             rows: [],
-            loaded: false
+            loaded: false,
         }
         this.loadColumnData();
-        
+
     }
 
     componentDidUpdate() {
-        if(!this.state.loaded && this.state.rows.length>0) {
+        if (!this.state.loaded && this.state.rows.length > 0) {
             this.setState({loaded: true});
             this.loadData();
         }
     }
 
     loadData() {
-        services.GetQuadrats(this.state.observationId, (quadrat) => {
-            let rows = this.state.rows;
-            console.log("State.rows->");
-            console.log(rows);
-            rows.forEach((row, index) => {
-                console.log("saved quadrat->");
-                console.log(quadrat);
-                quadrat.forEach((item, index) => {
-                    console.log("Compare row.quadratRangeId:"+row['quadratRangeId']+" saved item.quadratRangeId:"+item.quadratRangeId)
-                    if (row['quadratRangeId']==item.quadratRangeId) {
-                        console.log("set "+item.quadratSpeciesId+" to "+item.count);
-                        row[item.quadratSpeciesId] = item.count; 
+        services.GetQuadrats(this.state.observationId, quadrat => {
+            const rows = this.state.rows;
+
+            rows.forEach(row => {
+
+                quadrat.forEach(item => {
+                    if (row.quadratRangeId === item.quadratRangeId) {
+                        row[item.quadratSpeciesId] = item.count;
                     }
-                    //console.log("item ->");
-                    //console.log(item);
                 });
             });
             this.setState({rows: rows});
@@ -47,12 +43,12 @@ export default class Quadrat extends React.Component {
     }
 
     loadColumnData() {
-        services.GetQuadratSpecies((quadratSpecies) => {
-            let columns = [];
+        services.GetQuadratSpecies(quadratSpecies => {
+            const columns = [];
             columns.push({ fieldName: "distance", ChangeEvent: (key, row, e) => this.onChange(key, row, e), IsKey: true, columnHeaderText: "", IsVertical: false, controlType: "display", IsRowHeader: true });
             columns.push({ fieldName: "quadratRangeId", isHidden: "none", controlType: "hidden" });
-            quadratSpecies.forEach((item, index) => {
-                let column = { fieldName: item.id, ChangeEvent: (key, row, e) => this.onChange(key, row, e), columnHeaderText: item.name, IsVertical: true, controlType: "number"};
+            quadratSpecies.forEach(item => {
+                const column = { fieldName: item.id, ChangeEvent: (key, row, e) => this.onChange(key, row, e), columnHeaderText: item.name, IsVertical: true, controlType: "number"};
                 columns.push(column)
             })
             this.loadQuadRange(columns);
@@ -60,15 +56,15 @@ export default class Quadrat extends React.Component {
     }
 
     loadQuadRange(columns) {
-        services.GetQuadratRange((QuadratRange) => {
+        services.GetQuadratRange(QuadratRange => {
             var rows = [];
-            QuadratRange.forEach((item, index) => {
+            QuadratRange.forEach(item => {
                 var row = {};
-                columns.forEach((column, index) => {
-                    if(column.fieldName=='distance') {
-                        row['distance'] = item.range;
-                    } else if(column.fieldName=='quadratRangeId') {
-                        row['quadratRangeId'] = item.id;
+                columns.forEach(column => {
+                    if (column.fieldName === 'distance') {
+                        row.distance = item.range;
+                    } else if (column.fieldName === 'quadratRangeId') {
+                        row.quadratRangeId = item.id;
                     } else {
                         row[column.fieldName] = 0;
                     }
@@ -77,7 +73,7 @@ export default class Quadrat extends React.Component {
             })
             this.setState({ columnData: columns, rows: rows });
         })
-        
+
     }
 
     onChange(key, row, e) {
@@ -89,15 +85,15 @@ export default class Quadrat extends React.Component {
     }
 
     saveCell(key, value, row, observationId) {
-        let cell = {
+        const cell = {
             "count": value,
             "observationId": observationId,
             "quadratSpeciesId": key,
-            "quadratRangeId": row['quadratRangeId']
+            "quadratRangeId": row.quadratRangeId,
         };
 
-        services.upsertQuadrat(cell, (result) => {
-            console.log(result);
+        services.upsertQuadrat(cell, result => {
+            // TODO
         });
 
     }
@@ -109,8 +105,8 @@ export default class Quadrat extends React.Component {
         return true;
     }
 
-    render() {                
-        return (  
+    render() {
+        return (
             <Grid>
                 <Row>
                     <Col md={12}>
@@ -125,5 +121,4 @@ export default class Quadrat extends React.Component {
             </Grid>
         )
     }
-} 
-
+}

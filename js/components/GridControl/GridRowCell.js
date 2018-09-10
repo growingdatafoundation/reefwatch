@@ -4,37 +4,45 @@ import { Modal, Button, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Ch
 import SelectBox from '../SelectBox'
 
 var gridRowCell = React.createClass({
+    //TODO refactor
+    // eslint-disable-next-line complexity
     buildControl: function(controlType) {
         var result = "";
-        switch(controlType) {
+        switch (controlType) {
+
             case "hidden":
                 result = "";
-                break;
+            break;
+
             case "command":
-                result = <Button bsStyle="primary" 
+                result = <Button bsStyle="primary"
                             onClick={this.props.columnData.action.bind(null, this.props.fieldKey, this.props.row)}>
                                 {this.props.columnData.controlName}
                         </Button>;
+            break;
+
             case "text":
-                if(this.props.columnData.ChangeEvent && this.props.columnData.BlurEvent) {
+                if (this.props.columnData.ChangeEvent && this.props.columnData.BlurEvent) {
                     result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
                                 type="text"
                                 onBlur={this.props.columnData.BlurEvent.bind(null, this.props.fieldKey, this.props.row)}
                                 onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
                                 value={this.props.data} />;
 
-                } else if(this.props.columnData.ChangeEvent) {
+                } else if (this.props.columnData.ChangeEvent) {
                     result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
                                 type="text"
                                 onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
                                 value={this.props.data} />;
                 }
-                break;
+            break;
+
             case "display":
                 result = this.props.data;
-                break;
+            break;
+
             case "number":
-                if(this.props.columnData.ChangeEvent && this.props.columnData.BlurEvent) {
+                if (this.props.columnData.ChangeEvent && this.props.columnData.BlurEvent) {
                     result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
                                 className="number-field"
                                 type="text"
@@ -42,42 +50,49 @@ var gridRowCell = React.createClass({
                                 onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
                                 value={this.props.data} />;
 
-                } else if(this.props.columnData.ChangeEvent) {
+                } else if (this.props.columnData.ChangeEvent) {
                     result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
                                 className="number-field"
                                 type="text"
                                 onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
                                 value={this.props.data} />;
                 }
-                break;
+            break;
+
             case "check":
                 var checkedValue = (this.props.data) ? "checked" : "";
                 result = (this.props.columnData.ReadOnly) ? this.props.data : <FormControl
                             type="checkbox"
                             onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
                             defaultChecked={checkedValue} />;
-                break;
+            break;
+
             case "select":
-                result = <SelectBox disabled={this.props.columnData.ReadOnly} onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)} 
+                result = <SelectBox disabled={this.props.columnData.ReadOnly} onChange={this.props.columnData.ChangeEvent.bind(null, this.props.fieldKey, this.props.row)}
                                     value={this.props.data} data={this.props.columnData.data} />;
-                break;            
+            break;
+
             default:
-                break;
+            break;
         }
+
         return result;
     },
     render() {
-        return (
-            ("IsRowHeader" in this.props.columnData)  ?
+        if ("IsRowHeader" in this.props.columnData) {
+            return (
                 <th className='row-header' style={{display: this.props.columnData.isHidden}}  key={this.props.key}>
                     {this.props.data}
                 </th>
-                :
+            );
+        }
+
+        return (
                 <td key={this.props.key} style={{display: this.props.columnData.isHidden}}>
                     {this.buildControl(this.props.columnData.controlType)}
                 </td>
-        )
-    }
+        );
+    },
 });
-   
+
 module.exports = gridRowCell;

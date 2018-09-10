@@ -7,6 +7,7 @@ internals.baseUrl = config.api.hostname + ":" + config.api.port + "/" + config.a
 
 
 function failedRequest(jqXHR, textStatus, errorThrown) {
+    //eslint-disable-next-line no-console
     console.error('Service request failed', jqXHR, textStatus, errorThrown);
 }
 
@@ -47,37 +48,37 @@ export function GetSurveyDay(SurveyDayID, callback) {
 // GET /SurveyDays/{id}/selectedSites
 export function GetSurveyDaySelectedSites(SurveyDayID, callback) {
 
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/surveyDays/"+SurveyDayID+"/selectedSites", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/surveyDays/" + SurveyDayID + "/selectedSites", callback)
     .fail(failedRequest);
 }
 
 // GET /SurveyDays/{id}/observations
 export function GetSurveyDayObservations(SurveyDayID, callback) {
 
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/surveyDays/"+SurveyDayID+"/observations", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/surveyDays/" + SurveyDayID + "/observations", callback)
     .fail(failedRequest);
 }
 
 export function GetObservation(observationId, callback) {
 
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Observations/"+observationId+"?filter[include]=volunteers", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/Observations/" + observationId + "?filter[include]=volunteers", callback)
     .fail(failedRequest);
 }
 
 export function GetObservationBySiteId(SurveyDayID, SiteId, callback) {
 
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"surveyDays/"+SurveyDayID+"?filter[where][SiteId]="+SiteId+"filter[include]=selectedSites&filter[include]=location&filter[include]=observations", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "surveyDays/" + SurveyDayID + "?filter[where][SiteId]=" + SiteId + "filter[include]=selectedSites&filter[include]=location&filter[include]=observations", callback)
     .fail(failedRequest);
 }
 
 export function AddSurveyDay(data, callback) {
 
     $.ajax({
-        url: config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/surveyDays",
+        url: config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/surveyDays",
         data: JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
-        type: 'POST'
+        type: 'POST',
     })
     .done(callback)
     .fail(failedRequest);
@@ -86,11 +87,11 @@ export function AddSurveyDay(data, callback) {
 export function AddObservation(data, callback) {
 
     $.ajax({
-        url: config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Observations",
+        url: config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/Observations",
         data: JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
-        type: 'POST'
+        type: 'POST',
     })
     .done(callback)
     .fail(failedRequest);
@@ -99,11 +100,11 @@ export function AddObservation(data, callback) {
 export function AddSelectedSite(data, callback) {
 
     $.ajax({
-        url: config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/SelectedSites/SaveSelectedSites",
+        url: config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/SelectedSites/SaveSelectedSites",
         data: JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
-        type: 'POST'
+        type: 'POST',
     })
     .done(callback)
     .fail(failedRequest);
@@ -111,30 +112,30 @@ export function AddSelectedSite(data, callback) {
 
 export function GetLocations(callback) {
 
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/locations?filter[include]=sites", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/locations?filter[include]=sites", callback)
     .fail(failedRequest)
 }
 
 export function GetSitesByLocation(locationId, callback) {
 
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/locations/"+locationId+"/sites", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/locations/" + locationId + "/sites", callback)
     .fail(failedRequest)
 }
 
 export function GetVolunteers(observationId, callback) {
 
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/volunteers?filter[where][observationId]="+observationId, callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/volunteers?filter[where][observationId]=" + observationId, callback)
     .fail(failedRequest)
 }
 
 export function AddVolunteer(data, callback) {
 
     $.ajax({
-        url: config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/volunteers",
+        url: config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/volunteers",
         data: JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
-        type: 'POST'
+        type: 'POST',
     })
     .done(callback)
     .fail(failedRequest);
@@ -142,18 +143,18 @@ export function AddVolunteer(data, callback) {
 
 export function GetReefWatchVolunteers(callback) {
 
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/reefWatchVolunteers", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/reefWatchVolunteers", callback)
     .fail(failedRequest)
 }
 
 export function AddReefWatchVolunteer(data, callback) {
 
     $.ajax({
-        url: config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/reefWatchVolunteers",
+        url: config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/reefWatchVolunteers",
         data: JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
-        type: 'POST'
+        type: 'POST',
     })
     .done(callback)
     .fail(failedRequest);
@@ -162,11 +163,11 @@ export function AddReefWatchVolunteer(data, callback) {
 export function SaveObservation(observationId, data, callback) {
 
     $.ajax({
-        url: config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Observations/"+observationId,
+        url: config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/Observations/" + observationId,
         data: JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
-        type: 'PUT'
+        type: 'PUT',
     })
     .done(callback)
     .fail(failedRequest);
@@ -174,29 +175,29 @@ export function SaveObservation(observationId, data, callback) {
 
 export function GetSpecies(callback) {
 
-    return $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/species", callback)
+    return $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/species", callback)
     .fail(failedRequest);
 }
 
 export function GetPointInterceptObservation(observationId, callback) {
 
     var rndNumber = Math.floor((Math.random() * 1000)).toString();
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Observations/"+observationId+"/PointIntercepts?forceRefresh="+rndNumber, callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/Observations/" + observationId + "/PointIntercepts?forceRefresh=" + rndNumber, callback)
     .fail(failedRequest)
 }
 
 export function GetPointIntercepts(callback) {
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/PointIntercepts", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/PointIntercepts", callback)
     .fail(failedRequest)
 }
 
 export function AddPointIntercept(data, callback) {
     $.ajax({
-        url: config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/PointIntercepts",
+        url: config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/PointIntercepts",
         data: JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
-        type: 'POST'
+        type: 'POST',
     })
     .done(callback)
     .fail(failedRequest);
@@ -204,11 +205,11 @@ export function AddPointIntercept(data, callback) {
 
 export function SavePointIntercept(data, callback) {
     $.ajax({
-        url: config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/PointIntercepts",
+        url: config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/PointIntercepts",
         data: JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
-        type: 'PUT'
+        type: 'PUT',
     })
     .done(callback)
     .fail(failedRequest);
@@ -228,7 +229,7 @@ export function upsertTimeSearch(data, callback) {
         data: JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
-        type: 'PUT'
+        type: 'PUT',
     })
     .done(callback)
     .fail(failedRequest);
@@ -240,7 +241,7 @@ export function deleteTimeSearch(id, callback) {
         url: `${internals.baseUrl}/TimedSearches/${id}`,
         dataType: "json",
         contentType: "application/json",
-        type: 'DELETE'
+        type: 'DELETE',
     })
     .done(callback)
     .fail(failedRequest);
@@ -253,7 +254,7 @@ export function upsertQuadrat(data, callback) {
         data: JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
-        type: 'PUT'
+        type: 'PUT',
     })
     .done(callback)
     .fail(failedRequest);
@@ -261,51 +262,51 @@ export function upsertQuadrat(data, callback) {
 
 
 export function GetQuadrats(observationId,callback) {
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Quadrats?filter[where][observationId]="+observationId, callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/Quadrats?filter[where][observationId]=" + observationId, callback)
     .fail(failedRequest)
 }
 
 //lookup data
 export function GetBeaufortScale(callback) {
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/BeaufortScales", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/BeaufortScales", callback)
     .fail(failedRequest)
 }
 
 export function GetCloudCover(callback) {
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/CloudCovers", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/CloudCovers", callback)
     .fail(failedRequest)
 }
 
 export function GetRainfall(callback) {
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Rainfalls", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/Rainfalls", callback)
     .fail(failedRequest)
 }
 
 export function GetQuadratRange(callback) {
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/QuadratRanges", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/QuadratRanges", callback)
     .fail(failedRequest)
 }
 
 export function GetQuadratSpecies(callback) {
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/QuadratSpecies", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/QuadratSpecies", callback)
     .fail(failedRequest)
 }
 
 
 /*S# attachments */
 export function GetAttachments(callback) {
-    $.get(config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Attachments/gdf-reefwatch-images/files", callback)
+    $.get(config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/Attachments/gdf-reefwatch-images/files", callback)
     .fail(failedRequest)
 }
 
 export function AddAttachment(data, callback) {
     $.ajax({
-        url: config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Attachments/gdf-reefwatch-images/upload",
+        url: config.api.hostname + ":" + config.api.port + "/" + config.api.prefix + "/Attachments/gdf-reefwatch-images/upload",
         data: data,
         type: 'POST',
         cache: false,
         contentType: false,
-        processData: false
+        processData: false,
      })
     .done(callback)
     .fail(failedRequest);
