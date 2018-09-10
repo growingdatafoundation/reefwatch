@@ -6,6 +6,9 @@ module.exports = {
     output: {
         filename: 'bundle.js'
     },
+    devServer: {
+        open: true
+    },
     headers: { "Access-Control-Allow-Origin": "*"},
     devtool: 'source-map',
     module: {
