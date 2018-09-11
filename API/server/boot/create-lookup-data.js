@@ -12,7 +12,7 @@ module.exports = function(app) {
     cloudCover: async.apply(createCloudCover),
     species: async.apply(createSpecies),
     quadratRange: async.apply(createQuadratRange),
-    quadratRange: async.apply(createQuadratSpecies),
+    quadratSpecies: async.apply(createQuadratSpecies),
   }, function(err, results) {
     if (err) throw err;
     createSites(results.locations, function(err) {
