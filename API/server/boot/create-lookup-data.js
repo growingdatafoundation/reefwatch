@@ -13,6 +13,8 @@ module.exports = function(app) {
     species: async.apply(createSpecies),
     quadratRange: async.apply(createQuadratRange),
     quadratSpecies: async.apply(createQuadratSpecies),
+    // jb:
+    reefWatchVolunteer: async.apply(createReefWatchVolunteer),
   }, function(err, results) {
     if (err) throw err;
     createSites(results.locations, function(err) {
@@ -441,6 +443,23 @@ module.exports = function(app) {
         locationId: locations[8].id,
       },
     ], cb);
+    });
+  }
+
+  //jb:
+
+  // create createReefWatchVolunteer model with some example data
+
+  function createReefWatchVolunteer(cb) {
+    mongoDs.automigrate('reefWatchVolunteer', function(err) {
+      if (err) return cb(err);
+      const model = app.models.reefWatchVolunteer;
+      model.create([{
+        name: 'testVolunteer1',
+      },
+      {
+        name: 'testVolunteer2',
+      }], cb);
     });
   }
 };
