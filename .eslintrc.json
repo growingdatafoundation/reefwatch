@@ -225,7 +225,7 @@
         ],
         // jb:
         "comma-dangle": [ "error", "never" ],
-        "arrow-parens": [ "error", "as-needed" ],
+        "arrow-parens": [ "off" ],
         "comma-dangle": [ "error", "always-multiline" ], //relaxed rule
         "no-warning-comments": "off",
         "prefer-reflect": "off",
