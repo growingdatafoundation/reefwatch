@@ -21,9 +21,9 @@ var surveyDay =  React.createClass({
         initialState.leaders = [];
         initialState.renderedSites = [];
         initialState.selectedSitesdata = [];
-        initialState.surveyDay.surveyDate = moment().format("YYYY-MM-DD");
-        initialState.surveyDay.highTideTime = moment("1970-01-01 00:00");
-        initialState.surveyDay.lowTideTime = moment("1970-01-01 00:00");
+        initialState.surveyDay.surveyDate = null;
+        initialState.surveyDay.highTideTime = null;
+        initialState.surveyDay.lowTideTime = null;
         initialState.validationState = {"surveyDateState":null,"locationIdState":null,"lowTideState":null,"projectOfficerState":null,"lowTideTimeState":null,"highTideState":null,"highTideTimeState":null};
 
         return initialState;
@@ -91,7 +91,7 @@ var surveyDay =  React.createClass({
         var lowTimeTime = moment(d);
 
         if (lowTimeTime.isValid()) {
-            newSurveyData.lowTideTime = lowTimeTime.format("YYYY-MM-DD HH:mm");
+            newSurveyData.lowTideTime = lowTimeTime.format();
             this.setSurveyState(null, 'lowTideTimeState');
             this.setState({surveyDay: newSurveyData});
         } else {
@@ -103,7 +103,7 @@ var surveyDay =  React.createClass({
         var d = new Date(parseInt(date, 10)); //?
         var highTideTime = moment(d);
         if (highTideTime.isValid()) {
-            newSurveyData.highTideTime =  highTideTime.format("YYYY-MM-DD HH:mm")
+            newSurveyData.highTideTime =  highTideTime.format()
             this.setState({surveyDay: newSurveyData});
             this.setSurveyState(null, 'highTideTimeState');
         } else {
@@ -136,18 +136,19 @@ var surveyDay =  React.createClass({
         }
         return false;
     },
-    handleDate: function(date) {
+
+    handleDate: function(date) {console.log(date);
         var newSurveyData = this.state.surveyDay;
-        var d = new Date(parseInt(date, 10)); // ?
-        var surveyDate = moment(d); //? ^
+        var surveyDate = moment(date, 'x'); //? ^
         if (surveyDate.isValid()) {
-            newSurveyData.surveyDate = surveyDate.format("YYYY-MM-DD");
+            newSurveyData.surveyDate = surveyDate.format();
             this.setState({surveyDay: newSurveyData});
             this.setSurveyState(null, 'surveyDateState');
         } else {
             this.setSurveyState('error', 'surveyDateState');
         }
     },
+
     handleTideInput: function (e) {
         var value = $(e.target).val().replace(/[^0-9\.]/g,''); // eslint-disable-line newline-per-chained-call
         $(e.target).val(value);
@@ -200,97 +201,102 @@ var surveyDay =  React.createClass({
                         <FormGroup controlId="surveyDate" validationState={this.state.validationState.surveyDateState}>
                             <ControlLabel controlId="surveyDate">Survey date</ControlLabel>
                             <DateTimeField
-                                date={this.state.surveyDate}
+                                dateTime={this.state.surveyDate}
                                 mode="date"
                                 id="surveyDate"
-                                inputFormat="DD-MM-YYYY"
                                 inputProps={{required:"required"}}
                                 onChange={this.handleDate}
                             />
                             <FormControl.Feedback />
                             <HelpBlock>This should be the date the survey was completed. Its important to remember that surveys must be completed on the same day for a single location.</HelpBlock>
                         </FormGroup>
-                        <FormGroup controlId="locationId" validationState={this.state.validationState.locationIdState}>
-                            <ControlLabel>Survey location</ControlLabel>
-                                <SelectBox id="locationId" onChange={this.handleLocationChange} name="locationId" value={this.state.surveyDay.locationId} data={this.state.locationsCombo} />
-                            <FormControl.Feedback />
-                            <HelpBlock>Validation is based on string length.</HelpBlock>
-                        </FormGroup>
-                        <FormGroup controlId="projectOfficer"  validationState={this.state.validationState.projectOfficerState}>
-                            <ControlLabel controlId="projectOfficer">Project Officer</ControlLabel>
-                                {/*
-                                <SelectBox id="projectOfficer" fields={["id", "projectOfficer"]} onChange={this.handleChange} name="leader" data={this.state.leaders} required />
-                                */}
-                            <FormControl.Feedback />
-                            <HelpBlock></HelpBlock>
-                        </FormGroup>
-                        <div className="row">
-                            <div className="col-md-6">
-                                <FormGroup controlId="lowTide" validationState={this.state.validationState.lowTideState}>
-                                    <ControlLabel>Low Tide</ControlLabel>
-                                    <FormControl
-                                        type="text"
-                                        value={this.state.surveyDay.lowTide}
-                                        placeholder="Height of low tide (m)"
-                                        inputProps={{name:"lowTide"}}
-                                        onChange={this.handleTideInput}
-                                        defaultValue={0}
-                                        required
-                                    />
+
+                        { (this.state.surveyDay.surveyDate) &&
+                            <section>
+                                <FormGroup controlId="locationId" validationState={this.state.validationState.locationIdState}>
+                                    <ControlLabel>Survey location</ControlLabel>
+                                        <SelectBox id="locationId" onChange={this.handleLocationChange} name="locationId" value={this.state.surveyDay.locationId} data={this.state.locationsCombo} />
                                     <FormControl.Feedback />
-                                    <HelpBlock>Height of low tide (m)</HelpBlock>
+                                    <HelpBlock>Validation is based on string length.</HelpBlock>
                                 </FormGroup>
-                            </div>
-                            <div className="col-md-6">
-                                <FormGroup controlId="lowTideTime" validationState={this.state.validationState.lowTideTimeState}>
-                                    <ControlLabel>Low Tide Time</ControlLabel>
-                                    <DateTimeField
-                                        mode="time"
-                                        id="lowTideTime"
-                                        inputProps={{required:"required", name:"lowTideTime"}}
-                                        onChange={this.handleLowTime}
-                                        date={this.state.lowTideTime}
-                                    />
+                                <FormGroup controlId="projectOfficer"  validationState={this.state.validationState.projectOfficerState}>
+                                    <ControlLabel controlId="projectOfficer">Project Officer</ControlLabel>
+                                        {/*
+                                        <SelectBox id="projectOfficer" fields={["id", "projectOfficer"]} onChange={this.handleChange} name="leader" data={this.state.leaders} required />
+                                        */}
                                     <FormControl.Feedback />
-                                    <HelpBlock>Time of low tide</HelpBlock>
+                                    <HelpBlock></HelpBlock>
                                 </FormGroup>
-                            </div>
-                            <div className="col-md-6">
-                                <FormGroup controlId="highTide" validationState={this.state.validationState.highTideState}>
-                                    <ControlLabel>High Tide</ControlLabel>
-                                    <FormControl
-                                        type="text"
-                                        value={this.state.surveyDay.highTide}
-                                        defaultValue={0}
-                                        inputProps={{name:"highTide"}}
-                                        placeholder="Height of high tide (m)"
-                                        onChange={this.handleTideInput}
-                                        required
-                                    />
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <FormGroup controlId="lowTide" validationState={this.state.validationState.lowTideState}>
+                                            <ControlLabel>Low Tide</ControlLabel>
+                                            <FormControl
+                                                type="text"
+                                                value={this.state.surveyDay.lowTide}
+                                                placeholder="Height of low tide (m)"
+                                                inputProps={{name:"lowTide"}}
+                                                onChange={this.handleTideInput}
+                                                defaultValue={0}
+                                                required
+                                            />
+                                            <FormControl.Feedback />
+                                            <HelpBlock>Height of low tide (m)</HelpBlock>
+                                        </FormGroup>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <FormGroup controlId="lowTideTime" validationState={this.state.validationState.lowTideTimeState}>
+                                            <ControlLabel>Low Tide Time</ControlLabel>
+                                            <DateTimeField
+                                                mode="time"
+                                                id="lowTideTime"
+                                                inputProps={{required:"required", name:"lowTideTime"}}
+                                                onChange={this.handleLowTime}
+                                                dateTime={ (this.state.surveyDay.lowTideTime) ? this.state.surveyDay.lowTideTime : this.state.surveyDay.surveyDate }
+                                            />
+                                            <FormControl.Feedback />
+                                            <HelpBlock>Time of low tide</HelpBlock>
+                                        </FormGroup>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <FormGroup controlId="highTide" validationState={this.state.validationState.highTideState}>
+                                            <ControlLabel>High Tide</ControlLabel>
+                                            <FormControl
+                                                type="text"
+                                                value={this.state.surveyDay.highTide}
+                                                defaultValue={0}
+                                                inputProps={{name:"highTide"}}
+                                                placeholder="Height of high tide (m)"
+                                                onChange={this.handleTideInput}
+                                                required
+                                            />
+                                            <FormControl.Feedback />
+                                            <HelpBlock>Height of high tide (m)</HelpBlock>
+                                        </FormGroup>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <FormGroup controlId="highTideTime" validationState={this.state.validationState.highTideTimeState}>
+                                            <ControlLabel>High Tide Time</ControlLabel>
+                                            <DateTimeField
+                                                mode="time"
+                                                id="highTideTime"
+                                                dateTime={ (this.state.surveyDay.hightTideTime) ? this.state.surveyDay.hightTideTime : this.state.surveyDay.surveyDate }
+                                                inputProps={{required:"required", name:"highTideTime"}}
+                                                onChange={this.handleHighTime}
+                                            />
+                                            <FormControl.Feedback />
+                                            <HelpBlock>Time of last high tide</HelpBlock>
+                                        </FormGroup>
+                                    </div>
+                                </div>
+                                <FormGroup controlId="sites">
+                                    <ControlLabel>Sites surveyed</ControlLabel><br />
+                                    <div>{this.state.renderedSites}</div>
                                     <FormControl.Feedback />
-                                    <HelpBlock>Height of high tide (m)</HelpBlock>
                                 </FormGroup>
-                            </div>
-                            <div className="col-md-6">
-                                <FormGroup controlId="highTideTime" validationState={this.state.validationState.highTideTimeState}>
-                                    <ControlLabel>High Tide Time</ControlLabel>
-                                    <DateTimeField
-                                        mode="time"
-                                        id="highTideTime"
-                                        date={this.state.highTideTime}
-                                        inputProps={{required:"required", name:"highTideTime"}}
-                                        onChange={this.handleHighTime}
-                                    />
-                                    <FormControl.Feedback />
-                                    <HelpBlock>Time of last high tide</HelpBlock>
-                                </FormGroup>
-                            </div>
-                        </div>
-                        <FormGroup controlId="sites">
-                            <ControlLabel>Sites surveyed</ControlLabel><br />
-                            <div>{this.state.renderedSites}</div>
-                            <FormControl.Feedback />
-                        </FormGroup>
+
+                            </section>
+                        }
                 </Modal.Body>
                 <Modal.Footer>
                     <Button bsStyle="success" type="submit">Add</Button>

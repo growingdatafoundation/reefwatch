@@ -57,9 +57,20 @@ export function GetSurveyDayObservations(SurveyDayID, callback) {
     .fail(failedRequest);
 }
 
-export function GetObservation(observationId, callback) {
+export function GetObservationSurveyDay(observationId, callback) {
+    $.get(BASE_URI + "/Observations/" + observationId + "/surveyDay", callback)
+    .fail(failedRequest);
+}
+
+export function GetObservationWithVolunteers(observationId, callback) {
 
     $.get(BASE_URI + "/Observations/" + observationId + "?filter[include]=volunteers", callback)
+    .fail(failedRequest);
+}
+
+export function GetObservation(observationId, callback) {
+
+    $.get(BASE_URI + "/Observations/" + observationId, callback)
     .fail(failedRequest);
 }
 
@@ -130,6 +141,30 @@ export function AddVolunteer(data, callback) {
 
     $.ajax({
         url: BASE_URI + "/volunteers",
+        data: JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+        type: 'POST',
+    })
+    .done(callback)
+    .fail(failedRequest);
+}
+
+// deletes all volunteers for boservation
+export function deleteObservationVolunteers(id, callback) {
+    $.ajax({
+        url: `${BASE_URI}/Observations/${id}/volunteers`,
+        dataType: "json",
+        contentType: "application/json",
+        type: 'DELETE',
+    })
+    .done(callback)
+    .fail(failedRequest);
+}
+
+export function addObservationVolunteers(id, data, callback) {
+    $.ajax({
+        url: `${BASE_URI}/Observations/${id}/volunteers`,
         data: JSON.stringify(data),
         dataType: "json",
         contentType: "application/json",
