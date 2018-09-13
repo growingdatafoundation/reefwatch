@@ -36,15 +36,18 @@ var Observation = React.createClass({
 
         var initialState = {};
 
+        // load parent survey
         initialState.surveyDay = {
-            surveyDate: null
+            surveyDate: null,
         };
+
         Services.GetObservationSurveyDay(observationId, result => {
             this.setState({
                 surveyDay: result,
             })
         });
 
+        // observation
         initialState.observation = {
             observationTime: null,
         };
@@ -102,7 +105,6 @@ var Observation = React.createClass({
     },
 
     handleChange: function(e) {
-        console.log(e.target);
         var observation = this.state.observation;
         observation[e.target.name] = e.target.value;
         this.setState({ observation: observation });
@@ -141,9 +143,13 @@ var Observation = React.createClass({
         });
     },
 
-    handleTime: function (timeValue) {console.log(timevalue)
+    handleTime: function (timeValue) {// js timestamp!
         var observation = this.state.observation;
-        observation.time = moment(timeValue);
+
+        const d = new Date();
+        d.setTime(timeValue);
+
+        observation.observationTime = d.toISOString(); //JS timestamp to ISO format (storage)
         this.setState({observation: observation});
     },
 
@@ -157,14 +163,14 @@ var Observation = React.createClass({
         // always: delete all /DELETE /Observations/{id}/volunteers
         // add observationVolunteers
         // TODO: callback hell
+        // flag observation as edited
 
-        Services.SaveObservation(observationId, observation, function(oResult) {
-            console.log('obs', oResult);
-            Services.deleteObservationVolunteers(observationId, function(dResult) {
+        Services.SaveObservation(observationId, observation, (oResult) => {
+            Services.deleteObservationVolunteers(observationId, (dResult) => {
                 // TODO
                 if (observationVolunteers.length) {
-                    Services.addObservationVolunteers(observationId, observationVolunteers, function(aResult) {
-                      // TODO
+                    Services.addObservationVolunteers(observationId, observationVolunteers, (aResult) => {
+                        // TODO
                     });
                 }
             })
@@ -172,6 +178,22 @@ var Observation = React.createClass({
     },
 
     render() {
+
+        let ot = null;
+        // this is a work around checking if the obeservation was just created or edited before.
+        // loopback creates an observation record with an observationTime in API/common/models/selected-site.js. The timesamp is set to the creation.
+        // if no volunteers are loaded then this form was just created and the obsevationTime is set to the survey date
+
+        if (!this.state.observationVolunteers.length && this.state.observation.observationTime) {
+            ot = this.state.surveyDay.surveyDate || new Date();
+        } else {
+            ot = this.state.observation.observationTime || this.state.surveyDay.surveyDate || new Date();
+        }
+
+        const observationTime = moment(ot).format('x'); //too js timestamp
+
+
+
     return (
         <div className="container">
             <h2>Observation <small>{ (this.state.surveyDay.surveyDate || null) ? moment(this.state.surveyDay.surveyDate).format('DD-MM-YYYY') : null }</small></h2>
@@ -182,9 +204,8 @@ var Observation = React.createClass({
                 <DateTimeField
                     mode="time"
                     id="observationTime"
-                    format="" /* ISO! */
                     inputFormat="DD/MM/YY h:mm A"
-                    dateTime={ this.state.observation.observationTime || null }
+                    dateTime={ observationTime }
                     inputProps={{required:"required", name:"observationTime"}}
                     onChange={this.handleTime}
                 />

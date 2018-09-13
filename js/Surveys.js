@@ -20,7 +20,7 @@ var Table = React.createClass({
   handleComplete: function (row) {
   },
   handleSelect: function (row) {
-    $.publish("selectSurvey", {location: row.location.locationName, date: moment(row.surveyDate).format("DD-MM-YYYY")});
+    $.publish("selectSurvey", {location: row.location.locationName, date: moment(row.surveyDate).format("DD-MM-YYYY")});// ? jb
     this.props.onSelect(row);
   },
   BuildButtons: function(cell, row, enumObject){

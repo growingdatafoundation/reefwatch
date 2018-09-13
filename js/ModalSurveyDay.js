@@ -28,6 +28,7 @@ var surveyDay =  React.createClass({
 
         return initialState;
     },
+
     setLocation: function(result) {
         this.state.locations = result;
         this.state.locationsCombo = [];
@@ -76,40 +77,18 @@ var surveyDay =  React.createClass({
         newSurveyData[e.target.id] = e.target.value;
         this.setState({surveyDay: newSurveyData});
     },
+
     handleLeader: function (e) {
 
     },
+
     handleLocationChange: function (e) {
         var newSurveyData = this.state.surveyDay;
         newSurveyData[e.target.id] = e.target.options[e.target.selectedIndex].value;
         this.setState({surveyDay: newSurveyData});
         this.getSites(e.target.options[e.target.selectedIndex].value);
     },
-    handleLowTime: function(date) {
-        var newSurveyData = this.state.surveyDay;
-        var d = new Date(parseInt(date, 10)); //?
-        var lowTimeTime = moment(d);
 
-        if (lowTimeTime.isValid()) {
-            newSurveyData.lowTideTime = lowTimeTime.format();
-            this.setSurveyState(null, 'lowTideTimeState');
-            this.setState({surveyDay: newSurveyData});
-        } else {
-            this.setSurveyState('error', 'lowTideTimeState');
-        }
-    },
-    handleHighTime: function(date) {
-        var newSurveyData = this.state.surveyDay;
-        var d = new Date(parseInt(date, 10)); //?
-        var highTideTime = moment(d);
-        if (highTideTime.isValid()) {
-            newSurveyData.highTideTime =  highTideTime.format()
-            this.setState({surveyDay: newSurveyData});
-            this.setSurveyState(null, 'highTideTimeState');
-        } else {
-            this.setSurveyState('error', 'highTideTimeState');
-        }
-    },
     formValid: function() {
         var validationState = this.state.validationState;
         var siteSelected = false;
@@ -137,16 +116,17 @@ var surveyDay =  React.createClass({
         return false;
     },
 
-    handleDate: function(date) {console.log(date);
-        var newSurveyData = this.state.surveyDay;
-        var surveyDate = moment(date, 'x'); //? ^
-        if (surveyDate.isValid()) {
-            newSurveyData.surveyDate = surveyDate.format();
-            this.setState({surveyDay: newSurveyData});
-            this.setSurveyState(null, 'surveyDateState');
-        } else {
-            this.setSurveyState('error', 'surveyDateState');
-        }
+    handleDate: function(timeValue, property) { //! js timestamp
+        const d = new Date();
+        d.setTime(timeValue);
+
+        const _surveyDay = this.state.surveyDay;
+
+        _surveyDay[property] = d.toISOString();
+        this.setState({
+            surveyDay: _surveyDay,
+        });
+        this.setSurveyState(null, 'surveyDateState');
     },
 
     handleTideInput: function (e) {
@@ -159,11 +139,13 @@ var surveyDay =  React.createClass({
         newSurveyData[e.target.id] = value;
         this.setState({surveyDay: newSurveyData});
     },
+
     handleSelectChange: function (e) {
         var newSurveyData = this.state.surveyDay;
         newSurveyData[e.target.id] = e.target.options[e.target.selectedIndex].value;
         this.setState({surveyDay: newSurveyData});
     },
+
     handleSelectedSites: function (e) {
         //selected sites only
         var currentSiteList = this.state.currentSiteList;
@@ -174,10 +156,12 @@ var surveyDay =  React.createClass({
         });
         this.setState({currentSiteList: currentSiteList});
     },
+
     getSites: function (locationId) {
         var sites = [];
         Services.GetSitesByLocation(locationId, this.renderSites);
     },
+
     renderSites: function(sites) {
         this.state.currentSiteList = sites;
         this.state.renderedSites =  sites.map(function (item) {
@@ -191,6 +175,11 @@ var surveyDay =  React.createClass({
         this.forceUpdate();
     },
     render() {
+
+        const surveyDate = (this.state.surveyDay.surveyDate) ? moment(this.state.surveyDay.surveyDate).format('x') : moment().startOf('day').format('x'); // eslint-disable-line newline-per-chained-call
+        const lowTideTime = (this.state.surveyDay.lowTideTime) ? moment(this.state.surveyDay.lowTideTime).format('x') : surveyDate;
+        const highTideTime = (this.state.surveyDay.highTideTime) ? moment(this.state.surveyDay.highTideTime).format('x') : surveyDate;
+
         return (
             <Modal show={this.state.showModal} onHide={this.close} bsSize="large">
                 <Modal.Header>
@@ -201,11 +190,13 @@ var surveyDay =  React.createClass({
                         <FormGroup controlId="surveyDate" validationState={this.state.validationState.surveyDateState}>
                             <ControlLabel controlId="surveyDate">Survey date</ControlLabel>
                             <DateTimeField
-                                dateTime={this.state.surveyDate}
                                 mode="date"
+                                dateTime={ surveyDate }
+                                inputFormat="DD/MM/YY h:mm A"
+
                                 id="surveyDate"
-                                inputProps={{required:"required"}}
-                                onChange={this.handleDate}
+                                inputProps={{required:'required', name:'surveyDate'}}
+                                onChange={ (timestamp) => this.handleDate(timestamp, 'surveyDate') }
                             />
                             <FormControl.Feedback />
                             <HelpBlock>This should be the date the survey was completed. Its important to remember that surveys must be completed on the same day for a single location.</HelpBlock>
@@ -249,10 +240,12 @@ var surveyDay =  React.createClass({
                                             <ControlLabel>Low Tide Time</ControlLabel>
                                             <DateTimeField
                                                 mode="time"
+                                                dateTime={ lowTideTime }
+                                                inputFormat="DD/MM/YY h:mm A"
+
                                                 id="lowTideTime"
-                                                inputProps={{required:"required", name:"lowTideTime"}}
-                                                onChange={this.handleLowTime}
-                                                dateTime={ (this.state.surveyDay.lowTideTime) ? this.state.surveyDay.lowTideTime : this.state.surveyDay.surveyDate }
+                                                inputProps={{required:'required', name:'lowTideTime'}}
+                                                onChange={ (timestamp) => this.handleDate(timestamp, 'lowTideTime') }
                                             />
                                             <FormControl.Feedback />
                                             <HelpBlock>Time of low tide</HelpBlock>
@@ -279,11 +272,14 @@ var surveyDay =  React.createClass({
                                             <ControlLabel>High Tide Time</ControlLabel>
                                             <DateTimeField
                                                 mode="time"
+                                                dateTime={ highTideTime }
+                                                inputFormat="DD/MM/YY h:mm A"
+
                                                 id="highTideTime"
-                                                dateTime={ (this.state.surveyDay.hightTideTime) ? this.state.surveyDay.hightTideTime : this.state.surveyDay.surveyDate }
-                                                inputProps={{required:"required", name:"highTideTime"}}
-                                                onChange={this.handleHighTime}
+                                                inputProps={{required:'required', name:'highTideTime'}}
+                                                onChange={ (timestamp) => this.handleDate(timestamp, 'highTideTime') }
                                             />
+
                                             <FormControl.Feedback />
                                             <HelpBlock>Time of last high tide</HelpBlock>
                                         </FormGroup>
