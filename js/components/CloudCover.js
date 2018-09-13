@@ -1,28 +1,18 @@
 import React from 'react'
-import SelectBox from './SelectBox';
+import {FormControl } from 'react-bootstrap';
 
 /* eslint-disable global-require */
+const defaultImage = require("./images/Clear_1.png");
 
-var CloudCover = React.createClass({
-  getInitialState: function () {
-    var initialState = {};
-    initialState.cloudCover = [];
-    initialState.cloudCover.push({value: 0, display: "Cloudless"});
-    initialState.cloudCover.push({value: 1, display: "One eigth or less but a little"});
-    initialState.cloudCover.push({value: 2, display: "Two eights"});
-    initialState.cloudCover.push({value: 3, display: "Three eights"});
-    initialState.cloudCover.push({value: 4, display: "Four eights"});
-    initialState.cloudCover.push({value: 5, display: "Five eights"});
-    initialState.cloudCover.push({value: 6, display: "Six eights"});
-    initialState.cloudCover.push({value: 7, display: "Seven eights"});
-    initialState.cloudCover.push({value: 8, display: "Full cover"});
-    initialState.imageSource = require("./images/Clear_1.png");
+const CloudCover = function(props) {
+    const { cloudCoverOptions, cloudCoverId } = props;
 
-    return initialState;
-  },
-  handleCloudCoverChange: function (e) {
-    var imageSource = require("./images/Clear_1.png");
-    switch (parseInt(e.target.value, 10)) {
+    const current = cloudCoverOptions.filter(option => option.id === cloudCoverId);
+    const category = (current.length) ? current[0].category : -1;
+
+    let imageSource = require("./images/Clear_1.png");
+
+    switch (category) {
         case 0:
             imageSource = require("./images/Clear_1.png");
             break;
@@ -50,19 +40,27 @@ var CloudCover = React.createClass({
         case 8:
             imageSource = require("./images/eigths_8.png");
             break;
+        default:
+            // do nothing
     }
-    this.setState({ imageSource: imageSource });
-  },
-  render() {
+
     return (
             <div className="row">
                 <div className="col-xs-4">
-                    <SelectBox  onChange={this.handleCloudCoverChange} data={this.state.cloudCover} />
+                    <FormControl
+                        name={ props.formElementName }
+                        onChange={ props.handleChange }
+                        data={ cloudCoverOptions }
+                        componentClass="select"
+                        value={ cloudCoverId }
+                    >
+                    { cloudCoverOptions.map(item => <option key={ item.id } value={ item.id }>{ item.type }</option>) }
+                    </FormControl>
                 </div>
-                <div><img className="img-thumbnail" src={this.state.imageSource} /></div>
+                <div><img className="img-thumbnail" src={ imageSource } /></div>
             </div>
-        )
-  },
-});
+        );
+
+};
 
 module.exports = CloudCover;

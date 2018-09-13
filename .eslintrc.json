@@ -164,7 +164,7 @@
         "no-trailing-spaces": "off",
         "no-undef-init": "error",
         "no-undefined": "error",
-        "no-underscore-dangle": "error",
+        //"no-underscore-dangle": "error", // jb
         "no-unmodified-loop-condition": "error",
         "no-unneeded-ternary": "error",
         "no-unused-expressions": "off",
@@ -224,8 +224,9 @@
             "never"
         ],
         // jb:
+        "valid-jsdoc": "off",
         "comma-dangle": [ "error", "never" ],
-        "arrow-parens": [ "error", "as-needed" ],
+        "arrow-parens": [ "off" ],
         "comma-dangle": [ "error", "always-multiline" ], //relaxed rule
         "no-warning-comments": "off",
         "prefer-reflect": "off",

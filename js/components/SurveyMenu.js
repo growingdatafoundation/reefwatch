@@ -28,7 +28,7 @@ var SurveyMenu = React.createClass({
         this.loadSurvey();
     },
     componentWillUnmount: function() {
-        this.serverRequest.abort();
+        //this.serverRequest.abort(); //jb: disabled
     },
     componentDidUpdate: function (prevProps, prevState) {
         if (prevProps.observationId !== this.props.observationId) {
