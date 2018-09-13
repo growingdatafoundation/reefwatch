@@ -1,23 +1,24 @@
 import React from 'react'
 import { Modal, Button, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Checkbox } from 'react-bootstrap'
 import DateTimeField from 'react-bootstrap-datetimepicker'
-import { Router, Route, hashHistory, IndexRoute } from 'react-router'
+import {  Link, browserHistory, Router, Route, hashHistory, IndexRoute } from 'react-router'
 import moment from "moment";
 import { Redirect } from 'react-router-dom';
 import SelectBox from './components/SelectBox'
-import config from '../config'
 //import { LoginLink, LogoutLink, Authenticated, NotAuthenticated } from 'react-stormpath';
-import { Link}  from 'react-router'
-import  {browserHistory}  from 'react-router'
 import validator from 'bootstrap-validator';
 import ChangePassword from './PasswordChange';
 import Typeahead from 'react-bootstrap-typeahead';
+
+import AWS from 'aws-sdk';
 import {CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails} from 'amazon-cognito-identity-js';
-import { env } from './environments/environment';
+
+import CONFIG from '../config/index';
+
 export default React.createClass({
     componentWillMount: function() {
         this.setState({idToken: this.login()})
-       
+
       },
       getInitialState: function() {
         return {"login" : { "email": "", "password": "" }, "loggedIn":""};
@@ -28,11 +29,12 @@ export default React.createClass({
         this.setState({"login": newState});
     },
     login: function() {
+
      //   e.preventDefault();
         var data = this.state.login;
         var that = this;
        /*$.ajax({
-            url         : config.api.hostname + ":"+config.api.port+"/"+config.api.prefix+"/Users/Login",
+            url         : CONFIG.api.hostname + ":"+CONFIG.api.port+"/"+CONFIG.api.prefix+"/Users/Login",
             data        : JSON.stringify(data),
             dataType: "json",
             contentType: "application/json",
@@ -40,68 +42,68 @@ export default React.createClass({
         }).done(function(data){
             that.setState({ showModal: false });
         })
-        .fail(function(jqXHR, textStatus, errorThrown) { 
+        .fail(function(jqXHR, textStatus, errorThrown) {
             alert("Username or password incorrect!!!" + data.email );
         });*/
         var idToken = localStorage.getItem('id_token');
-        console.log("Id Token: " )
-       
-        if(!idToken){
-            
+
+        if (!idToken){
+
         //Cognito Auth
         var authData = {
             Username: data.email,
-            Password: data.password
+            Password: data.password,
         };
         var authenticationDetails = new AuthenticationDetails(authData);
         var poolData = {
-            UserPoolId: env.userPoolId,
-            ClientId: env.clientId
+            UserPoolId: CONFIG.aws.userPoolId,
+            ClientId: CONFIG.aws.clientId,
         }
         var userPool = new CognitoUserPool(poolData);
         var userData = {
             Username:data.email,
-            Pool: userPool
+            Pool: userPool,
         };
-       
-          
-        let cognitoUser = new CognitoUser(userData);
+
+
+        const cognitoUser = new CognitoUser(userData);
         cognitoUser.authenticateUser(authenticationDetails, {
              newPasswordRequired:function(userAttributes, requiredAttributes){
-                 console.log("New Password Required, Navigating to the New password screen!")
                  return this.setState({ error: true });
+                 // TODO replace alert
+                 // eslint-disable-next-line no-alert, no-unreachable
                  alert("Please Change Password using Change Password button!!");
             },
             onSuccess:function (result){
-                var url ='cognito-idp.' + env.region.toLowerCase() + '.amazonaws.com/' + env.userPoolId;
+                var url = 'cognito-idp.' + CONFIG.aws.region.toLowerCase() + '.amazonaws.com/' + CONFIG.aws.userPoolId;
                 localStorage.setItem('id_token', result.getAccessToken().getJwtToken());
                 window.location.reload()
-                AWS.config.region =  env.region;
-              
+                AWS.config.region =  CONFIG.aws.region;
+
                 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
                   IdentityPoolId:'',
                   Logins : {
-                        url : result.getIdToken().getJwtToken() 
-                     }
-                     
+                        url : result.getIdToken().getJwtToken(),
+                     },
+
                  });
-                
+
             },
             onFailure: function(err){
-              }
+                // TODO
+                return err;
+              },
         });
-    }
-    else{
+    } else {
         this.setState({idToken: idToken})
     }
         return idToken;
         //Ends here
     },
-    render() {   
-         if(this.state.idToken){
+    render() {
+         if (this.state.idToken){
             return (<LoggedIn idToken={this.state.idToken} />);
-        }
-        else{
+        } else {
              return (
                 <div>
                 <div>
@@ -139,33 +141,33 @@ export default React.createClass({
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <Link to="/changepassword">Change Password</Link>
                     </div>
-                  
+
                 </div>
-               
+
             </div>
-             
+
         )
-    }}
-})    
+    }},
+})
 
   var LoggedIn = React.createClass({
     getInitialState: function() {
       return {
-        profile: null
+        profile: null,
       }
     },
-   
+
     componentDidMount: function() {
         this.setState({profile: "Admin"});
     },
-  
+
     render: function() {
-        
+
       if (this.state.profile) {
         return (
             <div>
           <h2>Welcome {this.state.profile}</h2>
-              
+
           <div>
           </div></div>
         );
@@ -174,7 +176,7 @@ export default React.createClass({
           <div>Loading profile</div>
         );
       }
-    }
+    },
   }
 
 );

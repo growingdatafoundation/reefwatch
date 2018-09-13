@@ -15,7 +15,7 @@ var gridHeaderRow = React.createClass({
                     </tr>
                 </thead>
             )
-    }
+    },
 });
 
 module.exports = gridHeaderRow;

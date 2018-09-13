@@ -3,22 +3,20 @@ import { Modal, Button, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Ch
 import DateTimeField from 'react-bootstrap-datetimepicker'
 import moment from "moment";
 import SelectBox from './components/SelectBox'
-import config from '../config'
 import validator from 'bootstrap-validator';
 import Typeahead from 'react-bootstrap-typeahead';
 import {CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails} from 'amazon-cognito-identity-js';
-import { env } from './environments/environment';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
+
 export default React.createClass({
-      render() {                
+      render() {
         return (
             <div>
                 <div>
                     <h2>Welcome to Reef Watch</h2>
                 </div>
-               
+
             </div>
         )
-    }
-})    
-
+    },
+})

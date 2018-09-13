@@ -5,7 +5,7 @@ import { Button, Navbar, NavItem, Nav, Glyphicon } from 'react-bootstrap'
 var AdminMenu = React.createClass({
     closePanel: function () {
         $("div.contentPage").animate({
-            left: '100%'
+            left: '100%',
         });        
     },
     render() {
@@ -21,7 +21,7 @@ var AdminMenu = React.createClass({
                 </Nav>
             </Navbar>
           )
-    }
+    },
 });
 
 module.exports = AdminMenu;

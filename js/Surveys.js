@@ -1,5 +1,4 @@
 import React from 'react'
-import config from "../config"
 import SurveyDay from "./ModalSurveyDay"
 import WorkingSurveyList from "./components/WorkingSurveyList"
 import Panel from "./components/Panel"
@@ -21,7 +20,7 @@ var Table = React.createClass({
   handleComplete: function (row) {
   },
   handleSelect: function (row) {
-    $.publish("selectSurvey", {location: row.location.locationName, date: moment(row.surveyDate).format("DD-MM-YYYY")});
+    $.publish("selectSurvey", {location: row.location.locationName, date: moment(row.surveyDate).format("DD-MM-YYYY")});// ? jb
     this.props.onSelect(row);
   },
   BuildButtons: function(cell, row, enumObject){
@@ -44,7 +43,7 @@ var Table = React.createClass({
         <TableHeaderColumn dataField='location' dataFormat={this.LocationName} dataSort={true}>Location</TableHeaderColumn>
         <TableHeaderColumn width="200" dataAlign="center" dataField="id" dataFormat={this.BuildButtons}>Actions</TableHeaderColumn>
     </BootstrapTable>
-  )}
+  )},
 });
 
 /*
@@ -58,19 +57,19 @@ var ActiveSurvey = React.createClass({
     },
     componentDidMount: function() {
 
-        services.getSurveyDaysWithLocations((surveys) => this.setState({
-          surveys
+        services.getSurveyDaysWithLocations(surveys => this.setState({
+          surveys,
         }));
     },
     render() {
-        if(localStorage.getItem('id_token')===null){
-            return(
+        if (!localStorage.getItem('id_token')) {
+            return (
                 <div>
                 <h2>You must log in to view the page!!</h2>
                 </div>
             )
         }
-        else{ 
+        else {
         return (
             <Panel heading={"Current Survey Days"} type={"primary"}>
                 <button className="btn btn-primary" style={{marginBottom: "10px"}} onClick={this.handleBtnClick}>Add</button>
@@ -78,7 +77,7 @@ var ActiveSurvey = React.createClass({
                 <SurveyDay ref="surveyDay" />
             </Panel>
         )
-    }}
+    }},
 })
 
 /*
@@ -108,7 +107,7 @@ export default React.createClass({
                             {this.props.children}
                         </div>
                     </div>
-                    ): // eslint-disable-line  operator-linebreak
+                    ) : // eslint-disable-line  operator-linebreak
                     <div>
                         <div>
                             <ActiveSurvey onSelect={this.onSurveySelected} />
@@ -117,5 +116,5 @@ export default React.createClass({
                 }
             </div>
         )
-    }
+    },
 })

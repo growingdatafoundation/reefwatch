@@ -3,37 +3,39 @@ import CustomGrid from './components/GridControl/Grid'
 import { Grid, Col, Row } from 'react-bootstrap';
 import * as Services from "../data/services";
 
+/* eslint-disable new-cap */
+
 export default React.createClass({
     getInitialState: function() {
         var state = {
-            columnData: [{ fieldName: "depthlabel", readonly: true, ChangeEvent: this.onChange, IsKey: true, columnHeaderText: "", IsVertical: false, controlType: "display"}, 
-                            { fieldName: "id", isHidden: "none", controlType: "hidden"}, 
-                            { fieldName: "observationId", isHidden: "none", controlType: "hidden"}, 
-                            { fieldName: "sedimentdepth", BlurEvent: this.onBlurSediment, ChangeEvent: this.onChangeSediment, columnHeaderText: "Sediment depth (mm)", IsVertical: true, controlType: "number"}, 
-                            { fieldName: "rock", ChangeEvent: this.onChange,  columnHeaderText: "Rock", IsVertical: true, controlType: "check"}, 
-                            { fieldName: "turf",  ChangeEvent: this.onChange, columnHeaderText: "Turf", IsVertical: true, controlType: "check"}, 
-                            { fieldName: "encrusting",  ChangeEvent: this.onChange, columnHeaderText: "Encrusting algae", IsVertical: true, controlType: "check"}, 
-                            { fieldName: "foliaceous",  ChangeEvent: this.onChange, columnHeaderText: "Foliaceous algae", IsVertical: true, controlType: "check"}, 
-                            { fieldName: "neptunes",  ChangeEvent: this.onChange, columnHeaderText: "Neptunes necklace", IsVertical: true, controlType: "check"}, 
-                            { fieldName: "sealettuce", ChangeEvent: this.onChange,  columnHeaderText: "Sea Lettuce", IsVertical: true, controlType: "check"}, 
-                            { fieldName: "seagrass",  ChangeEvent: this.onChange, columnHeaderText: "Seagrass", IsVertical: true, controlType: "check"}, 
-                            { fieldName: "tubeworms", ChangeEvent: this.onChange, columnHeaderText: "Tube worms", IsVertical: true, controlType: "check"}, 
+            columnData: [{ fieldName: "depthlabel", readonly: true, ChangeEvent: this.onChange, IsKey: true, columnHeaderText: "", IsVertical: false, controlType: "display"},
+                            { fieldName: "id", isHidden: "none", controlType: "hidden"},
+                            { fieldName: "observationId", isHidden: "none", controlType: "hidden"},
+                            { fieldName: "sedimentdepth", BlurEvent: this.onBlurSediment, ChangeEvent: this.onChangeSediment, columnHeaderText: "Sediment depth (mm)", IsVertical: true, controlType: "number"},
+                            { fieldName: "rock", ChangeEvent: this.onChange,  columnHeaderText: "Rock", IsVertical: true, controlType: "check"},
+                            { fieldName: "turf",  ChangeEvent: this.onChange, columnHeaderText: "Turf", IsVertical: true, controlType: "check"},
+                            { fieldName: "encrusting",  ChangeEvent: this.onChange, columnHeaderText: "Encrusting algae", IsVertical: true, controlType: "check"},
+                            { fieldName: "foliaceous",  ChangeEvent: this.onChange, columnHeaderText: "Foliaceous algae", IsVertical: true, controlType: "check"},
+                            { fieldName: "neptunes",  ChangeEvent: this.onChange, columnHeaderText: "Neptunes necklace", IsVertical: true, controlType: "check"},
+                            { fieldName: "sealettuce", ChangeEvent: this.onChange,  columnHeaderText: "Sea Lettuce", IsVertical: true, controlType: "check"},
+                            { fieldName: "seagrass",  ChangeEvent: this.onChange, columnHeaderText: "Seagrass", IsVertical: true, controlType: "check"},
+                            { fieldName: "tubeworms", ChangeEvent: this.onChange, columnHeaderText: "Tube worms", IsVertical: true, controlType: "check"},
                             { fieldName: "mussels",  ChangeEvent: this.onChange, columnHeaderText: "Mussels", IsVertical: true, controlType: "check"},
-                            { fieldName: "other", ChangeEvent: this.onChangeOther, BlurEvent: this.onBlurOther,  columnHeaderText: "Other", IsVertical: true, controlType: "text"} 
+                            { fieldName: "other", ChangeEvent: this.onChangeOther, BlurEvent: this.onBlurOther,  columnHeaderText: "Other", IsVertical: true, controlType: "text"},
                           ],
-            rows: []
+            rows: [],
         };
 
         var observationId = this.props.params.observationId;
         Services.GetPointInterceptObservation(observationId, function (result) {
             var rows = [];
-            for(var i=40;i<=2000;i+=40) {
+            for (var i = 40; i <= 2000; i += 40) {
                 var row = null;
                 var item = null;
-                if(result) {
+                if (result) {
                     item = this.getItem(result, i);
                 }
-                if(item) {
+                if (item) {
                     row = item;
                 } else {
                     row = { depthlabel: i.toString(), observationId: "", id: "", sedimentdepth: "", rock: false, turf: false, encrusting: false, foliaceous: false, neptunes: false, sealettuce: false, seagrass: false, tubeworms: false, mussels: false, other: ""};
@@ -46,9 +48,9 @@ export default React.createClass({
         return state;
 
     },
-    getItem: function(result, index) { 
-        for(var i=0;i<result.length;i++) {
-            if(result[i].depthlabel == index.toString()) {
+    getItem: function(result, index) {
+        for (var i = 0; i < result.length; i += 1) {
+            if (result[i].depthlabel === index.toString()) {
                 return result[i];
             }
         }
@@ -63,13 +65,13 @@ export default React.createClass({
         var rows = this.state.rows;
         var value = e.target.value;
         //remove id so it will not add row with blank ID
-        if(changedRow["id"]=="") {
-            delete changedRow["id"];
+        if (!changedRow.id) {
+            delete changedRow.id;
         }
-        changedRow["observationId"] = this.props.params.observationId;
+        changedRow.observationId = this.props.params.observationId;
         Services.SavePointIntercept(changedRow, function (result) {
             rows.forEach(function (item, index) {
-                if(item.depthlabel == result.depthlabel) {
+                if (item.depthlabel === result.depthlabel) {
                     rows[index] = result;
                 }
             });
@@ -85,14 +87,14 @@ export default React.createClass({
     onBlurSediment: function(key, changedRow, e) {
         var rows = this.state.rows;
         var value = e.target.value;
-        //remove id so it will not add row with blank ID
-        if(changedRow["id"]=="") {
-            delete changedRow["id"];
+        // remove id so it will not add row with blank ID
+        if (!changedRow.id) {
+            delete changedRow.id;
         }
-        changedRow["observationId"] = this.props.params.observationId;
+        changedRow.observationId = this.props.params.observationId;
         Services.SavePointIntercept(changedRow, function (result) {
             rows.forEach(function (item, index) {
-                if(item.depthlabel == result.depthlabel) {
+                if (item.depthlabel === result.depthlabel) {
                     rows[index] = result;
                 }
             });
@@ -107,26 +109,26 @@ export default React.createClass({
     },
     onChange: function(key, changedRow, e) {
         var rows = this.state.rows;
-        if(changedRow[key]) {
+        if (changedRow[key]) {
             changedRow[key] = false;
         } else {
             changedRow[key] = true;
         }
         //remove id so it will not add row with blank ID
-        if(changedRow["id"]=="") {
-            delete changedRow["id"];
+        if (!changedRow.id) {
+            delete changedRow.id;
         }
-        changedRow["observationId"] = this.props.params.observationId;
+        changedRow.observationId = this.props.params.observationId;
         Services.SavePointIntercept(changedRow, function (result) {
             rows.forEach(function (item, index) {
-                if(item.depthlabel == result.depthlabel) {
+                if (item.depthlabel === result.depthlabel) {
                     rows[index] = result;
                 }
             });
             this.setState({rows: rows});
         }.bind(this));
     },
-    render() { 
+    render() {
         return (
             <Grid>
                 <Row>
@@ -141,5 +143,5 @@ export default React.createClass({
                 </Row>
             </Grid>
         )
-    }
-}) 
+    },
+})

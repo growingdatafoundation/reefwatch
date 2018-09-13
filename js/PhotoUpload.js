@@ -1,11 +1,38 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
+import * as Services from "../data/services";
+import ImageGallery from 'react-image-gallery';
+
+/* eslint-disable new-cap */
 
 export default React.createClass({
+    getInitialState: function() {
+        var state = {};
+
+        state.images = [];
+        this.loadAttachments();
+        return state;
+    },
+    loadAttachments: function() {
+        Services.GetAttachments(function (result) {
+            var images = [];
+            $.each(result, function(key, value)
+            {
+                images.push({
+                    "original": "http://gdf-reefwatch-images.s3.amazonaws.com/" + value.name,
+                    "thumbnail": "http://gdf-reefwatch-images.s3.amazonaws.com/" + value.name,
+                })
+            });
+            this.setState({"images": images});
+        }.bind(this));
+    },
     submit: function(data) {
     },
     onDrop: function (files) {
         this.fileUpload(files);
+    },
+    handleImageLoad: function() {
+
     },
     fileUpload: function (files) {
         event.stopPropagation(); // Stop stuff happening
@@ -14,44 +41,28 @@ export default React.createClass({
         // START A LOADING SPINNER HERE
         // Create a formdata object and add the files
         var data = new FormData();
+
         $.each(files, function(key, value)
         {
             data.append(key, value);
         });
 
-        $.ajax({
-            url: '',
-            type: 'POST',
-            data: data,
-            cache: false,
-            dataType: 'json',
-            processData: false, // Don't process the files
-            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-            success: function(result, textStatus, jqXHR)
-            {
-                if (typeof result.error === 'undefined')
-                {
-                    // Success so call function to process the form
-                }
-                else
-                {
-                    // Handle errors here
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown)
-            {
-                // Handle errors here
-                // STOP LOADING SPINNER
-            }
-        });        
+        Services.AddAttachment(data, function (result) {
+            // TODO
+        });// bind here?
+
     },
     render () {
         return (
             <span>
-                <Dropzone onDrop={this.onDrop}>
+                <Dropzone onDrop={this.onDrop} className="dropzone">
                     <div>Try dropping some files here, or click to select files to upload.</div>
                 </Dropzone>
+                <ImageGallery
+                    items={this.state.images}
+                    slideInterval={2000}
+                    onImageLoad={this.handleImageLoad}/>
             </span>
         )
-    }
+    },
 });

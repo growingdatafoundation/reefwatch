@@ -1,0 +1,23 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mongoRWDS": {
+    "host": "0.0.0.0",
+    "port": 27017,
+    "url": "mongodb://0.0.0.0:27017/ReefWatchAPI",
+    "database": "ReefWatchAPI",
+    "name": "mongoRWDS",
+    "connector": "mongodb",
+    "user": "<MONGO USER>",
+    "password": "<MONGO PASSWORD>",
+  },
+  "storage": {
+    "name": "amazonS3",
+    "connector": "loopback-component-storage",
+    "provider": "amazon",
+    "key": "<ACCESS KEY>",
+    "keyId": "<ACCESS KEY ID>"
+  }
+}

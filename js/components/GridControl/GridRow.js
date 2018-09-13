@@ -4,14 +4,13 @@ import $ from 'jquery'
 import GridRowCell from './GridRowCell'
 
 var gridRow = React.createClass({
-    CreateCell: function(row) {
+    createCell: function(row) {
         var rowCells = [];
-        console.log("ColumnData->"+this.props.columnData)
-        console.log("Rows->"+this.props.data)
-        Object.keys(row).map(function (key) {
+        Object.keys(row).forEach(function (key) {
             var field = row[key];
-            if(this.props.columnData[key]!=undefined)
+            if (typeof this.props.columnData[key] !== 'undefined') {
                 rowCells.push(<GridRowCell key={key} fieldKey={key} columnData={this.props.columnData[key]} data={field} row={row} />);
+            }
         }, this)
         return rowCells
     },
@@ -20,14 +19,14 @@ var gridRow = React.createClass({
                 <tbody>
                 {
                     this.props.data.map(function(row, index) {
-                        return (<tr key={"RowID"+index}>
-                            { this.CreateCell(row)}
+                        return (<tr key={"RowID" + index}>
+                            { this.createCell(row)}
                         </tr>);
                     }, this)
                 }
                 </tbody>
             )
-    }
+    },
 });
 
 module.exports = gridRow;
